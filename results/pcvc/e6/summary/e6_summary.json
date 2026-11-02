@@ -1,0 +1,40 @@
+{
+  "experiment": "E6_Probe_Correctness",
+  "description": "Trajectory-level safety and accessibility constraint audit for dispatched probes",
+  "total_evaluated_assignments": 114,
+  "valid_assignments": 114,
+  "invalid_assignments": 0,
+  "constraint_violation_rate_pct": 0.0,
+  "violation_counts_by_constraint": {
+    "stairs": 0,
+    "slope": 0,
+    "width": 0,
+    "other": 0
+  },
+  "violation_examples": [],
+  "environment": {
+    "timestamp_utc": "2026-10-05T10:45:13.359964+00:00",
+    "python_version": "3.14.2 (tags/v3.14.2:df79316, Dec  5 2025, 17:18:21) [MSC v.1944 64 bit (AMD64)]",
+    "platform": "Windows-11-10.0.26300-SP0",
+    "architecture": "64bit",
+    "processor": "Intel64 Family 6 Model 183 Stepping 1, GenuineIntel",
+    "packages": {
+      "networkx": "3.6.1",
+      "numpy": "2.5.2",
+      "pandas": "3.0.5",
+      "scipy": "1.18.1",
+      "matplotlib": "3.11.2",
+      "shapely": "2.1.2",
+      "geopandas": "1.1.4",
+      "osmnx": "2.1.1",
+      "fastapi": "0.141.1",
+      "pydantic": "2.13.5"
+    },
+    "dataset_audit": {
+      "path": "D:\\dynamic_pedestrian_rerouting\\data\\vit_vellore\\processed\\vit_vellore_academic_pedestrian_network.pkl",
+      "size_bytes": 767489,
+      "md5": "5ecc692284c6b43a700ac92f303aeed1",
+      "mtime": 1789544907.9315057
+    }
+  }
+}

@@ -1,0 +1,105 @@
+{
+  "experiment": "E8_Runtime_Profiling",
+  "description": "Empirical runtime profiling across 8 stages over 10 repetitions",
+  "num_repetitions": 10,
+  "candidate_limit": 40,
+  "stage_summaries": [
+    {
+      "stage_key": "stage_1_graph_loading_s",
+      "stage_name": "1. Graph Loading & Geometries",
+      "mean_seconds": 0.0223,
+      "median_seconds": 0.0215,
+      "std_seconds": 0.0027,
+      "min_seconds": 0.0193,
+      "max_seconds": 0.0281
+    },
+    {
+      "stage_key": "stage_2_subgraph_construction_s",
+      "stage_name": "2. Subgraph Construction",
+      "mean_seconds": 0.0138,
+      "median_seconds": 0.0087,
+      "std_seconds": 0.012,
+      "min_seconds": 0.0081,
+      "max_seconds": 0.0483
+    },
+    {
+      "stage_key": "stage_3_uncertainty_scanning_s",
+      "stage_name": "3. Uncertainty Scanning (1721 edges)",
+      "mean_seconds": 0.0129,
+      "median_seconds": 0.0115,
+      "std_seconds": 0.0039,
+      "min_seconds": 0.0093,
+      "max_seconds": 0.0213
+    },
+    {
+      "stage_key": "stage_4_bridge_detection_s",
+      "stage_name": "4. Bridge Detection Cache",
+      "mean_seconds": 0.0141,
+      "median_seconds": 0.0138,
+      "std_seconds": 0.0022,
+      "min_seconds": 0.0111,
+      "max_seconds": 0.0186
+    },
+    {
+      "stage_key": "stage_5_counterfactual_evaluation_s",
+      "stage_name": "5. Counterfactual Impact (40 edges)",
+      "mean_seconds": 5.832,
+      "median_seconds": 5.7828,
+      "std_seconds": 0.2701,
+      "min_seconds": 5.5578,
+      "max_seconds": 6.4246
+    },
+    {
+      "stage_key": "stage_6_candidate_ranking_s",
+      "stage_name": "6. Priority Ranking & Sorting",
+      "mean_seconds": 0.0001,
+      "median_seconds": 0.0001,
+      "std_seconds": 0.0,
+      "min_seconds": 0.0001,
+      "max_seconds": 0.0001
+    },
+    {
+      "stage_key": "stage_7_probe_selection_s",
+      "stage_name": "7. Probe Safe-Return Selection",
+      "mean_seconds": 0.0567,
+      "median_seconds": 0.0532,
+      "std_seconds": 0.0075,
+      "min_seconds": 0.0521,
+      "max_seconds": 0.0777
+    },
+    {
+      "stage_key": "stage_8_complete_end_to_end_s",
+      "stage_name": "8. Complete End-to-End Pipeline",
+      "mean_seconds": 5.89,
+      "median_seconds": 5.9747,
+      "std_seconds": 0.1971,
+      "min_seconds": 5.6094,
+      "max_seconds": 6.1711
+    }
+  ],
+  "environment": {
+    "timestamp_utc": "2026-10-05T10:47:23.532437+00:00",
+    "python_version": "3.14.2 (tags/v3.14.2:df79316, Dec  5 2025, 17:18:21) [MSC v.1944 64 bit (AMD64)]",
+    "platform": "Windows-11-10.0.26300-SP0",
+    "architecture": "64bit",
+    "processor": "Intel64 Family 6 Model 183 Stepping 1, GenuineIntel",
+    "packages": {
+      "networkx": "3.6.1",
+      "numpy": "2.5.2",
+      "pandas": "3.0.5",
+      "scipy": "1.18.1",
+      "matplotlib": "3.11.2",
+      "shapely": "2.1.2",
+      "geopandas": "1.1.4",
+      "osmnx": "2.1.1",
+      "fastapi": "0.141.1",
+      "pydantic": "2.13.5"
+    },
+    "dataset_audit": {
+      "path": "D:\\dynamic_pedestrian_rerouting\\data\\vit_vellore\\processed\\vit_vellore_academic_pedestrian_network.pkl",
+      "size_bytes": 767489,
+      "md5": "5ecc692284c6b43a700ac92f303aeed1",
+      "mtime": 1789544907.9315057
+    }
+  }
+}

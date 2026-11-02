@@ -1,0 +1,5 @@
+profile,total_edges,mean_uncertainty,median_uncertainty,std_uncertainty,min_uncertainty,max_uncertainty,candidate_count_above_threshold,candidate_pct_above_threshold,mean_confidence,median_confidence,std_confidence,active_weights
+general,1721,0.445,0.55,0.1445,0.25,0.75,1114,64.73,0.555,0.45,0.1445,"{'surface': 0.3, 'smoothness_value': 0.25, 'width_m': 0.25, 'slope_percent': 0.2}"
+elderly,1721,0.2805,0.35,0.0976,0.15,0.6,7,0.41,0.7195,0.65,0.0976,"{'stairs': 0.25, 'slope_percent': 0.25, 'surface': 0.2, 'width_m': 0.15, 'smoothness_value': 0.1, 'tactile_paving': 0.05}"
+pregnant,1721,0.2805,0.35,0.0976,0.15,0.6,7,0.41,0.7195,0.65,0.0976,"{'stairs': 0.25, 'slope_percent': 0.25, 'surface': 0.2, 'width_m': 0.15, 'smoothness_value': 0.1, 'tactile_paving': 0.05}"
+wheelchair,1721,0.4497,0.55,0.1403,0.1,0.75,1400,81.35,0.5503,0.45,0.1403,"{'wheelchair': 0.35, 'slope_percent': 0.2, 'width_m': 0.15, 'ramp': 0.1, 'surface': 0.1, 'smoothness_value': 0.05, 'tactile_paving': 0.05}"

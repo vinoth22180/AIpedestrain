@@ -1,0 +1,110 @@
+{
+  "experiment": "E9_Scalability_Benchmarking",
+  "description": "Evaluation of candidate limit scaling from N=5 to N=200",
+  "tested_limits": [
+    5,
+    10,
+    20,
+    40,
+    80,
+    100,
+    200
+  ],
+  "results": [
+    {
+      "candidate_limit": 5,
+      "candidates_evaluated": 5,
+      "candidates_returned": 5,
+      "uncertainty_scan_time_s": 0.0138,
+      "counterfactual_time_s": 0.7457,
+      "probe_selection_time_s": 0.0464,
+      "total_runtime_s": 0.91,
+      "ms_per_candidate": 149.14
+    },
+    {
+      "candidate_limit": 10,
+      "candidates_evaluated": 10,
+      "candidates_returned": 5,
+      "uncertainty_scan_time_s": 0.0108,
+      "counterfactual_time_s": 1.4565,
+      "probe_selection_time_s": 0.066,
+      "total_runtime_s": 1.8034,
+      "ms_per_candidate": 145.65
+    },
+    {
+      "candidate_limit": 20,
+      "candidates_evaluated": 20,
+      "candidates_returned": 5,
+      "uncertainty_scan_time_s": 0.0125,
+      "counterfactual_time_s": 3.2302,
+      "probe_selection_time_s": 0.0573,
+      "total_runtime_s": 3.2007,
+      "ms_per_candidate": 161.51
+    },
+    {
+      "candidate_limit": 40,
+      "candidates_evaluated": 40,
+      "candidates_returned": 5,
+      "uncertainty_scan_time_s": 0.018,
+      "counterfactual_time_s": 6.1198,
+      "probe_selection_time_s": 0.0417,
+      "total_runtime_s": 5.7648,
+      "ms_per_candidate": 153.0
+    },
+    {
+      "candidate_limit": 80,
+      "candidates_evaluated": 80,
+      "candidates_returned": 5,
+      "uncertainty_scan_time_s": 0.0119,
+      "counterfactual_time_s": 11.5887,
+      "probe_selection_time_s": 0.0475,
+      "total_runtime_s": 11.8617,
+      "ms_per_candidate": 144.86
+    },
+    {
+      "candidate_limit": 100,
+      "candidates_evaluated": 100,
+      "candidates_returned": 5,
+      "uncertainty_scan_time_s": 0.0414,
+      "counterfactual_time_s": 14.5766,
+      "probe_selection_time_s": 0.0664,
+      "total_runtime_s": 14.841,
+      "ms_per_candidate": 145.77
+    },
+    {
+      "candidate_limit": 200,
+      "candidates_evaluated": 200,
+      "candidates_returned": 5,
+      "uncertainty_scan_time_s": 0.01,
+      "counterfactual_time_s": 28.9385,
+      "probe_selection_time_s": 0.0381,
+      "total_runtime_s": 31.0043,
+      "ms_per_candidate": 144.69
+    }
+  ],
+  "environment": {
+    "timestamp_utc": "2026-10-05T10:49:22.328636+00:00",
+    "python_version": "3.14.2 (tags/v3.14.2:df79316, Dec  5 2025, 17:18:21) [MSC v.1944 64 bit (AMD64)]",
+    "platform": "Windows-11-10.0.26300-SP0",
+    "architecture": "64bit",
+    "processor": "Intel64 Family 6 Model 183 Stepping 1, GenuineIntel",
+    "packages": {
+      "networkx": "3.6.1",
+      "numpy": "2.5.2",
+      "pandas": "3.0.5",
+      "scipy": "1.18.1",
+      "matplotlib": "3.11.2",
+      "shapely": "2.1.2",
+      "geopandas": "1.1.4",
+      "osmnx": "2.1.1",
+      "fastapi": "0.141.1",
+      "pydantic": "2.13.5"
+    },
+    "dataset_audit": {
+      "path": "D:\\dynamic_pedestrian_rerouting\\data\\vit_vellore\\processed\\vit_vellore_academic_pedestrian_network.pkl",
+      "size_bytes": 767489,
+      "md5": "5ecc692284c6b43a700ac92f303aeed1",
+      "mtime": 1789544907.9315057
+    }
+  }
+}

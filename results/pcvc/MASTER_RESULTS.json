@@ -1,0 +1,1190 @@
+{
+  "title": "PCVC Phase 6 Master Experimental Results",
+  "project": "Profile-Coupled Counterfactual Verification Controller (PCVC)",
+  "target_publication": "IEEE Access",
+  "graph_statistics": {
+    "num_nodes": 1551,
+    "num_edges": 1721,
+    "is_multigraph": true,
+    "is_directed": false,
+    "num_connected_components": 9,
+    "component_sizes": [
+      1509,
+      14,
+      13,
+      6,
+      3,
+      2,
+      2,
+      1,
+      1
+    ],
+    "largest_component_nodes": 1509,
+    "largest_component_ratio": 0.9729
+  },
+  "runtime_environment": {
+    "timestamp_utc": "2026-10-05T10:36:47.685317+00:00",
+    "python_version": "3.14.2 (tags/v3.14.2:df79316, Dec  5 2025, 17:18:21) [MSC v.1944 64 bit (AMD64)]",
+    "platform": "Windows-11-10.0.26300-SP0",
+    "architecture": "64bit",
+    "processor": "Intel64 Family 6 Model 183 Stepping 1, GenuineIntel",
+    "packages": {
+      "networkx": "3.6.1",
+      "numpy": "2.5.2",
+      "pandas": "3.0.5",
+      "scipy": "1.18.1",
+      "matplotlib": "3.11.2",
+      "shapely": "2.1.2",
+      "geopandas": "1.1.4",
+      "osmnx": "2.1.1",
+      "fastapi": "0.141.1",
+      "pydantic": "2.13.5"
+    },
+    "dataset_audit": {
+      "path": "D:\\dynamic_pedestrian_rerouting\\data\\vit_vellore\\processed\\vit_vellore_academic_pedestrian_network.pkl",
+      "size_bytes": 767489,
+      "md5": "5ecc692284c6b43a700ac92f303aeed1",
+      "mtime": 1789544907.9315057
+    }
+  },
+  "experiment_parameters": {
+    "selected_experiments": [
+      "e1",
+      "e2",
+      "e3",
+      "e4",
+      "e5",
+      "e6",
+      "e7",
+      "e8",
+      "e9"
+    ],
+    "deterministic_seeds": [
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51
+    ],
+    "profiles": [
+      "general",
+      "elderly",
+      "pregnant",
+      "wheelchair"
+    ],
+    "uncertainty_threshold": 0.4,
+    "default_candidate_limit": 40
+  },
+  "experiments": {
+    "e1": {
+      "experiment": "E1_Natural_Uncertainty_Distribution",
+      "description": "Natural accessibility uncertainty distribution on active VIT Vellore network",
+      "environment": {
+        "timestamp_utc": "2026-10-05T10:36:47.736203+00:00",
+        "python_version": "3.14.2 (tags/v3.14.2:df79316, Dec  5 2025, 17:18:21) [MSC v.1944 64 bit (AMD64)]",
+        "platform": "Windows-11-10.0.26300-SP0",
+        "architecture": "64bit",
+        "processor": "Intel64 Family 6 Model 183 Stepping 1, GenuineIntel",
+        "packages": {
+          "networkx": "3.6.1",
+          "numpy": "2.5.2",
+          "pandas": "3.0.5",
+          "scipy": "1.18.1",
+          "matplotlib": "3.11.2",
+          "shapely": "2.1.2",
+          "geopandas": "1.1.4",
+          "osmnx": "2.1.1",
+          "fastapi": "0.141.1",
+          "pydantic": "2.13.5"
+        },
+        "dataset_audit": {
+          "path": "D:\\dynamic_pedestrian_rerouting\\data\\vit_vellore\\processed\\vit_vellore_academic_pedestrian_network.pkl",
+          "size_bytes": 767489,
+          "md5": "5ecc692284c6b43a700ac92f303aeed1",
+          "mtime": 1789544907.9315057
+        }
+      },
+      "graph_statistics": {
+        "num_nodes": 1551,
+        "num_edges": 1721,
+        "is_multigraph": true,
+        "is_directed": false,
+        "num_connected_components": 9,
+        "component_sizes": [
+          1509,
+          14,
+          13,
+          6,
+          3,
+          2,
+          2,
+          1,
+          1
+        ],
+        "largest_component_nodes": 1509,
+        "largest_component_ratio": 0.9729
+      },
+      "uncertainty_threshold": 0.4,
+      "profile_summaries": {
+        "general": {
+          "profile": "general",
+          "total_edges": 1721,
+          "mean_uncertainty": 0.445,
+          "median_uncertainty": 0.55,
+          "std_uncertainty": 0.1445,
+          "min_uncertainty": 0.25,
+          "max_uncertainty": 0.75,
+          "candidate_count_above_threshold": 1114,
+          "candidate_pct_above_threshold": 64.73,
+          "mean_confidence": 0.555,
+          "median_confidence": 0.45,
+          "std_confidence": 0.1445,
+          "active_weights": {
+            "surface": 0.3,
+            "smoothness_value": 0.25,
+            "width_m": 0.25,
+            "slope_percent": 0.2
+          }
+        },
+        "elderly": {
+          "profile": "elderly",
+          "total_edges": 1721,
+          "mean_uncertainty": 0.2805,
+          "median_uncertainty": 0.35,
+          "std_uncertainty": 0.0976,
+          "min_uncertainty": 0.15,
+          "max_uncertainty": 0.6,
+          "candidate_count_above_threshold": 7,
+          "candidate_pct_above_threshold": 0.41,
+          "mean_confidence": 0.7195,
+          "median_confidence": 0.65,
+          "std_confidence": 0.0976,
+          "active_weights": {
+            "stairs": 0.25,
+            "slope_percent": 0.25,
+            "surface": 0.2,
+            "width_m": 0.15,
+            "smoothness_value": 0.1,
+            "tactile_paving": 0.05
+          }
+        },
+        "pregnant": {
+          "profile": "pregnant",
+          "total_edges": 1721,
+          "mean_uncertainty": 0.2805,
+          "median_uncertainty": 0.35,
+          "std_uncertainty": 0.0976,
+          "min_uncertainty": 0.15,
+          "max_uncertainty": 0.6,
+          "candidate_count_above_threshold": 7,
+          "candidate_pct_above_threshold": 0.41,
+          "mean_confidence": 0.7195,
+          "median_confidence": 0.65,
+          "std_confidence": 0.0976,
+          "active_weights": {
+            "stairs": 0.25,
+            "slope_percent": 0.25,
+            "surface": 0.2,
+            "width_m": 0.15,
+            "smoothness_value": 0.1,
+            "tactile_paving": 0.05
+          }
+        },
+        "wheelchair": {
+          "profile": "wheelchair",
+          "total_edges": 1721,
+          "mean_uncertainty": 0.4497,
+          "median_uncertainty": 0.55,
+          "std_uncertainty": 0.1403,
+          "min_uncertainty": 0.1,
+          "max_uncertainty": 0.75,
+          "candidate_count_above_threshold": 1400,
+          "candidate_pct_above_threshold": 81.35,
+          "mean_confidence": 0.5503,
+          "median_confidence": 0.45,
+          "std_confidence": 0.1403,
+          "active_weights": {
+            "wheelchair": 0.35,
+            "slope_percent": 0.2,
+            "width_m": 0.15,
+            "ramp": 0.1,
+            "surface": 0.1,
+            "smoothness_value": 0.05,
+            "tactile_paving": 0.05
+          }
+        }
+      },
+      "key_observations": [
+        "general: mean uncertainty = 0.445, 1114 candidates (64.73%)",
+        "elderly: mean uncertainty = 0.281, 7 candidates (0.41%)",
+        "pregnant: mean uncertainty = 0.281, 7 candidates (0.41%)",
+        "wheelchair: mean uncertainty = 0.450, 1400 candidates (81.35%)"
+      ]
+    },
+    "e2": {
+      "experiment": "E2_Oracle_Holdout_Masking",
+      "profile": "wheelchair",
+      "eligible_pool_size": 324,
+      "k_values": [
+        20,
+        40,
+        80
+      ],
+      "seeds": [
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51
+      ],
+      "k_aggregates": {
+        "K_20": {
+          "k_masked": 20,
+          "num_seeds": 10,
+          "spearman_rho_mean": 0.1191,
+          "spearman_rho_std": 0.1918,
+          "kendall_tau_mean": 0.1084,
+          "kendall_tau_std": 0.1747,
+          "hit_at_1_mean": 1.0,
+          "hit_at_5_mean": 1.0,
+          "hit_at_10_mean": 1.0,
+          "precision_at_5_mean": 0.88,
+          "precision_at_10_mean": 0.89,
+          "tic_at_5_mean": 1.0,
+          "tic_at_10_mean": 1.0,
+          "ndcg_at_5_mean": 1.0,
+          "ndcg_at_10_mean": 1.0
+        },
+        "K_40": {
+          "k_masked": 40,
+          "num_seeds": 10,
+          "spearman_rho_mean": 0.1877,
+          "spearman_rho_std": 0.2011,
+          "kendall_tau_mean": 0.1702,
+          "kendall_tau_std": 0.1827,
+          "hit_at_1_mean": 1.0,
+          "hit_at_5_mean": 1.0,
+          "hit_at_10_mean": 1.0,
+          "precision_at_5_mean": 0.7,
+          "precision_at_10_mean": 0.93,
+          "tic_at_5_mean": 1.0,
+          "tic_at_10_mean": 1.0,
+          "ndcg_at_5_mean": 1.0,
+          "ndcg_at_10_mean": 1.0
+        },
+        "K_80": {
+          "k_masked": 80,
+          "num_seeds": 10,
+          "spearman_rho_mean": 0.1538,
+          "spearman_rho_std": 0.1654,
+          "kendall_tau_mean": 0.1395,
+          "kendall_tau_std": 0.1498,
+          "hit_at_1_mean": 1.0,
+          "hit_at_5_mean": 1.0,
+          "hit_at_10_mean": 1.0,
+          "precision_at_5_mean": 0.7,
+          "precision_at_10_mean": 0.75,
+          "tic_at_5_mean": 1.0,
+          "tic_at_10_mean": 1.0,
+          "ndcg_at_5_mean": 1.0,
+          "ndcg_at_10_mean": 1.0
+        }
+      },
+      "environment": {
+        "timestamp_utc": "2026-10-05T10:36:48.958530+00:00",
+        "python_version": "3.14.2 (tags/v3.14.2:df79316, Dec  5 2025, 17:18:21) [MSC v.1944 64 bit (AMD64)]",
+        "platform": "Windows-11-10.0.26300-SP0",
+        "architecture": "64bit",
+        "processor": "Intel64 Family 6 Model 183 Stepping 1, GenuineIntel",
+        "packages": {
+          "networkx": "3.6.1",
+          "numpy": "2.5.2",
+          "pandas": "3.0.5",
+          "scipy": "1.18.1",
+          "matplotlib": "3.11.2",
+          "shapely": "2.1.2",
+          "geopandas": "1.1.4",
+          "osmnx": "2.1.1",
+          "fastapi": "0.141.1",
+          "pydantic": "2.13.5"
+        },
+        "dataset_audit": {
+          "path": "D:\\dynamic_pedestrian_rerouting\\data\\vit_vellore\\processed\\vit_vellore_academic_pedestrian_network.pkl",
+          "size_bytes": 767489,
+          "md5": "5ecc692284c6b43a700ac92f303aeed1",
+          "mtime": 1789544907.9315057
+        }
+      }
+    },
+    "e3": {
+      "experiment": "E3_Baseline_Comparison",
+      "candidate_pool_size": 40,
+      "num_seeds": 10,
+      "seeds": [
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51
+      ],
+      "baseline_summaries": [
+        {
+          "baseline_code": "B1",
+          "baseline_name": "Random",
+          "spearman_rho_mean": 0.0546,
+          "spearman_rho_std": 0.0837,
+          "kendall_tau_mean": 0.0451,
+          "kendall_tau_std": 0.0692,
+          "hit_at_5_mean": 0.4,
+          "hit_at_10_mean": 0.9,
+          "precision_at_5_mean": 0.1,
+          "precision_at_10_mean": 0.24,
+          "tic_at_5_mean": 1.0,
+          "tic_at_5_std": 0.0,
+          "tic_at_10_mean": 1.0,
+          "tic_at_10_std": 0.0,
+          "ndcg_at_5_mean": 1.0,
+          "ndcg_at_5_std": 0.0,
+          "ndcg_at_10_mean": 1.0,
+          "ndcg_at_10_std": 0.0
+        },
+        {
+          "baseline_code": "B2",
+          "baseline_name": "Uncertainty-Only",
+          "spearman_rho_mean": -0.0578,
+          "spearman_rho_std": 0.1623,
+          "kendall_tau_mean": -0.0571,
+          "kendall_tau_std": 0.1605,
+          "hit_at_5_mean": 1.0,
+          "hit_at_10_mean": 1.0,
+          "precision_at_5_mean": 0.68,
+          "precision_at_10_mean": 0.75,
+          "tic_at_5_mean": 0.94,
+          "tic_at_5_std": 0.0966,
+          "tic_at_10_mean": 0.97,
+          "tic_at_10_std": 0.0483,
+          "ndcg_at_5_mean": 0.9108,
+          "ndcg_at_5_std": 0.1477,
+          "ndcg_at_10_mean": 0.9421,
+          "ndcg_at_10_std": 0.0958
+        },
+        {
+          "baseline_code": "B3",
+          "baseline_name": "CAD-Only",
+          "spearman_rho_mean": 0.2037,
+          "spearman_rho_std": 0.2184,
+          "kendall_tau_mean": 0.1939,
+          "kendall_tau_std": 0.2078,
+          "hit_at_5_mean": 1.0,
+          "hit_at_10_mean": 1.0,
+          "precision_at_5_mean": 1.0,
+          "precision_at_10_mean": 1.0,
+          "tic_at_5_mean": 1.0,
+          "tic_at_5_std": 0.0,
+          "tic_at_10_mean": 1.0,
+          "tic_at_10_std": 0.0,
+          "ndcg_at_5_mean": 1.0,
+          "ndcg_at_5_std": 0.0,
+          "ndcg_at_10_mean": 1.0,
+          "ndcg_at_10_std": 0.0
+        },
+        {
+          "baseline_code": "B4",
+          "baseline_name": "Impact-Only",
+          "spearman_rho_mean": 0.5,
+          "spearman_rho_std": 0.527,
+          "kendall_tau_mean": 0.5,
+          "kendall_tau_std": 0.527,
+          "hit_at_5_mean": 1.0,
+          "hit_at_10_mean": 1.0,
+          "precision_at_5_mean": 1.0,
+          "precision_at_10_mean": 1.0,
+          "tic_at_5_mean": 1.0,
+          "tic_at_5_std": 0.0,
+          "tic_at_10_mean": 1.0,
+          "tic_at_10_std": 0.0,
+          "ndcg_at_5_mean": 1.0,
+          "ndcg_at_5_std": 0.0,
+          "ndcg_at_10_mean": 1.0,
+          "ndcg_at_10_std": 0.0
+        },
+        {
+          "baseline_code": "B5",
+          "baseline_name": "Uncertainty + CAD",
+          "spearman_rho_mean": 0.1851,
+          "spearman_rho_std": 0.1981,
+          "kendall_tau_mean": 0.1679,
+          "kendall_tau_std": 0.1799,
+          "hit_at_5_mean": 1.0,
+          "hit_at_10_mean": 1.0,
+          "precision_at_5_mean": 0.7,
+          "precision_at_10_mean": 0.93,
+          "tic_at_5_mean": 1.0,
+          "tic_at_5_std": 0.0,
+          "tic_at_10_mean": 1.0,
+          "tic_at_10_std": 0.0,
+          "ndcg_at_5_mean": 1.0,
+          "ndcg_at_5_std": 0.0,
+          "ndcg_at_10_mean": 1.0,
+          "ndcg_at_10_std": 0.0
+        },
+        {
+          "baseline_code": "B6",
+          "baseline_name": "Full PCVC",
+          "spearman_rho_mean": 0.1877,
+          "spearman_rho_std": 0.2011,
+          "kendall_tau_mean": 0.1702,
+          "kendall_tau_std": 0.1827,
+          "hit_at_5_mean": 1.0,
+          "hit_at_10_mean": 1.0,
+          "precision_at_5_mean": 0.7,
+          "precision_at_10_mean": 0.93,
+          "tic_at_5_mean": 1.0,
+          "tic_at_5_std": 0.0,
+          "tic_at_10_mean": 1.0,
+          "tic_at_10_std": 0.0,
+          "ndcg_at_5_mean": 1.0,
+          "ndcg_at_5_std": 0.0,
+          "ndcg_at_10_mean": 1.0,
+          "ndcg_at_10_std": 0.0
+        }
+      ],
+      "statistical_tests": {
+        "friedman_test_all_baselines": {
+          "tic_at_10": {
+            "statistic": 15.0,
+            "p_value": 0.010362
+          },
+          "ndcg_at_10": {
+            "statistic": 15.0,
+            "p_value": 0.010362
+          },
+          "spearman_rho": {
+            "statistic": 24.3642,
+            "p_value": 0.000185
+          }
+        },
+        "pairwise_wilcoxon_vs_b6": {
+          "B6_vs_B1": {
+            "comparison": "Full PCVC vs Random",
+            "tic_at_10": {
+              "w_stat": 0.0,
+              "p_value": 1.0
+            },
+            "ndcg_at_10": {
+              "w_stat": 0.0,
+              "p_value": 1.0
+            }
+          },
+          "B6_vs_B2": {
+            "comparison": "Full PCVC vs Uncertainty-Only",
+            "tic_at_10": {
+              "w_stat": 0.0,
+              "p_value": 0.25
+            },
+            "ndcg_at_10": {
+              "w_stat": 0.0,
+              "p_value": 0.25
+            }
+          },
+          "B6_vs_B3": {
+            "comparison": "Full PCVC vs CAD-Only",
+            "tic_at_10": {
+              "w_stat": 0.0,
+              "p_value": 1.0
+            },
+            "ndcg_at_10": {
+              "w_stat": 0.0,
+              "p_value": 1.0
+            }
+          },
+          "B6_vs_B4": {
+            "comparison": "Full PCVC vs Impact-Only",
+            "tic_at_10": {
+              "w_stat": 0.0,
+              "p_value": 1.0
+            },
+            "ndcg_at_10": {
+              "w_stat": 0.0,
+              "p_value": 1.0
+            }
+          },
+          "B6_vs_B5": {
+            "comparison": "Full PCVC vs Uncertainty + CAD",
+            "tic_at_10": {
+              "w_stat": 0.0,
+              "p_value": 1.0
+            },
+            "ndcg_at_10": {
+              "w_stat": 0.0,
+              "p_value": 1.0
+            }
+          }
+        }
+      },
+      "environment": {
+        "timestamp_utc": "2026-10-05T10:42:53.049348+00:00",
+        "python_version": "3.14.2 (tags/v3.14.2:df79316, Dec  5 2025, 17:18:21) [MSC v.1944 64 bit (AMD64)]",
+        "platform": "Windows-11-10.0.26300-SP0",
+        "architecture": "64bit",
+        "processor": "Intel64 Family 6 Model 183 Stepping 1, GenuineIntel",
+        "packages": {
+          "networkx": "3.6.1",
+          "numpy": "2.5.2",
+          "pandas": "3.0.5",
+          "scipy": "1.18.1",
+          "matplotlib": "3.11.2",
+          "shapely": "2.1.2",
+          "geopandas": "1.1.4",
+          "osmnx": "2.1.1",
+          "fastapi": "0.141.1",
+          "pydantic": "2.13.5"
+        },
+        "dataset_audit": {
+          "path": "D:\\dynamic_pedestrian_rerouting\\data\\vit_vellore\\processed\\vit_vellore_academic_pedestrian_network.pkl",
+          "size_bytes": 767489,
+          "md5": "5ecc692284c6b43a700ac92f303aeed1",
+          "mtime": 1789544907.9315057
+        }
+      }
+    },
+    "e4": {
+      "experiment": "E4_Profile_Sensitivity",
+      "description": "Evaluation of profile-specific prioritization differentiation",
+      "profiles_evaluated": [
+        "general",
+        "elderly",
+        "pregnant",
+        "wheelchair"
+      ],
+      "pairwise_similarity": [
+        {
+          "profile_a": "general",
+          "profile_b": "elderly",
+          "comparison": "general vs elderly",
+          "candidates_a": 10,
+          "candidates_b": 7,
+          "top10_overlap_count": 1,
+          "top10_overlap_pct": 10.0,
+          "jaccard_at_5": 0.0,
+          "jaccard_at_10": 0.0625
+        },
+        {
+          "profile_a": "general",
+          "profile_b": "pregnant",
+          "comparison": "general vs pregnant",
+          "candidates_a": 10,
+          "candidates_b": 7,
+          "top10_overlap_count": 1,
+          "top10_overlap_pct": 10.0,
+          "jaccard_at_5": 0.0,
+          "jaccard_at_10": 0.0625
+        },
+        {
+          "profile_a": "general",
+          "profile_b": "wheelchair",
+          "comparison": "general vs wheelchair",
+          "candidates_a": 10,
+          "candidates_b": 10,
+          "top10_overlap_count": 9,
+          "top10_overlap_pct": 90.0,
+          "jaccard_at_5": 0.6667,
+          "jaccard_at_10": 0.8182
+        },
+        {
+          "profile_a": "elderly",
+          "profile_b": "pregnant",
+          "comparison": "elderly vs pregnant",
+          "candidates_a": 7,
+          "candidates_b": 7,
+          "top10_overlap_count": 7,
+          "top10_overlap_pct": 70.0,
+          "jaccard_at_5": 1.0,
+          "jaccard_at_10": 1.0
+        },
+        {
+          "profile_a": "elderly",
+          "profile_b": "wheelchair",
+          "comparison": "elderly vs wheelchair",
+          "candidates_a": 7,
+          "candidates_b": 10,
+          "top10_overlap_count": 2,
+          "top10_overlap_pct": 20.0,
+          "jaccard_at_5": 0.0,
+          "jaccard_at_10": 0.1333
+        },
+        {
+          "profile_a": "pregnant",
+          "profile_b": "wheelchair",
+          "comparison": "pregnant vs wheelchair",
+          "candidates_a": 7,
+          "candidates_b": 10,
+          "top10_overlap_count": 2,
+          "top10_overlap_pct": 20.0,
+          "jaccard_at_5": 0.0,
+          "jaccard_at_10": 0.1333
+        }
+      ],
+      "environment": {
+        "timestamp_utc": "2026-10-05T10:44:46.196400+00:00",
+        "python_version": "3.14.2 (tags/v3.14.2:df79316, Dec  5 2025, 17:18:21) [MSC v.1944 64 bit (AMD64)]",
+        "platform": "Windows-11-10.0.26300-SP0",
+        "architecture": "64bit",
+        "processor": "Intel64 Family 6 Model 183 Stepping 1, GenuineIntel",
+        "packages": {
+          "networkx": "3.6.1",
+          "numpy": "2.5.2",
+          "pandas": "3.0.5",
+          "scipy": "1.18.1",
+          "matplotlib": "3.11.2",
+          "shapely": "2.1.2",
+          "geopandas": "1.1.4",
+          "osmnx": "2.1.1",
+          "fastapi": "0.141.1",
+          "pydantic": "2.13.5"
+        },
+        "dataset_audit": {
+          "path": "D:\\dynamic_pedestrian_rerouting\\data\\vit_vellore\\processed\\vit_vellore_academic_pedestrian_network.pkl",
+          "size_bytes": 767489,
+          "md5": "5ecc692284c6b43a700ac92f303aeed1",
+          "mtime": 1789544907.9315057
+        }
+      }
+    },
+    "e5": {
+      "experiment": "E5_Safe_Return_Evaluation",
+      "description": "Evaluation of closed-loop safe-return probe feasibility and detour overhead",
+      "total_evaluations": 214,
+      "target_profile_summaries": [
+        {
+          "target_profile": "wheelchair",
+          "total_candidates": 100,
+          "eligible_count": 100,
+          "rejected_count": 0,
+          "eligibility_rate_pct": 100.0,
+          "detour_overhead_mean": 86.212,
+          "detour_overhead_median": 45.52,
+          "detour_overhead_std": 108.081,
+          "detour_overhead_min": 1.001,
+          "detour_overhead_max": 694.31,
+          "travel_distance_m_mean": 993.48,
+          "travel_distance_m_median": 942.15
+        },
+        {
+          "target_profile": "elderly",
+          "total_candidates": 7,
+          "eligible_count": 7,
+          "rejected_count": 0,
+          "eligibility_rate_pct": 100.0,
+          "detour_overhead_mean": 48.347,
+          "detour_overhead_median": 29.261,
+          "detour_overhead_std": 48.456,
+          "detour_overhead_min": 5.215,
+          "detour_overhead_max": 126.87,
+          "travel_distance_m_mean": 407.06,
+          "travel_distance_m_median": 439.7
+        },
+        {
+          "target_profile": "pregnant",
+          "total_candidates": 7,
+          "eligible_count": 7,
+          "rejected_count": 0,
+          "eligibility_rate_pct": 100.0,
+          "detour_overhead_mean": 48.347,
+          "detour_overhead_median": 29.261,
+          "detour_overhead_std": 48.456,
+          "detour_overhead_min": 5.215,
+          "detour_overhead_max": 126.87,
+          "travel_distance_m_mean": 407.06,
+          "travel_distance_m_median": 439.7
+        },
+        {
+          "target_profile": "general",
+          "total_candidates": 100,
+          "eligible_count": 100,
+          "rejected_count": 0,
+          "eligibility_rate_pct": 100.0,
+          "detour_overhead_mean": 91.128,
+          "detour_overhead_median": 54.528,
+          "detour_overhead_std": 110.231,
+          "detour_overhead_min": 2.689,
+          "detour_overhead_max": 694.31,
+          "travel_distance_m_mean": 1018.77,
+          "travel_distance_m_median": 963.9
+        }
+      ],
+      "selected_probe_distribution": {
+        "general": 214
+      },
+      "rejection_counts": {},
+      "environment": {
+        "timestamp_utc": "2026-10-05T10:45:01.745381+00:00",
+        "python_version": "3.14.2 (tags/v3.14.2:df79316, Dec  5 2025, 17:18:21) [MSC v.1944 64 bit (AMD64)]",
+        "platform": "Windows-11-10.0.26300-SP0",
+        "architecture": "64bit",
+        "processor": "Intel64 Family 6 Model 183 Stepping 1, GenuineIntel",
+        "packages": {
+          "networkx": "3.6.1",
+          "numpy": "2.5.2",
+          "pandas": "3.0.5",
+          "scipy": "1.18.1",
+          "matplotlib": "3.11.2",
+          "shapely": "2.1.2",
+          "geopandas": "1.1.4",
+          "osmnx": "2.1.1",
+          "fastapi": "0.141.1",
+          "pydantic": "2.13.5"
+        },
+        "dataset_audit": {
+          "path": "D:\\dynamic_pedestrian_rerouting\\data\\vit_vellore\\processed\\vit_vellore_academic_pedestrian_network.pkl",
+          "size_bytes": 767489,
+          "md5": "5ecc692284c6b43a700ac92f303aeed1",
+          "mtime": 1789544907.9315057
+        }
+      }
+    },
+    "e6": {
+      "experiment": "E6_Probe_Correctness",
+      "description": "Trajectory-level safety and accessibility constraint audit for dispatched probes",
+      "total_evaluated_assignments": 114,
+      "valid_assignments": 114,
+      "invalid_assignments": 0,
+      "constraint_violation_rate_pct": 0.0,
+      "violation_counts_by_constraint": {
+        "stairs": 0,
+        "slope": 0,
+        "width": 0,
+        "other": 0
+      },
+      "violation_examples": [],
+      "environment": {
+        "timestamp_utc": "2026-10-05T10:45:13.359964+00:00",
+        "python_version": "3.14.2 (tags/v3.14.2:df79316, Dec  5 2025, 17:18:21) [MSC v.1944 64 bit (AMD64)]",
+        "platform": "Windows-11-10.0.26300-SP0",
+        "architecture": "64bit",
+        "processor": "Intel64 Family 6 Model 183 Stepping 1, GenuineIntel",
+        "packages": {
+          "networkx": "3.6.1",
+          "numpy": "2.5.2",
+          "pandas": "3.0.5",
+          "scipy": "1.18.1",
+          "matplotlib": "3.11.2",
+          "shapely": "2.1.2",
+          "geopandas": "1.1.4",
+          "osmnx": "2.1.1",
+          "fastapi": "0.141.1",
+          "pydantic": "2.13.5"
+        },
+        "dataset_audit": {
+          "path": "D:\\dynamic_pedestrian_rerouting\\data\\vit_vellore\\processed\\vit_vellore_academic_pedestrian_network.pkl",
+          "size_bytes": 767489,
+          "md5": "5ecc692284c6b43a700ac92f303aeed1",
+          "mtime": 1789544907.9315057
+        }
+      }
+    },
+    "e7": {
+      "experiment": "E7_Metric_Component_Ablation",
+      "description": "Component ablation study with empirical collinearity proof",
+      "redundancy_diagnostic": {
+        "spearman_delta_aoc_vs_delta_arl": 1.0,
+        "pvalue_delta_aoc_vs_delta_arl": 0.0,
+        "spearman_delta_arl_vs_mal": 1.0,
+        "pvalue_delta_arl_vs_mal": 0.0,
+        "identity_verified": true,
+        "diagnostic_statement": "In the active codebase, delta_AOC == delta_ARL == MAL is an exact verified mathematical identity. Separate ablations of these three terms are redundant."
+      },
+      "ablation_summaries": [
+        {
+          "ablation_code": "A1",
+          "ablation_name": "Uncertainty Only",
+          "spearman_rho_mean": -0.0578,
+          "spearman_rho_std": 0.1623,
+          "kendall_tau_mean": -0.0571,
+          "kendall_tau_std": 0.1605,
+          "tic_at_5_mean": 0.94,
+          "tic_at_5_std": 0.0966,
+          "tic_at_10_mean": 0.97,
+          "tic_at_10_std": 0.0483,
+          "ndcg_at_5_mean": 0.9108,
+          "ndcg_at_5_std": 0.1477,
+          "ndcg_at_10_mean": 0.9421,
+          "ndcg_at_10_std": 0.0958
+        },
+        {
+          "ablation_code": "A2",
+          "ablation_name": "Impact Only",
+          "spearman_rho_mean": 0.5,
+          "spearman_rho_std": 0.527,
+          "kendall_tau_mean": 0.5,
+          "kendall_tau_std": 0.527,
+          "tic_at_5_mean": 1.0,
+          "tic_at_5_std": 0.0,
+          "tic_at_10_mean": 1.0,
+          "tic_at_10_std": 0.0,
+          "ndcg_at_5_mean": 1.0,
+          "ndcg_at_5_std": 0.0,
+          "ndcg_at_10_mean": 1.0,
+          "ndcg_at_10_std": 0.0
+        },
+        {
+          "ablation_code": "A3",
+          "ablation_name": "CAD Only",
+          "spearman_rho_mean": 0.2037,
+          "spearman_rho_std": 0.2184,
+          "kendall_tau_mean": 0.1939,
+          "kendall_tau_std": 0.2078,
+          "tic_at_5_mean": 1.0,
+          "tic_at_5_std": 0.0,
+          "tic_at_10_mean": 1.0,
+          "tic_at_10_std": 0.0,
+          "ndcg_at_5_mean": 1.0,
+          "ndcg_at_5_std": 0.0,
+          "ndcg_at_10_mean": 1.0,
+          "ndcg_at_10_std": 0.0
+        },
+        {
+          "ablation_code": "A4",
+          "ablation_name": "Uncertainty + CAD",
+          "spearman_rho_mean": 0.1851,
+          "spearman_rho_std": 0.1981,
+          "kendall_tau_mean": 0.1679,
+          "kendall_tau_std": 0.1799,
+          "tic_at_5_mean": 1.0,
+          "tic_at_5_std": 0.0,
+          "tic_at_10_mean": 1.0,
+          "tic_at_10_std": 0.0,
+          "ndcg_at_5_mean": 1.0,
+          "ndcg_at_5_std": 0.0,
+          "ndcg_at_10_mean": 1.0,
+          "ndcg_at_10_std": 0.0
+        },
+        {
+          "ablation_code": "A5",
+          "ablation_name": "Uncertainty + Impact",
+          "spearman_rho_mean": 0.2266,
+          "spearman_rho_std": 0.2447,
+          "kendall_tau_mean": 0.2211,
+          "kendall_tau_std": 0.2388,
+          "tic_at_5_mean": 1.0,
+          "tic_at_5_std": 0.0,
+          "tic_at_10_mean": 1.0,
+          "tic_at_10_std": 0.0,
+          "ndcg_at_5_mean": 1.0,
+          "ndcg_at_5_std": 0.0,
+          "ndcg_at_10_mean": 1.0,
+          "ndcg_at_10_std": 0.0
+        },
+        {
+          "ablation_code": "A6",
+          "ablation_name": "Full PCVC",
+          "spearman_rho_mean": 0.1877,
+          "spearman_rho_std": 0.2011,
+          "kendall_tau_mean": 0.1702,
+          "kendall_tau_std": 0.1827,
+          "tic_at_5_mean": 1.0,
+          "tic_at_5_std": 0.0,
+          "tic_at_10_mean": 1.0,
+          "tic_at_10_std": 0.0,
+          "ndcg_at_5_mean": 1.0,
+          "ndcg_at_5_std": 0.0,
+          "ndcg_at_10_mean": 1.0,
+          "ndcg_at_10_std": 0.0
+        }
+      ],
+      "environment": {
+        "timestamp_utc": "2026-10-05T10:45:19.665905+00:00",
+        "python_version": "3.14.2 (tags/v3.14.2:df79316, Dec  5 2025, 17:18:21) [MSC v.1944 64 bit (AMD64)]",
+        "platform": "Windows-11-10.0.26300-SP0",
+        "architecture": "64bit",
+        "processor": "Intel64 Family 6 Model 183 Stepping 1, GenuineIntel",
+        "packages": {
+          "networkx": "3.6.1",
+          "numpy": "2.5.2",
+          "pandas": "3.0.5",
+          "scipy": "1.18.1",
+          "matplotlib": "3.11.2",
+          "shapely": "2.1.2",
+          "geopandas": "1.1.4",
+          "osmnx": "2.1.1",
+          "fastapi": "0.141.1",
+          "pydantic": "2.13.5"
+        },
+        "dataset_audit": {
+          "path": "D:\\dynamic_pedestrian_rerouting\\data\\vit_vellore\\processed\\vit_vellore_academic_pedestrian_network.pkl",
+          "size_bytes": 767489,
+          "md5": "5ecc692284c6b43a700ac92f303aeed1",
+          "mtime": 1789544907.9315057
+        }
+      }
+    },
+    "e8": {
+      "experiment": "E8_Runtime_Profiling",
+      "description": "Empirical runtime profiling across 8 stages over 10 repetitions",
+      "num_repetitions": 10,
+      "candidate_limit": 40,
+      "stage_summaries": [
+        {
+          "stage_key": "stage_1_graph_loading_s",
+          "stage_name": "1. Graph Loading & Geometries",
+          "mean_seconds": 0.0223,
+          "median_seconds": 0.0215,
+          "std_seconds": 0.0027,
+          "min_seconds": 0.0193,
+          "max_seconds": 0.0281
+        },
+        {
+          "stage_key": "stage_2_subgraph_construction_s",
+          "stage_name": "2. Subgraph Construction",
+          "mean_seconds": 0.0138,
+          "median_seconds": 0.0087,
+          "std_seconds": 0.012,
+          "min_seconds": 0.0081,
+          "max_seconds": 0.0483
+        },
+        {
+          "stage_key": "stage_3_uncertainty_scanning_s",
+          "stage_name": "3. Uncertainty Scanning (1721 edges)",
+          "mean_seconds": 0.0129,
+          "median_seconds": 0.0115,
+          "std_seconds": 0.0039,
+          "min_seconds": 0.0093,
+          "max_seconds": 0.0213
+        },
+        {
+          "stage_key": "stage_4_bridge_detection_s",
+          "stage_name": "4. Bridge Detection Cache",
+          "mean_seconds": 0.0141,
+          "median_seconds": 0.0138,
+          "std_seconds": 0.0022,
+          "min_seconds": 0.0111,
+          "max_seconds": 0.0186
+        },
+        {
+          "stage_key": "stage_5_counterfactual_evaluation_s",
+          "stage_name": "5. Counterfactual Impact (40 edges)",
+          "mean_seconds": 5.832,
+          "median_seconds": 5.7828,
+          "std_seconds": 0.2701,
+          "min_seconds": 5.5578,
+          "max_seconds": 6.4246
+        },
+        {
+          "stage_key": "stage_6_candidate_ranking_s",
+          "stage_name": "6. Priority Ranking & Sorting",
+          "mean_seconds": 0.0001,
+          "median_seconds": 0.0001,
+          "std_seconds": 0.0,
+          "min_seconds": 0.0001,
+          "max_seconds": 0.0001
+        },
+        {
+          "stage_key": "stage_7_probe_selection_s",
+          "stage_name": "7. Probe Safe-Return Selection",
+          "mean_seconds": 0.0567,
+          "median_seconds": 0.0532,
+          "std_seconds": 0.0075,
+          "min_seconds": 0.0521,
+          "max_seconds": 0.0777
+        },
+        {
+          "stage_key": "stage_8_complete_end_to_end_s",
+          "stage_name": "8. Complete End-to-End Pipeline",
+          "mean_seconds": 5.89,
+          "median_seconds": 5.9747,
+          "std_seconds": 0.1971,
+          "min_seconds": 5.6094,
+          "max_seconds": 6.1711
+        }
+      ],
+      "environment": {
+        "timestamp_utc": "2026-10-05T10:47:23.532437+00:00",
+        "python_version": "3.14.2 (tags/v3.14.2:df79316, Dec  5 2025, 17:18:21) [MSC v.1944 64 bit (AMD64)]",
+        "platform": "Windows-11-10.0.26300-SP0",
+        "architecture": "64bit",
+        "processor": "Intel64 Family 6 Model 183 Stepping 1, GenuineIntel",
+        "packages": {
+          "networkx": "3.6.1",
+          "numpy": "2.5.2",
+          "pandas": "3.0.5",
+          "scipy": "1.18.1",
+          "matplotlib": "3.11.2",
+          "shapely": "2.1.2",
+          "geopandas": "1.1.4",
+          "osmnx": "2.1.1",
+          "fastapi": "0.141.1",
+          "pydantic": "2.13.5"
+        },
+        "dataset_audit": {
+          "path": "D:\\dynamic_pedestrian_rerouting\\data\\vit_vellore\\processed\\vit_vellore_academic_pedestrian_network.pkl",
+          "size_bytes": 767489,
+          "md5": "5ecc692284c6b43a700ac92f303aeed1",
+          "mtime": 1789544907.9315057
+        }
+      }
+    },
+    "e9": {
+      "experiment": "E9_Scalability_Benchmarking",
+      "description": "Evaluation of candidate limit scaling from N=5 to N=200",
+      "tested_limits": [
+        5,
+        10,
+        20,
+        40,
+        80,
+        100,
+        200
+      ],
+      "results": [
+        {
+          "candidate_limit": 5,
+          "candidates_evaluated": 5,
+          "candidates_returned": 5,
+          "uncertainty_scan_time_s": 0.0138,
+          "counterfactual_time_s": 0.7457,
+          "probe_selection_time_s": 0.0464,
+          "total_runtime_s": 0.91,
+          "ms_per_candidate": 149.14
+        },
+        {
+          "candidate_limit": 10,
+          "candidates_evaluated": 10,
+          "candidates_returned": 5,
+          "uncertainty_scan_time_s": 0.0108,
+          "counterfactual_time_s": 1.4565,
+          "probe_selection_time_s": 0.066,
+          "total_runtime_s": 1.8034,
+          "ms_per_candidate": 145.65
+        },
+        {
+          "candidate_limit": 20,
+          "candidates_evaluated": 20,
+          "candidates_returned": 5,
+          "uncertainty_scan_time_s": 0.0125,
+          "counterfactual_time_s": 3.2302,
+          "probe_selection_time_s": 0.0573,
+          "total_runtime_s": 3.2007,
+          "ms_per_candidate": 161.51
+        },
+        {
+          "candidate_limit": 40,
+          "candidates_evaluated": 40,
+          "candidates_returned": 5,
+          "uncertainty_scan_time_s": 0.018,
+          "counterfactual_time_s": 6.1198,
+          "probe_selection_time_s": 0.0417,
+          "total_runtime_s": 5.7648,
+          "ms_per_candidate": 153.0
+        },
+        {
+          "candidate_limit": 80,
+          "candidates_evaluated": 80,
+          "candidates_returned": 5,
+          "uncertainty_scan_time_s": 0.0119,
+          "counterfactual_time_s": 11.5887,
+          "probe_selection_time_s": 0.0475,
+          "total_runtime_s": 11.8617,
+          "ms_per_candidate": 144.86
+        },
+        {
+          "candidate_limit": 100,
+          "candidates_evaluated": 100,
+          "candidates_returned": 5,
+          "uncertainty_scan_time_s": 0.0414,
+          "counterfactual_time_s": 14.5766,
+          "probe_selection_time_s": 0.0664,
+          "total_runtime_s": 14.841,
+          "ms_per_candidate": 145.77
+        },
+        {
+          "candidate_limit": 200,
+          "candidates_evaluated": 200,
+          "candidates_returned": 5,
+          "uncertainty_scan_time_s": 0.01,
+          "counterfactual_time_s": 28.9385,
+          "probe_selection_time_s": 0.0381,
+          "total_runtime_s": 31.0043,
+          "ms_per_candidate": 144.69
+        }
+      ],
+      "environment": {
+        "timestamp_utc": "2026-10-05T10:49:22.328636+00:00",
+        "python_version": "3.14.2 (tags/v3.14.2:df79316, Dec  5 2025, 17:18:21) [MSC v.1944 64 bit (AMD64)]",
+        "platform": "Windows-11-10.0.26300-SP0",
+        "architecture": "64bit",
+        "processor": "Intel64 Family 6 Model 183 Stepping 1, GenuineIntel",
+        "packages": {
+          "networkx": "3.6.1",
+          "numpy": "2.5.2",
+          "pandas": "3.0.5",
+          "scipy": "1.18.1",
+          "matplotlib": "3.11.2",
+          "shapely": "2.1.2",
+          "geopandas": "1.1.4",
+          "osmnx": "2.1.1",
+          "fastapi": "0.141.1",
+          "pydantic": "2.13.5"
+        },
+        "dataset_audit": {
+          "path": "D:\\dynamic_pedestrian_rerouting\\data\\vit_vellore\\processed\\vit_vellore_academic_pedestrian_network.pkl",
+          "size_bytes": 767489,
+          "md5": "5ecc692284c6b43a700ac92f303aeed1",
+          "mtime": 1789544907.9315057
+        }
+      }
+    }
+  },
+  "limitations_and_warnings": [
+    {
+      "issue": "Metric Redundancy / Collinearity",
+      "description": "delta_AOC, delta_ARL, and MAL are mathematically identical (Spearman rho = 1.0000) in the active codebase. delta_ARL is utilized as the unified counterfactual impact metric.",
+      "status": "EXPLICITLY_DOCUMENTED"
+    },
+    {
+      "issue": "Unused Priority Score Weights",
+      "description": "w_cost (0.03) and w_risk (0.02) are defined in DEFAULT_PCVC_WEIGHTS in src/pcvc/controller.py but omitted from the active priority score formula. Active weights sum to 0.95.",
+      "status": "EXPLICITLY_DOCUMENTED"
+    },
+    {
+      "issue": "Synthetic Pathway Widths",
+      "description": "Pathway width values (width_m = 1.8) are uniform synthetic defaults across pedestrian edges, precluding empirical width-filtering discrimination.",
+      "status": "EXPLICITLY_DOCUMENTED"
+    },
+    {
+      "issue": "Zero Confirmed Ramps in Campus Extent",
+      "description": "The active dataset contains 0 confirmed ramp tags (ramps.geojson has 0 features), limiting ramp-specific counterfactual evaluation.",
+      "status": "EXPLICITLY_DOCUMENTED"
+    },
+    {
+      "issue": "100% Missing Smoothness & Tactile Paving",
+      "description": "All 1,721 edges lack smoothness_value and tactile_paving tags. These contribute constant missingness penalty in profile uncertainty weights.",
+      "status": "EXPLICITLY_DOCUMENTED"
+    },
+    {
+      "issue": "Physical IoT Probe In-Situ Validation",
+      "description": "Probe feasibility is evaluated using topological shortest-path and obstacle verification over the graph; real-world physical robot/sensor deployment remains future work.",
+      "status": "EXPLICITLY_DOCUMENTED"
+    },
+    {
+      "issue": "Closed-Loop Automated Graph Mutation",
+      "description": "The current PCVC implementation records verification events in memory; automatic mutation of graph edge attributes on disk is not enabled.",
+      "status": "EXPLICITLY_DOCUMENTED"
+    }
+  ],
+  "total_execution_time_seconds": 892.32
+}

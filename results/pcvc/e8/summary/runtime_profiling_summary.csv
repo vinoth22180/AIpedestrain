@@ -1,0 +1,9 @@
+stage_key,stage_name,mean_seconds,median_seconds,std_seconds,min_seconds,max_seconds
+stage_1_graph_loading_s,1. Graph Loading & Geometries,0.0223,0.0215,0.0027,0.0193,0.0281
+stage_2_subgraph_construction_s,2. Subgraph Construction,0.0138,0.0087,0.012,0.0081,0.0483
+stage_3_uncertainty_scanning_s,3. Uncertainty Scanning (1721 edges),0.0129,0.0115,0.0039,0.0093,0.0213
+stage_4_bridge_detection_s,4. Bridge Detection Cache,0.0141,0.0138,0.0022,0.0111,0.0186
+stage_5_counterfactual_evaluation_s,5. Counterfactual Impact (40 edges),5.832,5.7828,0.2701,5.5578,6.4246
+stage_6_candidate_ranking_s,6. Priority Ranking & Sorting,0.0001,0.0001,0.0,0.0001,0.0001
+stage_7_probe_selection_s,7. Probe Safe-Return Selection,0.0567,0.0532,0.0075,0.0521,0.0777
+stage_8_complete_end_to_end_s,8. Complete End-to-End Pipeline,5.89,5.9747,0.1971,5.6094,6.1711

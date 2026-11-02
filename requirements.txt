@@ -1,0 +1,13 @@
+networkx==3.4.2
+pandas==2.2.3
+geopandas==1.0.1
+osmnx==1.9.4
+fastapi==0.115.6
+uvicorn==0.34.0
+pydantic==2.10.3
+pyyaml==6.0.3
+opencv-python>=4.8.0
+ultralytics>=8.0.0
+torch>=2.0.0
+torchvision>=0.15.0
+lap>=0.5.12

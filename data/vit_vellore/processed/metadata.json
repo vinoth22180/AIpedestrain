@@ -1,0 +1,17 @@
+{
+    "dataset_name": "VIT Vellore Master Geographic Dataset",
+    "campus_name": "VIT Vellore",
+    "coordinate_system": "EPSG:4326",
+    "retrieval_date": "2026-09-07T22:31:06.580678",
+    "center": [
+        79.16147170815022,
+        12.971832112805027
+    ],
+    "zoom": 15.5,
+    "bbox": [
+        79.1514391,
+        12.9664079,
+        79.1690386,
+        12.9774604
+    ]
+}

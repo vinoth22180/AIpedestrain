@@ -1,0 +1,72 @@
+{
+  "pcvc_phase": 6,
+  "graph_dataset": "vit_vellore_academic_pedestrian_network",
+  "profiles": [
+    "wheelchair",
+    "elderly",
+    "pregnant",
+    "general"
+  ],
+  "total_elapsed_s": 168.87,
+  "n_success": 5,
+  "n_failed": 0,
+  "experiments": [
+    {
+      "name": "Exp1_UncertaintyCensus",
+      "module": "D:\\dynamic_pedestrian_rerouting\\experiments\\exp1_uncertainty_census.py",
+      "status": "SUCCESS",
+      "elapsed_s": 0.53,
+      "error": null
+    },
+    {
+      "name": "Exp2_CounterfactualImpact",
+      "module": "D:\\dynamic_pedestrian_rerouting\\experiments\\exp2_counterfactual_impact.py",
+      "status": "SUCCESS",
+      "elapsed_s": 10.92,
+      "error": null
+    },
+    {
+      "name": "Exp3_PriorityRankingValidation",
+      "module": "D:\\dynamic_pedestrian_rerouting\\experiments\\exp3_priority_ranking.py",
+      "status": "SUCCESS",
+      "elapsed_s": 11.72,
+      "error": null
+    },
+    {
+      "name": "Exp4_ProbeSafetyValidation",
+      "module": "D:\\dynamic_pedestrian_rerouting\\experiments\\exp4_probe_safety.py",
+      "status": "SUCCESS",
+      "elapsed_s": 11.68,
+      "error": null
+    },
+    {
+      "name": "Exp5_CADCensus",
+      "module": "D:\\dynamic_pedestrian_rerouting\\experiments\\exp5_cad_census.py",
+      "status": "SUCCESS",
+      "elapsed_s": 134.02,
+      "error": null
+    }
+  ],
+  "output_files": {
+    "exp1": {
+      "json": "experiments/results/exp1_uncertainty_census.json",
+      "csv": "experiments/results/exp1_summary.csv"
+    },
+    "exp2": {
+      "json": "experiments/results/exp2_counterfactual_impact.json",
+      "csv": "experiments/results/exp2_counterfactual_summary.csv"
+    },
+    "exp3": {
+      "json": "experiments/results/exp3_priority_ranking.json",
+      "csv": "experiments/results/exp3_priority_ranking.csv"
+    },
+    "exp4": {
+      "json": "experiments/results/exp4_probe_safety.json",
+      "csv": "experiments/results/exp4_probe_safety.csv"
+    },
+    "exp5": {
+      "json": "experiments/results/exp5_cad_census.json",
+      "csv": "experiments/results/exp5_cad_summary.csv"
+    }
+  }
+}

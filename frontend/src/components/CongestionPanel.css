@@ -1,0 +1,219 @@
+/* Base panel styles */
+.congestion-panel-wrapper {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  width: 340px;
+  max-width: calc(100vw - 48px);
+  max-height: calc(100vh - 48px);
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  box-sizing: border-box;
+  z-index: 10;
+  overflow-y: auto;
+  transform: translateX(0);
+  opacity: 1;
+  visibility: visible;
+  transition: transform var(--transition-normal, 0.25s cubic-bezier(0.4, 0, 0.2, 1)),
+              opacity var(--transition-normal, 0.25s cubic-bezier(0.4, 0, 0.2, 1)),
+              visibility var(--transition-normal, 0.25s cubic-bezier(0.4, 0, 0.2, 1));
+}
+
+.congestion-panel-wrapper.collapsed {
+  transform: translateX(calc(100% + 40px));
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* Minimize toggle button in panel header */
+.congestion-panel-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border-radius: var(--radius-full, 9999px);
+  border: 1px solid var(--border-color, #e2e8f0);
+  background-color: #f8fafc;
+  color: var(--text-secondary, #475569);
+  cursor: pointer;
+  transition: all var(--transition-fast, 0.15s ease);
+  outline: none;
+}
+
+.congestion-panel-toggle-btn:hover {
+  background-color: var(--accent-light, #eff6ff);
+  color: var(--accent-color, #3b82f6);
+  border-color: var(--accent-color, #3b82f6);
+  transform: translateX(1px);
+}
+
+.congestion-panel-toggle-btn:focus-visible {
+  box-shadow: 0 0 0 3px var(--accent-light, #eff6ff);
+  border-color: var(--accent-color, #3b82f6);
+}
+
+/* Floating expand tab/button displayed when panel is collapsed */
+.congestion-expand-tab {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  z-index: 1000;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border-radius: var(--radius-full, 9999px);
+  background: var(--panel-bg, rgba(255, 255, 255, 0.96));
+  backdrop-filter: blur(var(--panel-blur, 16px));
+  -webkit-backdrop-filter: blur(var(--panel-blur, 16px));
+  border: 1px solid var(--border-color, #e2e8f0);
+  box-shadow: var(--shadow-md, 0 4px 6px -1px rgba(0, 0, 0, 0.1));
+  color: var(--text-primary, #0f172a);
+  font-weight: 600;
+  font-size: 0.8125rem;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition: all var(--transition-fast, 0.15s ease);
+  outline: none;
+  animation: slideInRight 0.25s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.congestion-expand-tab:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-lg, 0 10px 15px -3px rgba(0, 0, 0, 0.08));
+  border-color: var(--accent-color, #3b82f6);
+  background-color: white;
+}
+
+.congestion-expand-tab:focus-visible {
+  box-shadow: 0 0 0 3px var(--accent-light, #eff6ff);
+  border-color: var(--accent-color, #3b82f6);
+}
+
+.congestion-expand-tab .tab-icon {
+  display: flex;
+  align-items: center;
+  color: var(--accent-color, #3b82f6);
+  transition: transform var(--transition-fast, 0.15s ease);
+}
+
+.congestion-expand-tab:hover .tab-icon {
+  transform: translateX(-2px);
+}
+
+.congestion-expand-badge-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Fallback legacy compatibility classes */
+.congestion-panel {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 250px;
+  background-color: white;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  font-family: sans-serif;
+  font-size: 14px;
+}
+
+.panel-group {
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.panel-group label {
+  font-weight: bold;
+  margin-bottom: 5px;
+  font-size: 12px;
+}
+
+.panel-group select, .panel-group input {
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.congestion-panel button {
+  width: 100%;
+  padding: 8px;
+  background-color: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.congestion-panel button:disabled {
+  background-color: #9ca3af;
+  cursor: not-allowed;
+}
+
+.status {
+  margin-top: 10px;
+  font-style: italic;
+  color: #666;
+  text-align: center;
+}
+
+.congestion-results {
+  margin-top: 15px;
+  padding-top: 10px;
+  border-top: 1px solid #eee;
+}
+
+.congestion-results p {
+  margin: 5px 0;
+}
+
+/* Responsive / small screen adjustments */
+@media (max-width: 640px) {
+  .congestion-panel-wrapper {
+    top: 16px;
+    right: 16px;
+    width: calc(100vw - 32px);
+    max-width: calc(100vw - 32px);
+    max-height: calc(100vh - 32px);
+    padding: 16px;
+  }
+
+  .congestion-expand-tab {
+    top: 16px;
+    right: 16px;
+    padding: 8px 12px;
+    font-size: 0.75rem;
+  }
+}
+
+/* Accessibility / motion sensitivity */
+@media (prefers-reduced-motion: reduce) {
+  .congestion-panel-wrapper,
+  .congestion-expand-tab,
+  .congestion-panel-toggle-btn {
+    transition: none !important;
+    animation: none !important;
+  }
+}

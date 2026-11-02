@@ -1,0 +1,21 @@
+profile,bin_range,count,pct_of_edges
+general,"[0.0, 0.2)",0,0.0
+general,"[0.2, 0.4)",607,35.27
+general,"[0.4, 0.6)",1107,64.32
+general,"[0.6, 0.8)",7,0.41
+general,"[0.8, 1.0]",0,0.0
+elderly,"[0.0, 0.2)",607,35.27
+elderly,"[0.2, 0.4)",1107,64.32
+elderly,"[0.4, 0.6)",0,0.0
+elderly,"[0.6, 0.8)",7,0.41
+elderly,"[0.8, 1.0]",0,0.0
+pregnant,"[0.0, 0.2)",607,35.27
+pregnant,"[0.2, 0.4)",1107,64.32
+pregnant,"[0.4, 0.6)",0,0.0
+pregnant,"[0.6, 0.8)",7,0.41
+pregnant,"[0.8, 1.0]",0,0.0
+wheelchair,"[0.0, 0.2)",80,4.65
+wheelchair,"[0.2, 0.4)",241,14.0
+wheelchair,"[0.4, 0.6)",1396,81.12
+wheelchair,"[0.6, 0.8)",4,0.23
+wheelchair,"[0.8, 1.0]",0,0.0

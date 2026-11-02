@@ -1,0 +1,5 @@
+profile,subgraph_nodes,subgraph_edges,n_critical,pct_critical,n_cut_edges,n_cad_1_0,n_cad_0_5_to_1,n_cad_0_4_to_0_5,n_profile_exclusive,top_edge_name,top_edge_cad
+wheelchair,1551,1714,1426,83.2,558,558,868,0,21,Segment_1034973038_1034973039,1.0
+elderly,1551,1716,1427,83.16,552,552,875,0,15,Segment_1034973038_1034973039,1.0
+pregnant,1551,1716,1427,83.16,552,552,875,0,15,Segment_1034973038_1034973039,1.0
+general,1551,1721,1431,83.15,537,537,894,0,0,Segment_1034973038_1034973039,1.0

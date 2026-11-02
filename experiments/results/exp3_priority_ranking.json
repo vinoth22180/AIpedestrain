@@ -1,0 +1,437 @@
+{
+  "experiment": "exp3_priority_ranking",
+  "pcvc_weights": {
+    "w_uncertainty": 0.25,
+    "w_delta_arl": 0.25,
+    "w_delta_aoc": 0.15,
+    "w_mal": 0.15,
+    "w_cad": 0.15,
+    "w_cost": 0.03,
+    "w_risk": 0.02
+  },
+  "top_k": 5,
+  "profiles": [
+    "wheelchair",
+    "elderly",
+    "pregnant",
+    "general"
+  ],
+  "per_profile": {
+    "wheelchair": {
+      "summary": "Evaluated 40 uncertain edges for 'wheelchair'. Top priority target: Walkway_1035391385_1064545157 (Score: 0.84). Selected probe: general.",
+      "ranked_candidates": [
+        {
+          "rank": 1,
+          "edge_id": "1035391385-1064545157-E000253",
+          "name": "Walkway_1035391385_1064545157",
+          "priority_score": 0.838,
+          "uncertainty": 0.55,
+          "delta_arl": 1.0,
+          "delta_aoc": 1,
+          "mal_impact": 1.0,
+          "cad": 1.0,
+          "is_cut_edge": true,
+          "reason": "Essential accessible cut-edge: failure severs corridor connectivity for wheelchair users (CAD=1.0, uncertainty=55%)."
+        },
+        {
+          "rank": 2,
+          "edge_id": "1035404684-1035404671-E000028",
+          "name": "Walkway_1035404684_1035404671",
+          "priority_score": 0.838,
+          "uncertainty": 0.55,
+          "delta_arl": 1.0,
+          "delta_aoc": 1,
+          "mal_impact": 1.0,
+          "cad": 1.0,
+          "is_cut_edge": true,
+          "reason": "Essential accessible cut-edge: failure severs corridor connectivity for wheelchair users (CAD=1.0, uncertainty=55%)."
+        },
+        {
+          "rank": 3,
+          "edge_id": "1035404671-1035404682-E000029",
+          "name": "Walkway_1035404671_1035404682",
+          "priority_score": 0.838,
+          "uncertainty": 0.55,
+          "delta_arl": 1.0,
+          "delta_aoc": 1,
+          "mal_impact": 1.0,
+          "cad": 1.0,
+          "is_cut_edge": true,
+          "reason": "Essential accessible cut-edge: failure severs corridor connectivity for wheelchair users (CAD=1.0, uncertainty=55%)."
+        },
+        {
+          "rank": 4,
+          "edge_id": "1035404682-1035404680-E000030",
+          "name": "Walkway_1035404682_1035404680",
+          "priority_score": 0.838,
+          "uncertainty": 0.55,
+          "delta_arl": 1.0,
+          "delta_aoc": 1,
+          "mal_impact": 1.0,
+          "cad": 1.0,
+          "is_cut_edge": true,
+          "reason": "Essential accessible cut-edge: failure severs corridor connectivity for wheelchair users (CAD=1.0, uncertainty=55%)."
+        },
+        {
+          "rank": 5,
+          "edge_id": "1035404680-1035404681-E000031",
+          "name": "Walkway_1035404680_1035404681",
+          "priority_score": 0.838,
+          "uncertainty": 0.55,
+          "delta_arl": 1.0,
+          "delta_aoc": 1,
+          "mal_impact": 1.0,
+          "cad": 1.0,
+          "is_cut_edge": true,
+          "reason": "Essential accessible cut-edge: failure severs corridor connectivity for wheelchair users (CAD=1.0, uncertainty=55%)."
+        }
+      ],
+      "selected_target": "1035391385-1064545157-E000253",
+      "selected_probe": "general",
+      "anchor_name": "CTS",
+      "eligible_probes": [
+        {
+          "profile": "general",
+          "travel_cost": 1123.5,
+          "outbound_distance_m": 510.6,
+          "return_distance_m": 561.8,
+          "reason": "Feasible outbound (511m), traversal (51m), and safe-return (562m) confirmed."
+        },
+        {
+          "profile": "elderly",
+          "travel_cost": 1123.5,
+          "outbound_distance_m": 510.6,
+          "return_distance_m": 561.8,
+          "reason": "Feasible outbound (511m), traversal (51m), and safe-return (562m) confirmed."
+        },
+        {
+          "profile": "pregnant",
+          "travel_cost": 1123.5,
+          "outbound_distance_m": 510.6,
+          "return_distance_m": 561.8,
+          "reason": "Feasible outbound (511m), traversal (51m), and safe-return (562m) confirmed."
+        },
+        {
+          "profile": "wheelchair",
+          "travel_cost": 1123.5,
+          "outbound_distance_m": 510.6,
+          "return_distance_m": 561.8,
+          "reason": "Feasible outbound (511m), traversal (51m), and safe-return (562m) confirmed."
+        }
+      ],
+      "rejected_probes": []
+    },
+    "elderly": {
+      "summary": "Evaluated 7 uncertain edges for 'elderly'. Top priority target: Amrtya Sen Avenue (Score: 0.78). Selected probe: general.",
+      "ranked_candidates": [
+        {
+          "rank": 1,
+          "edge_id": "1626952116-13318861531-E000260",
+          "name": "Amrtya Sen Avenue",
+          "priority_score": 0.775,
+          "uncertainty": 0.6,
+          "delta_arl": 1.0,
+          "delta_aoc": 1,
+          "mal_impact": 1.0,
+          "cad": 0.5,
+          "is_cut_edge": false,
+          "reason": "High accessibility impact: counterfactual failure causes \u0394ARL=1.0 and \u0394AOC=1 under elderly constraints."
+        },
+        {
+          "rank": 2,
+          "edge_id": "13318861531-1626952168-E000261",
+          "name": "Amrtya Sen Avenue",
+          "priority_score": 0.775,
+          "uncertainty": 0.6,
+          "delta_arl": 1.0,
+          "delta_aoc": 1,
+          "mal_impact": 1.0,
+          "cad": 0.5,
+          "is_cut_edge": false,
+          "reason": "High accessibility impact: counterfactual failure causes \u0394ARL=1.0 and \u0394AOC=1 under elderly constraints."
+        },
+        {
+          "rank": 3,
+          "edge_id": "1626952168-13318878761-E000262",
+          "name": "Amrtya Sen Avenue",
+          "priority_score": 0.775,
+          "uncertainty": 0.6,
+          "delta_arl": 1.0,
+          "delta_aoc": 1,
+          "mal_impact": 1.0,
+          "cad": 0.5,
+          "is_cut_edge": false,
+          "reason": "High accessibility impact: counterfactual failure causes \u0394ARL=1.0 and \u0394AOC=1 under elderly constraints."
+        },
+        {
+          "rank": 4,
+          "edge_id": "14095322502-13318878766-E001517",
+          "name": "Walkway_14095322502_13318878766",
+          "priority_score": 0.775,
+          "uncertainty": 0.6,
+          "delta_arl": 1.0,
+          "delta_aoc": 1,
+          "mal_impact": 1.0,
+          "cad": 0.5,
+          "is_cut_edge": false,
+          "reason": "High accessibility impact: counterfactual failure causes \u0394ARL=1.0 and \u0394AOC=1 under elderly constraints."
+        },
+        {
+          "rank": 5,
+          "edge_id": "13318878762-13318878765-E001516",
+          "name": "Walkway_13318878762_13318878765",
+          "priority_score": 0.775,
+          "uncertainty": 0.6,
+          "delta_arl": 1.0,
+          "delta_aoc": 1,
+          "mal_impact": 1.0,
+          "cad": 0.5,
+          "is_cut_edge": false,
+          "reason": "High accessibility impact: counterfactual failure causes \u0394ARL=1.0 and \u0394AOC=1 under elderly constraints."
+        }
+      ],
+      "selected_target": "1626952116-13318861531-E000260",
+      "selected_probe": "general",
+      "anchor_name": "TT",
+      "eligible_probes": [
+        {
+          "profile": "general",
+          "travel_cost": 314.6,
+          "outbound_distance_m": 157.3,
+          "return_distance_m": 154.8,
+          "reason": "Feasible outbound (157m), traversal (2m), and safe-return (155m) confirmed."
+        },
+        {
+          "profile": "elderly",
+          "travel_cost": 789.9,
+          "outbound_distance_m": 394.9,
+          "return_distance_m": 392.5,
+          "reason": "Feasible outbound (395m), traversal (2m), and safe-return (392m) confirmed."
+        },
+        {
+          "profile": "pregnant",
+          "travel_cost": 789.9,
+          "outbound_distance_m": 394.9,
+          "return_distance_m": 392.5,
+          "reason": "Feasible outbound (395m), traversal (2m), and safe-return (392m) confirmed."
+        },
+        {
+          "profile": "wheelchair",
+          "travel_cost": 789.9,
+          "outbound_distance_m": 394.9,
+          "return_distance_m": 392.5,
+          "reason": "Feasible outbound (395m), traversal (2m), and safe-return (392m) confirmed."
+        }
+      ],
+      "rejected_probes": []
+    },
+    "pregnant": {
+      "summary": "Evaluated 7 uncertain edges for 'pregnant'. Top priority target: Amrtya Sen Avenue (Score: 0.78). Selected probe: general.",
+      "ranked_candidates": [
+        {
+          "rank": 1,
+          "edge_id": "1626952116-13318861531-E000260",
+          "name": "Amrtya Sen Avenue",
+          "priority_score": 0.775,
+          "uncertainty": 0.6,
+          "delta_arl": 1.0,
+          "delta_aoc": 1,
+          "mal_impact": 1.0,
+          "cad": 0.5,
+          "is_cut_edge": false,
+          "reason": "High accessibility impact: counterfactual failure causes \u0394ARL=1.0 and \u0394AOC=1 under pregnant constraints."
+        },
+        {
+          "rank": 2,
+          "edge_id": "13318861531-1626952168-E000261",
+          "name": "Amrtya Sen Avenue",
+          "priority_score": 0.775,
+          "uncertainty": 0.6,
+          "delta_arl": 1.0,
+          "delta_aoc": 1,
+          "mal_impact": 1.0,
+          "cad": 0.5,
+          "is_cut_edge": false,
+          "reason": "High accessibility impact: counterfactual failure causes \u0394ARL=1.0 and \u0394AOC=1 under pregnant constraints."
+        },
+        {
+          "rank": 3,
+          "edge_id": "1626952168-13318878761-E000262",
+          "name": "Amrtya Sen Avenue",
+          "priority_score": 0.775,
+          "uncertainty": 0.6,
+          "delta_arl": 1.0,
+          "delta_aoc": 1,
+          "mal_impact": 1.0,
+          "cad": 0.5,
+          "is_cut_edge": false,
+          "reason": "High accessibility impact: counterfactual failure causes \u0394ARL=1.0 and \u0394AOC=1 under pregnant constraints."
+        },
+        {
+          "rank": 4,
+          "edge_id": "14095322502-13318878766-E001517",
+          "name": "Walkway_14095322502_13318878766",
+          "priority_score": 0.775,
+          "uncertainty": 0.6,
+          "delta_arl": 1.0,
+          "delta_aoc": 1,
+          "mal_impact": 1.0,
+          "cad": 0.5,
+          "is_cut_edge": false,
+          "reason": "High accessibility impact: counterfactual failure causes \u0394ARL=1.0 and \u0394AOC=1 under pregnant constraints."
+        },
+        {
+          "rank": 5,
+          "edge_id": "13318878762-13318878765-E001516",
+          "name": "Walkway_13318878762_13318878765",
+          "priority_score": 0.775,
+          "uncertainty": 0.6,
+          "delta_arl": 1.0,
+          "delta_aoc": 1,
+          "mal_impact": 1.0,
+          "cad": 0.5,
+          "is_cut_edge": false,
+          "reason": "High accessibility impact: counterfactual failure causes \u0394ARL=1.0 and \u0394AOC=1 under pregnant constraints."
+        }
+      ],
+      "selected_target": "1626952116-13318861531-E000260",
+      "selected_probe": "general",
+      "anchor_name": "TT",
+      "eligible_probes": [
+        {
+          "profile": "general",
+          "travel_cost": 314.6,
+          "outbound_distance_m": 157.3,
+          "return_distance_m": 154.8,
+          "reason": "Feasible outbound (157m), traversal (2m), and safe-return (155m) confirmed."
+        },
+        {
+          "profile": "elderly",
+          "travel_cost": 789.9,
+          "outbound_distance_m": 394.9,
+          "return_distance_m": 392.5,
+          "reason": "Feasible outbound (395m), traversal (2m), and safe-return (392m) confirmed."
+        },
+        {
+          "profile": "pregnant",
+          "travel_cost": 789.9,
+          "outbound_distance_m": 394.9,
+          "return_distance_m": 392.5,
+          "reason": "Feasible outbound (395m), traversal (2m), and safe-return (392m) confirmed."
+        },
+        {
+          "profile": "wheelchair",
+          "travel_cost": 789.9,
+          "outbound_distance_m": 394.9,
+          "return_distance_m": 392.5,
+          "reason": "Feasible outbound (395m), traversal (2m), and safe-return (392m) confirmed."
+        }
+      ],
+      "rejected_probes": []
+    },
+    "general": {
+      "summary": "Evaluated 40 uncertain edges for 'general'. Top priority target: Walkway_14093657497_14093657498 (Score: 0.84). Selected probe: general.",
+      "ranked_candidates": [
+        {
+          "rank": 1,
+          "edge_id": "14093657497-14093657498-E002185",
+          "name": "Walkway_14093657497_14093657498",
+          "priority_score": 0.838,
+          "uncertainty": 0.55,
+          "delta_arl": 1.0,
+          "delta_aoc": 1,
+          "mal_impact": 1.0,
+          "cad": 1.0,
+          "is_cut_edge": true,
+          "reason": "Essential accessible cut-edge: failure severs corridor connectivity for general users (CAD=1.0, uncertainty=55%)."
+        },
+        {
+          "rank": 2,
+          "edge_id": "1035391385-1064545157-E000253",
+          "name": "Walkway_1035391385_1064545157",
+          "priority_score": 0.838,
+          "uncertainty": 0.55,
+          "delta_arl": 1.0,
+          "delta_aoc": 1,
+          "mal_impact": 1.0,
+          "cad": 1.0,
+          "is_cut_edge": true,
+          "reason": "Essential accessible cut-edge: failure severs corridor connectivity for general users (CAD=1.0, uncertainty=55%)."
+        },
+        {
+          "rank": 3,
+          "edge_id": "1035404684-1035404671-E000028",
+          "name": "Walkway_1035404684_1035404671",
+          "priority_score": 0.838,
+          "uncertainty": 0.55,
+          "delta_arl": 1.0,
+          "delta_aoc": 1,
+          "mal_impact": 1.0,
+          "cad": 1.0,
+          "is_cut_edge": true,
+          "reason": "Essential accessible cut-edge: failure severs corridor connectivity for general users (CAD=1.0, uncertainty=55%)."
+        },
+        {
+          "rank": 4,
+          "edge_id": "1035404671-1035404682-E000029",
+          "name": "Walkway_1035404671_1035404682",
+          "priority_score": 0.838,
+          "uncertainty": 0.55,
+          "delta_arl": 1.0,
+          "delta_aoc": 1,
+          "mal_impact": 1.0,
+          "cad": 1.0,
+          "is_cut_edge": true,
+          "reason": "Essential accessible cut-edge: failure severs corridor connectivity for general users (CAD=1.0, uncertainty=55%)."
+        },
+        {
+          "rank": 5,
+          "edge_id": "1035404682-1035404680-E000030",
+          "name": "Walkway_1035404682_1035404680",
+          "priority_score": 0.838,
+          "uncertainty": 0.55,
+          "delta_arl": 1.0,
+          "delta_aoc": 1,
+          "mal_impact": 1.0,
+          "cad": 1.0,
+          "is_cut_edge": true,
+          "reason": "Essential accessible cut-edge: failure severs corridor connectivity for general users (CAD=1.0, uncertainty=55%)."
+        }
+      ],
+      "selected_target": "14093657497-14093657498-E002185",
+      "selected_probe": "general",
+      "anchor_name": "MGR",
+      "eligible_probes": [
+        {
+          "profile": "general",
+          "travel_cost": 36.7,
+          "outbound_distance_m": 14.2,
+          "return_distance_m": 18.4,
+          "reason": "Feasible outbound (14m), traversal (4m), and safe-return (18m) confirmed."
+        },
+        {
+          "profile": "elderly",
+          "travel_cost": 36.7,
+          "outbound_distance_m": 14.2,
+          "return_distance_m": 18.4,
+          "reason": "Feasible outbound (14m), traversal (4m), and safe-return (18m) confirmed."
+        },
+        {
+          "profile": "pregnant",
+          "travel_cost": 36.7,
+          "outbound_distance_m": 14.2,
+          "return_distance_m": 18.4,
+          "reason": "Feasible outbound (14m), traversal (4m), and safe-return (18m) confirmed."
+        },
+        {
+          "profile": "wheelchair",
+          "travel_cost": 36.7,
+          "outbound_distance_m": 14.2,
+          "return_distance_m": 18.4,
+          "reason": "Feasible outbound (14m), traversal (4m), and safe-return (18m) confirmed."
+        }
+      ],
+      "rejected_probes": []
+    }
+  }
+}

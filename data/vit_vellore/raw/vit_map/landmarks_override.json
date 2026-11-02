@@ -1,0 +1,146 @@
+[
+    {
+        "id_override": "VIT_SJT",
+        "name": "Silver Jubilee Tower",
+        "aliases": ["SJT", "Silver Jubilee Tower (SJT)"],
+        "category": "academic",
+        "zone": "Academic Core",
+        "match_heuristics": ["Silver Jubilee Tower", "SJT"]
+    },
+    {
+        "id_override": "VIT_TT",
+        "name": "Technology Tower",
+        "aliases": ["TT", "Technology Tower (TT)"],
+        "category": "academic",
+        "zone": "Academic Core",
+        "match_heuristics": ["Technology Tower", "TT"]
+    },
+    {
+        "id_override": "VIT_MB",
+        "name": "Dr. M.G.R. Block",
+        "aliases": ["Main Building", "MB"],
+        "category": "academic",
+        "zone": "Academic Core",
+        "match_heuristics": ["M.G.R", "M G R", "Main Building", "MB Block"]
+    },
+    {
+        "id_override": "VIT_SMV",
+        "name": "Sri M. Visvesvaraya Building",
+        "aliases": ["SMV"],
+        "category": "academic",
+        "zone": "Academic Core",
+        "match_heuristics": ["Visvesvaraya", "SMV"]
+    },
+    {
+        "id_override": "VIT_CBMR",
+        "name": "Centre for Biomaterials Cellular and Molecular Theranostics",
+        "aliases": ["CBMR"],
+        "category": "research",
+        "zone": "Research",
+        "match_heuristics": ["CBMR"]
+    },
+    {
+        "id_override": "VIT_GDN",
+        "name": "G.D. Naidu Block",
+        "aliases": ["GDN", "GD Naidu"],
+        "category": "academic",
+        "zone": "Academic Core",
+        "match_heuristics": ["G.D. Naidu", "GD Naidu", "GDN"]
+    },
+    {
+        "id_override": "VIT_CDMM",
+        "name": "Centre for Disaster Mitigation and Management",
+        "aliases": ["CDMM"],
+        "category": "research",
+        "zone": "Research",
+        "match_heuristics": ["CDMM", "Disaster Mitigation"]
+    },
+    {
+        "id_override": "VIT_GANDHI",
+        "name": "Mahatma Gandhi Block",
+        "aliases": ["Gandhi Block"],
+        "category": "academic",
+        "zone": "Academic Core",
+        "match_heuristics": ["Gandhi Block"]
+    },
+    {
+        "id_override": "VIT_PRP",
+        "name": "Periyar E. V. Ramasamy Block",
+        "aliases": ["PRP"],
+        "category": "academic",
+        "zone": "Academic Core",
+        "match_heuristics": ["Periyar", "PRP"]
+    },
+    {
+        "id_override": "VIT_LIBRARY",
+        "name": "Periyar EVR Central Library",
+        "aliases": ["Central Library", "Library"],
+        "category": "library",
+        "zone": "Library",
+        "match_heuristics": ["Central Library", "Periyar EVR Central Library"]
+    },
+    {
+        "id_override": "VIT_MUDALIAR",
+        "name": "A.L. Mudaliar Block",
+        "aliases": ["ALM", "Mudaliar Block"],
+        "category": "academic",
+        "zone": "Academic Core",
+        "match_heuristics": ["Mudaliar", "A.L.M"]
+    },
+    {
+        "id_override": "VIT_MAIN_GATE",
+        "name": "VIT Main Gate",
+        "aliases": ["Main Gate", "Gate 1"],
+        "category": "gate",
+        "zone": "Entrance",
+        "match_heuristics": ["Main Gate"]
+    },
+    {
+        "id_override": "VIT_GATE_2",
+        "name": "Gate 2",
+        "aliases": ["Gate 2", "Student Gate"],
+        "category": "gate",
+        "zone": "Entrance",
+        "match_heuristics": ["Gate 2"]
+    },
+    {
+        "id_override": "VIT_GATE_3",
+        "name": "Gate 3",
+        "aliases": ["Gate 3"],
+        "category": "gate",
+        "zone": "Entrance",
+        "match_heuristics": ["Gate 3"]
+    },
+    {
+        "id_override": "VIT_ANNA_AUDI",
+        "name": "Anna Auditorium",
+        "aliases": ["Anna Audi", "Auditorium"],
+        "category": "auditorium",
+        "zone": "Academic Core",
+        "match_heuristics": ["Anna Auditorium"]
+    },
+    {
+        "id_override": "VIT_INDOOR_STADIUM",
+        "name": "Indoor Stadium",
+        "aliases": ["Indoor Sports", "Stadium"],
+        "category": "sports",
+        "zone": "Sports",
+        "match_heuristics": ["Indoor Stadium"]
+    },
+    {
+        "id_override": "VIT_OUTDOOR_STADIUM",
+        "name": "Outdoor Stadium",
+        "aliases": ["Main Ground", "Sports Ground"],
+        "category": "sports",
+        "zone": "Sports",
+        "match_heuristics": ["Outdoor Stadium", "Main Ground"]
+    },
+    {
+        "id_override": "VIT_FC",
+        "name": "Food Court",
+        "aliases": ["FC", "Main Food Court"],
+        "category": "food",
+        "zone": "Food",
+        "match_heuristics": ["Food Court", "FC"]
+    }
+]

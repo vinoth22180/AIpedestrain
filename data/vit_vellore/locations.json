@@ -1,0 +1,132 @@
+[
+    {
+        "location_id": "VIT_MAIN_GATE",
+        "name": "Main Gate",
+        "aliases": [
+            "vit gate 1",
+            "main entrance"
+        ],
+        "display_name": "VIT Main Gate",
+        "category": "Gate",
+        "latitude": 12.9718,
+        "longitude": 79.1583,
+        "nearest_graph_node": 14095322502,
+        "zone": "Entrance",
+        "source": "OSM",
+        "confidence": "HIGH"
+    },
+    {
+        "location_id": "VIT_SJT",
+        "name": "SJT",
+        "aliases": [
+            "silver jubilee tower",
+            "sjt building"
+        ],
+        "display_name": "Silver Jubilee Tower",
+        "category": "Academic",
+        "latitude": 12.9692,
+        "longitude": 79.1559,
+        "nearest_graph_node": 14093657499,
+        "zone": "Academic Core",
+        "source": "VIT Map",
+        "confidence": "HIGH"
+    },
+    {
+        "location_id": "VIT_TT",
+        "name": "TT",
+        "aliases": [
+            "technology tower",
+            "tt building"
+        ],
+        "display_name": "Technology Tower",
+        "category": "Academic",
+        "latitude": 12.9705,
+        "longitude": 79.1565,
+        "nearest_graph_node": 1035519601,
+        "zone": "Academic Core",
+        "source": "VIT Map",
+        "confidence": "HIGH"
+    },
+    {
+        "location_id": "VIT_CDMM",
+        "name": "CDMM",
+        "aliases": [
+            "cdmm block",
+            "centre for disaster mitigation"
+        ],
+        "display_name": "CDMM Block",
+        "category": "Academic",
+        "latitude": 12.973,
+        "longitude": 79.154,
+        "nearest_graph_node": 5487048371,
+        "zone": "Academic Core",
+        "source": "VIT Map",
+        "confidence": "HIGH"
+    },
+    {
+        "location_id": "VIT_FOOD_COURT",
+        "name": "Food Court",
+        "aliases": [
+            "fc",
+            "main food court",
+            "canteen"
+        ],
+        "display_name": "Main Food Court",
+        "category": "Food",
+        "latitude": 12.9725,
+        "longitude": 79.1575,
+        "nearest_graph_node": 14095322515,
+        "zone": "Food",
+        "source": "VIT Map",
+        "confidence": "HIGH"
+    },
+    {
+        "location_id": "VIT_MENS_HOSTEL",
+        "name": "Men's Hostel",
+        "aliases": [
+            "mens hostel",
+            "mh",
+            "mens hostel block"
+        ],
+        "display_name": "Men's Hostel Block",
+        "category": "Hostel",
+        "latitude": 12.975,
+        "longitude": 79.159,
+        "nearest_graph_node": 1035454035,
+        "zone": "Hostels",
+        "source": "OSM",
+        "confidence": "HIGH"
+    },
+    {
+        "location_id": "VIT_LIBRARY",
+        "name": "Central Library",
+        "aliases": [
+            "library",
+            "periyar evr central library"
+        ],
+        "display_name": "Central Library",
+        "category": "Library",
+        "latitude": 12.97,
+        "longitude": 79.156,
+        "nearest_graph_node": 14082415199,
+        "zone": "Library",
+        "source": "VIT Map",
+        "confidence": "HIGH"
+    },
+    {
+        "location_id": "VIT_PRP",
+        "name": "PRP",
+        "aliases": [
+            "pearl research park",
+            "prp building"
+        ],
+        "display_name": "Pearl Research Park",
+        "category": "Research",
+        "latitude": 12.968,
+        "longitude": 79.155,
+        "nearest_graph_node": 1035470403,
+        "zone": "Research",
+        "source": "VIT Map",
+        "confidence": "HIGH"
+    }
+]

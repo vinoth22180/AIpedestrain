@@ -1,0 +1,100 @@
+{
+  "experiment": "E2_Oracle_Holdout_Masking",
+  "profile": "wheelchair",
+  "eligible_pool_size": 324,
+  "k_values": [
+    20,
+    40,
+    80
+  ],
+  "seeds": [
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51
+  ],
+  "k_aggregates": {
+    "K_20": {
+      "k_masked": 20,
+      "num_seeds": 10,
+      "spearman_rho_mean": 0.1191,
+      "spearman_rho_std": 0.1918,
+      "kendall_tau_mean": 0.1084,
+      "kendall_tau_std": 0.1747,
+      "hit_at_1_mean": 1.0,
+      "hit_at_5_mean": 1.0,
+      "hit_at_10_mean": 1.0,
+      "precision_at_5_mean": 0.88,
+      "precision_at_10_mean": 0.89,
+      "tic_at_5_mean": 1.0,
+      "tic_at_10_mean": 1.0,
+      "ndcg_at_5_mean": 1.0,
+      "ndcg_at_10_mean": 1.0
+    },
+    "K_40": {
+      "k_masked": 40,
+      "num_seeds": 10,
+      "spearman_rho_mean": 0.1877,
+      "spearman_rho_std": 0.2011,
+      "kendall_tau_mean": 0.1702,
+      "kendall_tau_std": 0.1827,
+      "hit_at_1_mean": 1.0,
+      "hit_at_5_mean": 1.0,
+      "hit_at_10_mean": 1.0,
+      "precision_at_5_mean": 0.7,
+      "precision_at_10_mean": 0.93,
+      "tic_at_5_mean": 1.0,
+      "tic_at_10_mean": 1.0,
+      "ndcg_at_5_mean": 1.0,
+      "ndcg_at_10_mean": 1.0
+    },
+    "K_80": {
+      "k_masked": 80,
+      "num_seeds": 10,
+      "spearman_rho_mean": 0.1538,
+      "spearman_rho_std": 0.1654,
+      "kendall_tau_mean": 0.1395,
+      "kendall_tau_std": 0.1498,
+      "hit_at_1_mean": 1.0,
+      "hit_at_5_mean": 1.0,
+      "hit_at_10_mean": 1.0,
+      "precision_at_5_mean": 0.7,
+      "precision_at_10_mean": 0.75,
+      "tic_at_5_mean": 1.0,
+      "tic_at_10_mean": 1.0,
+      "ndcg_at_5_mean": 1.0,
+      "ndcg_at_10_mean": 1.0
+    }
+  },
+  "environment": {
+    "timestamp_utc": "2026-10-05T10:36:48.958530+00:00",
+    "python_version": "3.14.2 (tags/v3.14.2:df79316, Dec  5 2025, 17:18:21) [MSC v.1944 64 bit (AMD64)]",
+    "platform": "Windows-11-10.0.26300-SP0",
+    "architecture": "64bit",
+    "processor": "Intel64 Family 6 Model 183 Stepping 1, GenuineIntel",
+    "packages": {
+      "networkx": "3.6.1",
+      "numpy": "2.5.2",
+      "pandas": "3.0.5",
+      "scipy": "1.18.1",
+      "matplotlib": "3.11.2",
+      "shapely": "2.1.2",
+      "geopandas": "1.1.4",
+      "osmnx": "2.1.1",
+      "fastapi": "0.141.1",
+      "pydantic": "2.13.5"
+    },
+    "dataset_audit": {
+      "path": "D:\\dynamic_pedestrian_rerouting\\data\\vit_vellore\\processed\\vit_vellore_academic_pedestrian_network.pkl",
+      "size_bytes": 767489,
+      "md5": "5ecc692284c6b43a700ac92f303aeed1",
+      "mtime": 1789544907.9315057
+    }
+  }
+}

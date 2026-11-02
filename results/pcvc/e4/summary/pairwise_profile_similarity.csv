@@ -1,0 +1,7 @@
+profile_a,profile_b,comparison,candidates_a,candidates_b,top10_overlap_count,top10_overlap_pct,jaccard_at_5,jaccard_at_10
+general,elderly,general vs elderly,10,7,1,10.0,0.0,0.0625
+general,pregnant,general vs pregnant,10,7,1,10.0,0.0,0.0625
+general,wheelchair,general vs wheelchair,10,10,9,90.0,0.6667,0.8182
+elderly,pregnant,elderly vs pregnant,7,7,7,70.0,1.0,1.0
+elderly,wheelchair,elderly vs wheelchair,7,10,2,20.0,0.0,0.1333
+pregnant,wheelchair,pregnant vs wheelchair,7,10,2,20.0,0.0,0.1333

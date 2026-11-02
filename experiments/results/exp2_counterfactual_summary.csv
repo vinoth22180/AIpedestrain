@@ -1,0 +1,5 @@
+profile,n_candidates,n_cut_edges,mean_delta_arl,max_delta_arl,mean_delta_aoc,max_delta_aoc,mean_cad,max_cad,top_edge_name,top_edge_delta_arl
+wheelchair,40,8,1.0,1.0,1.0,1,0.515,1.0,Walkway_1035391385_1064545157,1.0
+elderly,7,0,1.0,1.0,1.0,1,0.4714,0.5,Amrtya Sen Avenue,1.0
+pregnant,7,0,1.0,1.0,1.0,1,0.4714,0.5,Amrtya Sen Avenue,1.0
+general,40,9,1.0,1.0,1.0,1,0.5425,1.0,Walkway_14093657497_14093657498,1.0

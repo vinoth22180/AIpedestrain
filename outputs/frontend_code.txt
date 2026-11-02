@@ -1,0 +1,977 @@
+
+=== frontend/src\App.jsx ===
+import { useState, useEffect, useRef } from 'react'
+import Sidebar from './components/Sidebar'
+import MapCanvas from './components/MapCanvas'
+import StatsOverlay from './components/StatsOverlay'
+import SimulationControls from './components/SimulationControls'
+import RouteExplanationPanel from './components/RouteExplanationPanel'
+import './index.css'
+
+function App() {
+  const [routeData, setRouteData] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+  
+  const [simState, setSimState] = useState(null);
+  const [injectMode, setInjectMode] = useState(false);
+  
+  // Store last requested route parameters for recalculation
+  const lastRequest = useRef(null);
+
+  useEffect(() => {
+    fetch('http://127.0.0.1:8000/api/simulation/state')
+      .then(res => res.json())
+      .then(setSimState)
+      .catch(console.error);
+  }, []);
+
+  const handleRouteCalculation = async (origin, destination, profile) => {
+    setIsLoading(true);
+    setError(null);
+    setRouteData(null);
+    lastRequest.current = { origin, destination, profile };
+    
+    try {
+      const response = await fetch('http://127.0.0.1:8000/api/route', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ origin, destination, profile }),
+      });
+      
+      if (!response.ok) {
+        throw new Error('Failed to calculate route. Please try different locations.');
+      }
+      
+      const data = await response.json();
+      setRouteData(data);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleRecalculate = () => {
+    if (lastRequest.current) {
+      const { origin, destination, profile } = lastRequest.current;
+      handleRouteCalculation(origin, destination, profile);
+    }
+  };
+
+  const handleInjectCongestion = async (lon, lat) => {
+    if (!injectMode) return;
+    try {
+      await fetch('http://127.0.0.1:8000/api/simulation/inject_congestion', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ lon, lat, penalty: 200.0 }) // High penalty
+      });
+      setInjectMode(false);
+      handleRecalculate();
+    } catch (e) {
+      console.error('Failed to inject congestion', e);
+    }
+  };
+
+  return (
+    <div style={{ display: 'flex', width: '100%', height: '100%' }}>
+      <Sidebar 
+        onCalculate={handleRouteCalculation} 
+        isLoading={isLoading} 
+        error={error} 
+      />
+      <div style={{ flex: 1, position: 'relative' }}>
+        <MapCanvas 
+          routeData={routeData} 
+          injectMode={injectMode}
+          onMapClick={handleInjectCongestion}
+        />
+        {routeData && <StatsOverlay stats={routeData.stats} profile={routeData.route.properties.profile} />}
+        {routeData && <RouteExplanationPanel stats={routeData.stats} route={routeData.route} />}
+        
+        <SimulationControls 
+          simState={simState} 
+          setSimState={setSimState} 
+          onRecalculate={handleRecalculate}
+          onInjectCongestion={setInjectMode}
+        />
+      </div>
+    </div>
+  )
+}
+
+export default App
+
+
+=== frontend/src\main.jsx ===
+import { StrictMode } from 'react'
+import { createRoot } from 'react-dom/client'
+import './index.css'
+import App from './App.jsx'
+
+createRoot(document.getElementById('root')).render(
+  <StrictMode>
+    <App />
+  </StrictMode>,
+)
+
+=== frontend/src\components\MapCanvas.jsx ===
+import React, { useEffect, useRef, useState } from 'react';
+import Map, { Source, Layer } from 'react-map-gl/maplibre';
+import * as maplibregl from 'maplibre-gl';
+import 'maplibre-gl/dist/maplibre-gl.css';
+
+export default function MapCanvas({ routeData, injectMode, onMapClick }) {
+  const mapRef = useRef();
+  
+  // Default map view centered on Melbourne CBD
+  const [viewState, setViewState] = useState({
+    longitude: 144.965,
+    latitude: -37.813,
+    zoom: 14.5,
+    pitch: 45,
+    bearing: 0
+  });
+
+  const [sensors, setSensors] = useState([]);
+  const [signals, setSignals] = useState([]);
+
+  useEffect(() => {
+    fetch('http://127.0.0.1:8000/api/sensors')
+      .then(res => res.json())
+      .then(setSensors)
+      .catch(console.error);
+      
+    fetch('http://127.0.0.1:8000/api/signals')
+      .then(res => res.json())
+      .then(setSignals)
+      .catch(console.error);
+  }, []);
+
+  useEffect(() => {
+    if (routeData && mapRef.current) {
+      const coords = routeData.route.geometry.coordinates;
+      if (coords && coords.length > 0) {
+        // Find bounding box to fit the route
+        const bounds = coords.reduce(
+          (acc, coord) => [
+            [Math.min(acc[0][0], coord[0]), Math.min(acc[0][1], coord[1])],
+            [Math.max(acc[1][0], coord[0]), Math.max(acc[1][1], coord[1])]
+          ],
+          [[coords[0][0], coords[0][1]], [coords[0][0], coords[0][1]]]
+        );
+        
+        mapRef.current.fitBounds(bounds, { padding: 80, duration: 1500 });
+      }
+    }
+  }, [routeData]);
+
+  const handleMapClick = (e) => {
+    if (injectMode && onMapClick) {
+      onMapClick(e.lngLat.lng, e.lngLat.lat);
+    }
+  };
+
+  // Route Style
+  const routeLayerStyle = {
+    id: 'route',
+    type: 'line',
+    layout: {
+      'line-join': 'round',
+      'line-cap': 'round'
+    },
+    paint: {
+      'line-color': '#2563eb', // accent color
+      'line-width': 6,
+      'line-opacity': 0.8
+    }
+  };
+
+  // Restricted segments style
+  const restrictedLayerStyle = {
+    id: 'restricted-segments',
+    type: 'line',
+    layout: {
+      'line-join': 'round',
+      'line-cap': 'round'
+    },
+    paint: {
+      'line-color': '#dc2626', // danger color
+      'line-width': 8,
+      'line-opacity': 0.9,
+      'line-dasharray': [2, 2]
+    }
+  };
+
+  const cursorStyle = injectMode ? 'crosshair' : 'grab';
+
+  return (
+    <div style={{ position: 'absolute', top: 0, bottom: 0, left: 0, right: 0 }}>
+      <Map
+        ref={mapRef}
+        {...viewState}
+        onMove={evt => setViewState(evt.viewState)}
+        onClick={handleMapClick}
+        mapStyle="https://basemaps.cartocdn.com/gl/positron-gl-style/style.json"
+        mapLibre={maplibregl}
+        style={{ width: '100%', height: '100%' }}
+        cursor={cursorStyle}
+      >
+        {/* Sensors Layer */}
+        {sensors.length > 0 && (
+          <Source id="sensors-source" type="geojson" data={{
+            type: 'FeatureCollection',
+            features: sensors.map(s => ({
+              type: 'Feature',
+              geometry: { type: 'Point', coordinates: [s.longitude, s.latitude] },
+              properties: { id: s.location_id, name: s.sensor_name }
+            }))
+          }}>
+            <Layer
+              id="sensors-layer"
+              type="circle"
+              paint={{
+                'circle-radius': 4,
+                'circle-color': '#1890ff',
+                'circle-stroke-width': 1,
+                'circle-stroke-color': '#ffffff'
+              }}
+            />
+          </Source>
+        )}
+
+        {/* Signals Layer */}
+        {signals.length > 0 && (
+          <Source id="signals-source" type="geojson" data={{
+            type: 'FeatureCollection',
+            features: signals.map(s => ({
+              type: 'Feature',
+              geometry: { type: 'Point', coordinates: [s.LONGITUDE, s.LATITUDE] },
+              properties: { id: s.SITE_NO, name: s.SITE_NAME }
+            }))
+          }}>
+            <Layer
+              id="signals-layer"
+              type="circle"
+              paint={{
+                'circle-radius': 3,
+                'circle-color': '#faad14',
+                'circle-stroke-width': 1,
+                'circle-stroke-color': '#000000'
+              }}
+            />
+          </Source>
+        )}
+
+        {routeData && (
+          <>
+            {/* Main Route */}
+            <Source id="route-source" type="geojson" data={routeData.route}>
+              <Layer {...routeLayerStyle} />
+            </Source>
+
+            {/* Restricted Segments */}
+            {routeData.restricted_segments.features.length > 0 && (
+              <Source id="restricted-source" type="geojson" data={routeData.restricted_segments}>
+                <Layer {...restrictedLayerStyle} />
+              </Source>
+            )}
+
+            {/* Origin Marker */}
+            <Source id="origin-source" type="geojson" data={{
+              type: 'Feature',
+              geometry: {
+                type: 'Point',
+                coordinates: routeData.route.geometry.coordinates[0]
+              }
+            }}>
+              <Layer
+                id="origin-marker"
+                type="circle"
+                paint={{
+                  'circle-radius': 8,
+                  'circle-color': '#15803d',
+                  'circle-stroke-width': 2,
+                  'circle-stroke-color': '#ffffff'
+                }}
+              />
+            </Source>
+
+            {/* Destination Marker */}
+            <Source id="dest-source" type="geojson" data={{
+              type: 'Feature',
+              geometry: {
+                type: 'Point',
+                coordinates: routeData.route.geometry.coordinates[routeData.route.geometry.coordinates.length - 1]
+              }
+            }}>
+              <Layer
+                id="dest-marker"
+                type="circle"
+                paint={{
+                  'circle-radius': 8,
+                  'circle-color': '#b91c1c',
+                  'circle-stroke-width': 2,
+                  'circle-stroke-color': '#ffffff'
+                }}
+              />
+            </Source>
+          </>
+        )}
+      </Map>
+    </div>
+  );
+}
+
+=== frontend/src\components\RouteExplanationPanel.jsx ===
+import React from 'react';
+
+export default function RouteExplanationPanel({ stats, route }) {
+  if (!stats) return null;
+
+  return (
+    <div style={{
+      position: 'absolute',
+      top: 20,
+      right: 20,
+      background: 'rgba(255, 255, 255, 0.95)',
+      padding: '20px',
+      borderRadius: '8px',
+      boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+      zIndex: 10,
+      width: '300px',
+      maxHeight: '80%',
+      overflowY: 'auto'
+    }}>
+      <h3 style={{ margin: '0 0 15px 0', fontSize: '18px', color: '#333' }}>Route Cost Breakdown</h3>
+      
+      <div style={{ marginBottom: '15px' }}>
+        <p style={{ margin: '5px 0', fontSize: '14px' }}><strong>Total Cost:</strong> {stats.cost.toFixed(1)} units</p>
+        <p style={{ margin: '5px 0', fontSize: '14px' }}><strong>Distance:</strong> {stats.distance.toFixed(1)} m</p>
+      </div>
+      
+      <div style={{ fontSize: '13px', color: '#666', borderTop: '1px solid #eee', paddingTop: '10px' }}>
+        <p style={{ margin: '0 0 5px 0' }}>The total cost is a combination of:</p>
+        <ul style={{ paddingLeft: '20px', margin: '5px 0' }}>
+          <li>Base Distance & Accessibility</li>
+          <li>Current Congestion Density</li>
+          <li>Historical/Predictive Density</li>
+          <li>Traffic Signal Delays</li>
+          <li>Injected Signal-Decay</li>
+        </ul>
+        <p style={{ fontStyle: 'italic', marginTop: '10px' }}>
+          When high congestion is injected, the decay penalty increases sharply, forcing the router to find alternative paths.
+        </p>
+      </div>
+    </div>
+  );
+}
+
+=== frontend/src\components\Sidebar.jsx ===
+import React, { useState } from 'react';
+import { Navigation, MapPin, Search } from 'lucide-react';
+
+const LOCATIONS = [
+  { name: 'Flinders Street Station', coords: [144.9669, -37.8183] },
+  { name: 'State Library', coords: [144.9646, -37.8098] },
+  { name: 'Parliament House', coords: [144.9740, -37.8115] },
+  { name: 'Flagstaff Gardens', coords: [144.9555, -37.8105] },
+];
+
+const PROFILES = [
+  { id: 'general', name: 'General' },
+  { id: 'elderly', name: 'Elderly' },
+  { id: 'pregnant', name: 'Pregnant' },
+  { id: 'mobility_impaired', name: 'Mobility-Impaired' },
+];
+
+export default function Sidebar({ onCalculate, isLoading, error }) {
+  const [profile, setProfile] = useState('general');
+  const [originIdx, setOriginIdx] = useState(0);
+  const [destIdx, setDestIdx] = useState(1);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    onCalculate(LOCATIONS[originIdx].coords, LOCATIONS[destIdx].coords, profile);
+  };
+
+  return (
+    <div style={{
+      width: '380px',
+      height: '100vh',
+      display: 'flex',
+      flexDirection: 'column',
+      padding: '24px',
+      boxSizing: 'border-box',
+      borderRight: '1px solid var(--border-color)',
+      backgroundColor: 'var(--panel-bg)',
+      zIndex: 10
+    }}>
+      <div style={{ marginBottom: '32px' }}>
+        <h1 style={{ fontSize: '1.25rem', fontWeight: '700', marginBottom: '8px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <Navigation size={24} color="var(--accent-color)" />
+          Accessibility-Aware Routing
+        </h1>
+        <p style={{ fontSize: '0.875rem' }}>
+          Intelligent pedestrian navigation adapted to accessibility needs.
+        </p>
+      </div>
+
+      <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+        <div>
+          <label style={{ display: 'block', marginBottom: '8px', fontSize: '0.875rem', fontWeight: '600' }}>
+            User Profile
+          </label>
+          <select value={profile} onChange={e => setProfile(e.target.value)}>
+            {PROFILES.map(p => (
+              <option key={p.id} value={p.id}>{p.name}</option>
+            ))}
+          </select>
+        </div>
+
+        <div>
+          <label style={{ display: 'block', marginBottom: '8px', fontSize: '0.875rem', fontWeight: '600', display: 'flex', alignItems: 'center', gap: '6px' }}>
+            <MapPin size={16} color="var(--success-color)" /> From
+          </label>
+          <select value={originIdx} onChange={e => setOriginIdx(Number(e.target.value))}>
+            {LOCATIONS.map((loc, idx) => (
+              <option key={idx} value={idx}>{loc.name}</option>
+            ))}
+          </select>
+        </div>
+
+        <div>
+          <label style={{ display: 'block', marginBottom: '8px', fontSize: '0.875rem', fontWeight: '600', display: 'flex', alignItems: 'center', gap: '6px' }}>
+            <MapPin size={16} color="var(--danger-color)" /> To
+          </label>
+          <select value={destIdx} onChange={e => setDestIdx(Number(e.target.value))}>
+            {LOCATIONS.map((loc, idx) => (
+              <option key={idx} value={idx}>{loc.name}</option>
+            ))}
+          </select>
+        </div>
+
+        <button type="submit" disabled={isLoading}>
+          {isLoading ? 'Calculating...' : (
+            <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <Search size={18} /> Find Accessible Route
+            </span>
+          )}
+        </button>
+      </form>
+
+      {error && (
+        <div style={{
+          marginTop: '24px',
+          padding: '12px',
+          backgroundColor: '#fef2f2',
+          border: '1px solid #fecaca',
+          borderRadius: 'var(--radius-md)',
+          color: 'var(--danger-color)',
+          fontSize: '0.875rem'
+        }}>
+          {error}
+        </div>
+      )}
+    </div>
+  );
+}
+
+=== frontend/src\components\SimulationControls.jsx ===
+import React, { useState, useEffect } from 'react';
+
+export default function SimulationControls({ simState, setSimState, onInjectCongestion, onRecalculate }) {
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [injectMode, setInjectMode] = useState(false);
+
+  useEffect(() => {
+    let interval;
+    if (isPlaying) {
+      interval = setInterval(async () => {
+        try {
+          const res = await fetch('http://127.0.0.1:8000/api/simulation/step', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ delta_seconds: 300 }) // advance 5 mins
+          });
+          const data = await res.json();
+          setSimState(data);
+          onRecalculate();
+        } catch (e) {
+          console.error(e);
+          setIsPlaying(false);
+        }
+      }, 2000);
+    }
+    return () => clearInterval(interval);
+  }, [isPlaying, setSimState, onRecalculate]);
+
+  const handleReset = async () => {
+    const res = await fetch('http://127.0.0.1:8000/api/simulation/reset', { method: 'POST' });
+    const data = await res.json();
+    setSimState(data);
+    onRecalculate();
+  };
+
+  const formatTime = (secs) => {
+    const mins = Math.floor(secs / 60) % 60;
+    const hrs = Math.floor(secs / 3600);
+    return `+${hrs}h ${mins}m`;
+  };
+
+  return (
+    <div style={{
+      position: 'absolute',
+      bottom: 20,
+      left: 20,
+      background: 'white',
+      padding: '15px',
+      borderRadius: '8px',
+      boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
+      zIndex: 10,
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '10px',
+      width: '320px'
+    }}>
+      <h3 style={{ margin: 0, fontSize: '16px' }}>Simulation Controls</h3>
+      
+      <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '14px' }}>
+        <span><strong>Time:</strong> {simState?.date} {simState?.hour}:00</span>
+        <span><strong>Elapsed:</strong> {formatTime(simState?.elapsed_seconds || 0)}</span>
+      </div>
+
+      <div style={{ display: 'flex', gap: '8px' }}>
+        <button 
+          onClick={() => setIsPlaying(!isPlaying)}
+          style={{ flex: 1, padding: '8px', background: isPlaying ? '#ff4d4f' : '#1890ff', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer' }}
+        >
+          {isPlaying ? 'Pause' : 'Play (x300)'}
+        </button>
+        <button 
+          onClick={handleReset}
+          style={{ flex: 1, padding: '8px', background: '#f0f0f0', border: '1px solid #d9d9d9', borderRadius: '4px', cursor: 'pointer' }}
+        >
+          Reset
+        </button>
+      </div>
+
+      <button 
+        onClick={() => {
+          setInjectMode(!injectMode);
+          onInjectCongestion(!injectMode); // toggle mode in parent
+        }}
+        style={{ padding: '8px', background: injectMode ? '#52c41a' : '#faad14', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', marginTop: '5px' }}
+      >
+        {injectMode ? 'Click Map to Inject Congestion...' : 'Inject High Congestion'}
+      </button>
+    </div>
+  );
+}
+
+=== frontend/src\components\StatsOverlay.jsx ===
+import React from 'react';
+import { Activity, Route, CheckCircle, AlertTriangle } from 'lucide-react';
+
+export default function StatsOverlay({ stats, profile }) {
+  if (!stats) return null;
+
+  const isAccessible = stats.inaccessible_count === 0 && stats.stairs_count === 0;
+
+  return (
+    <div className="glass-panel" style={{
+      position: 'absolute',
+      top: '24px',
+      right: '24px',
+      width: '320px',
+      padding: '20px',
+      zIndex: 10,
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '16px'
+    }}>
+      <h3 style={{ fontSize: '1rem', fontWeight: '600', marginBottom: '4px' }}>
+        Route Summary
+      </h3>
+      
+      <div style={{
+        display: 'flex',
+        alignItems: 'center',
+        gap: '12px',
+        padding: '12px',
+        backgroundColor: isAccessible ? 'rgba(21, 128, 61, 0.1)' : 'rgba(202, 138, 4, 0.1)',
+        borderRadius: 'var(--radius-md)',
+        color: isAccessible ? 'var(--success-color)' : 'var(--warning-color)',
+        fontWeight: '600'
+      }}>
+        {isAccessible ? <CheckCircle size={24} /> : <AlertTriangle size={24} />}
+        <span>
+          {isAccessible ? 'Accessible Route' : 'Accessibility Considerations'}
+        </span>
+      </div>
+
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+        <div style={{
+          padding: '12px',
+          backgroundColor: 'var(--bg-color)',
+          borderRadius: 'var(--radius-md)',
+          border: '1px solid var(--border-color)'
+        }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: 'var(--text-secondary)', fontSize: '0.75rem', fontWeight: '600', marginBottom: '4px' }}>
+            <Route size={14} /> Distance
+          </div>
+          <div style={{ fontSize: '1.25rem', fontWeight: '700' }}>
+            {stats.distance} m
+          </div>
+        </div>
+
+        <div style={{
+          padding: '12px',
+          backgroundColor: 'var(--bg-color)',
+          borderRadius: 'var(--radius-md)',
+          border: '1px solid var(--border-color)'
+        }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: 'var(--text-secondary)', fontSize: '0.75rem', fontWeight: '600', marginBottom: '4px' }}>
+            <Activity size={14} /> Cost
+          </div>
+          <div style={{ fontSize: '1.25rem', fontWeight: '700' }}>
+            {stats.cost}
+          </div>
+        </div>
+      </div>
+
+      {(!isAccessible) && (
+        <div style={{ fontSize: '0.875rem', color: 'var(--text-secondary)' }}>
+          <ul style={{ margin: 0, paddingLeft: '20px' }}>
+            {stats.stairs_count > 0 && (
+              <li>{stats.stairs_count} stairs encountered</li>
+            )}
+            {stats.inaccessible_count > 0 && (
+              <li>{stats.inaccessible_count} inaccessible segments</li>
+            )}
+          </ul>
+        </div>
+      )}
+      
+      <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', textAlign: 'right' }}>
+        Profile: <span style={{ fontWeight: '600', textTransform: 'capitalize' }}>{profile.replace('_', ' ')}</span>
+      </div>
+    </div>
+  );
+}
+
+=== frontend/src\App.css ===
+.counter {
+  font-size: 16px;
+  padding: 5px 10px;
+  border-radius: 5px;
+  color: var(--accent);
+  background: var(--accent-bg);
+  border: 2px solid transparent;
+  transition: border-color 0.3s;
+  margin-bottom: 24px;
+
+  &:hover {
+    border-color: var(--accent-border);
+  }
+  &:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+}
+
+.hero {
+  position: relative;
+
+  .base,
+  .framework,
+  .vite {
+    inset-inline: 0;
+    margin: 0 auto;
+  }
+
+  .base {
+    width: 170px;
+    position: relative;
+    z-index: 0;
+  }
+
+  .framework,
+  .vite {
+    position: absolute;
+  }
+
+  .framework {
+    z-index: 1;
+    top: 34px;
+    height: 28px;
+    transform: perspective(2000px) rotateZ(300deg) rotateX(44deg) rotateY(39deg)
+      scale(1.4);
+  }
+
+  .vite {
+    z-index: 0;
+    top: 107px;
+    height: 26px;
+    width: auto;
+    transform: perspective(2000px) rotateZ(300deg) rotateX(40deg) rotateY(39deg)
+      scale(0.8);
+  }
+}
+
+#center {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  place-content: center;
+  place-items: center;
+  flex-grow: 1;
+
+  @media (max-width: 1024px) {
+    padding: 32px 20px 24px;
+    gap: 18px;
+  }
+}
+
+#next-steps {
+  display: flex;
+  border-top: 1px solid var(--border);
+  text-align: left;
+
+  & > div {
+    flex: 1 1 0;
+    padding: 32px;
+    @media (max-width: 1024px) {
+      padding: 24px 20px;
+    }
+  }
+
+  .icon {
+    margin-bottom: 16px;
+    width: 22px;
+    height: 22px;
+  }
+
+  @media (max-width: 1024px) {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+#docs {
+  border-right: 1px solid var(--border);
+
+  @media (max-width: 1024px) {
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+  }
+}
+
+#next-steps ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  gap: 8px;
+  margin: 32px 0 0;
+
+  .logo {
+    height: 18px;
+  }
+
+  a {
+    color: var(--text-h);
+    font-size: 16px;
+    border-radius: 6px;
+    background: var(--social-bg);
+    display: flex;
+    padding: 6px 12px;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    transition: box-shadow 0.3s;
+
+    &:hover {
+      box-shadow: var(--shadow);
+    }
+    .button-icon {
+      height: 18px;
+      width: 18px;
+    }
+  }
+
+  @media (max-width: 1024px) {
+    margin-top: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    li {
+      flex: 1 1 calc(50% - 8px);
+    }
+
+    a {
+      width: 100%;
+      justify-content: center;
+      box-sizing: border-box;
+    }
+  }
+}
+
+#spacer {
+  height: 88px;
+  border-top: 1px solid var(--border);
+  @media (max-width: 1024px) {
+    height: 48px;
+  }
+}
+
+.ticks {
+  position: relative;
+  width: 100%;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    top: -4.5px;
+    border: 5px solid transparent;
+  }
+
+  &::before {
+    left: 0;
+    border-left-color: var(--border);
+  }
+  &::after {
+    right: 0;
+    border-right-color: var(--border);
+  }
+}
+
+=== frontend/src\index.css ===
+:root {
+  font-family: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light;
+  
+  --bg-color: #f8fafc;
+  --panel-bg: rgba(255, 255, 255, 0.95);
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  
+  --accent-color: #2563eb;
+  --accent-hover: #1d4ed8;
+  
+  --success-color: #15803d;
+  --warning-color: #ca8a04;
+  --danger-color: #b91c1c;
+
+  --border-color: #e2e8f0;
+  
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg-color);
+  color: var(--text-primary);
+  overflow: hidden;
+}
+
+#root {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+}
+
+/* Glassmorphic Panel utility */
+.glass-panel {
+  background: var(--panel-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: var(--shadow-lg);
+  border-radius: var(--radius-xl);
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  color: var(--text-primary);
+}
+
+p {
+  margin: 0;
+  color: var(--text-secondary);
+}
+
+/* Inputs & Buttons */
+select, button {
+  font-family: inherit;
+  font-size: 1rem;
+}
+
+select {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+  background-color: white;
+  color: var(--text-primary);
+  appearance: none;
+  cursor: pointer;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+select:focus {
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+}
+
+button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--radius-md);
+  border: none;
+  background-color: var(--accent-color);
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+button:hover {
+  background-color: var(--accent-hover);
+}
+
+button:active {
+  transform: scale(0.98);
+}
+
+button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* MapLibre specifics */
+.maplibregl-control-container .maplibregl-ctrl-bottom-right {
+  bottom: 20px;
+  right: 20px;
+}

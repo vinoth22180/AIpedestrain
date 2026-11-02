@@ -1,0 +1,8 @@
+{
+  "spearman_delta_aoc_vs_delta_arl": 1.0,
+  "pvalue_delta_aoc_vs_delta_arl": 0.0,
+  "spearman_delta_arl_vs_mal": 1.0,
+  "pvalue_delta_arl_vs_mal": 0.0,
+  "identity_verified": true,
+  "diagnostic_statement": "In the active codebase, delta_AOC == delta_ARL == MAL is an exact verified mathematical identity. Separate ablations of these three terms are redundant."
+}

@@ -1,0 +1,107 @@
+{
+  "friedman_test": {
+    "deployable_baselines": [
+      "B1",
+      "B2",
+      "B3",
+      "B5",
+      "B6"
+    ],
+    "tic_at_10": {
+      "f_stat": 36.241,
+      "p_value": 0.0
+    },
+    "ndcg_at_10": {
+      "f_stat": 36.5301,
+      "p_value": 0.0
+    },
+    "mean_detour_at_10": {
+      "f_stat": 36.241,
+      "p_value": 0.0
+    }
+  },
+  "pairwise_wilcoxon_tests": [
+    {
+      "comparison": "Full PCVC (B6) vs Random (B1)",
+      "comp_code": "B1",
+      "tic_at_10_wilcoxon_stat": 0.0,
+      "tic_at_10_p_raw": 0.00195,
+      "ndcg_at_10_wilcoxon_stat": 0.0,
+      "ndcg_at_10_p_raw": 0.00195,
+      "detour_10_wilcoxon_stat": 0.0,
+      "detour_10_p_raw": 0.00195,
+      "tic_at_10_p_holm_bonferroni": 0.007812,
+      "ndcg_at_10_p_holm_bonferroni": 0.007812,
+      "detour_10_p_holm_bonferroni": 0.007812,
+      "is_significant_0_05": true
+    },
+    {
+      "comparison": "Full PCVC (B6) vs Uncertainty-Only (B2)",
+      "comp_code": "B2",
+      "tic_at_10_wilcoxon_stat": 0.0,
+      "tic_at_10_p_raw": 0.00195,
+      "ndcg_at_10_wilcoxon_stat": 0.0,
+      "ndcg_at_10_p_raw": 0.00195,
+      "detour_10_wilcoxon_stat": 0.0,
+      "detour_10_p_raw": 0.00195,
+      "tic_at_10_p_holm_bonferroni": 0.007812,
+      "ndcg_at_10_p_holm_bonferroni": 0.007812,
+      "detour_10_p_holm_bonferroni": 0.007812,
+      "is_significant_0_05": true
+    },
+    {
+      "comparison": "Full PCVC (B6) vs CAD-Only (B3)",
+      "comp_code": "B3",
+      "tic_at_10_wilcoxon_stat": 1.0,
+      "tic_at_10_p_raw": 1.0,
+      "ndcg_at_10_wilcoxon_stat": 1.0,
+      "ndcg_at_10_p_raw": 1.0,
+      "detour_10_wilcoxon_stat": 1.0,
+      "detour_10_p_raw": 1.0,
+      "tic_at_10_p_holm_bonferroni": 1.0,
+      "ndcg_at_10_p_holm_bonferroni": 1.0,
+      "detour_10_p_holm_bonferroni": 1.0,
+      "is_significant_0_05": false
+    },
+    {
+      "comparison": "Full PCVC (B6) vs Uncertainty + CAD (B5)",
+      "comp_code": "B5",
+      "tic_at_10_wilcoxon_stat": 0.0,
+      "tic_at_10_p_raw": 1.0,
+      "ndcg_at_10_wilcoxon_stat": 0.0,
+      "ndcg_at_10_p_raw": 1.0,
+      "detour_10_wilcoxon_stat": 0.0,
+      "detour_10_p_raw": 1.0,
+      "tic_at_10_p_holm_bonferroni": 1.0,
+      "ndcg_at_10_p_holm_bonferroni": 1.0,
+      "detour_10_p_holm_bonferroni": 1.0,
+      "is_significant_0_05": false
+    }
+  ],
+  "relative_gains": {
+    "PCVC_vs_Random": {
+      "tic_at_10_gain_pct": 202.37,
+      "ndcg_at_10_gain_pct": 248.0,
+      "detour_captured_at_10_gain_pct": 204.61,
+      "rank_max_edge_improvement": 3.8
+    },
+    "PCVC_vs_Uncertainty-Only": {
+      "tic_at_10_gain_pct": 161.74,
+      "ndcg_at_10_gain_pct": 134.45,
+      "detour_captured_at_10_gain_pct": 160.27,
+      "rank_max_edge_improvement": 0.8
+    },
+    "PCVC_vs_CAD-Only": {
+      "tic_at_10_gain_pct": -0.62,
+      "ndcg_at_10_gain_pct": -0.37,
+      "detour_captured_at_10_gain_pct": -0.63,
+      "rank_max_edge_improvement": 0.0
+    },
+    "PCVC_vs_Uncertainty + CAD": {
+      "tic_at_10_gain_pct": 0.0,
+      "ndcg_at_10_gain_pct": 0.0,
+      "detour_captured_at_10_gain_pct": 0.0,
+      "rank_max_edge_improvement": 0.0
+    }
+  }
+}

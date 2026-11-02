@@ -1,0 +1,153 @@
+{
+    "RAW DATA": {
+        "edges": 2371,
+        "unique_ways": 488,
+        "unique_nodes": 2149,
+        "stairs": 13,
+        "ramps": 0
+    },
+    "PROCESSED DATA": {
+        "nodes": 1551,
+        "edges": 1721,
+        "geometry_from_osm": 1683,
+        "geometry_fallback": 14,
+        "missing_geometry": 0,
+        "known_slopes": 0,
+        "unknown_slopes": 1721,
+        "connected_components": 9,
+        "academic_blocks": 7,
+        "landmarks": 2
+    },
+    "ANCHORS": [
+        {
+            "location": "MGR",
+            "manual_lat": 12.969035851408112,
+            "manual_lon": 79.15583638463455,
+            "anchor_node": 14093702429,
+            "anchor_distance_m": 16.230383172572004,
+            "validation_status": "Valid"
+        },
+        {
+            "location": "SMV",
+            "manual_lat": 12.969246074425618,
+            "manual_lon": 79.15766374408548,
+            "anchor_node": 14040730564,
+            "anchor_distance_m": 43.846262801447175,
+            "validation_status": "Valid"
+        },
+        {
+            "location": "TT",
+            "manual_lat": 12.97082312983498,
+            "manual_lon": 79.15953483469843,
+            "anchor_node": 14041614622,
+            "anchor_distance_m": 11.193381049298432,
+            "validation_status": "Valid"
+        },
+        {
+            "location": "SJT",
+            "manual_lat": 12.970917609834906,
+            "manual_lon": 79.16394473901578,
+            "anchor_node": 4137696570,
+            "anchor_distance_m": 41.47413513563611,
+            "validation_status": "Valid"
+        },
+        {
+            "location": "PRP",
+            "manual_lat": 12.971264636436771,
+            "manual_lon": 79.16640540870385,
+            "anchor_node": 14038978762,
+            "anchor_distance_m": 89.77775699982695,
+            "validation_status": "Valid"
+        },
+        {
+            "location": "Gandhi Block",
+            "manual_lat": 12.972225506107774,
+            "manual_lon": 79.16799249061337,
+            "anchor_node": 14040595927,
+            "anchor_distance_m": 84.9448798157268,
+            "validation_status": "Valid"
+        },
+        {
+            "location": "Anna Auditorium",
+            "manual_lat": 12.96984326294177,
+            "manual_lon": 79.1556603675251,
+            "anchor_node": 5487048366,
+            "anchor_distance_m": 21.84827394348122,
+            "validation_status": "Valid"
+        },
+        {
+            "location": "Parking Lot",
+            "manual_lat": 12.968647332768128,
+            "manual_lon": 79.1550150327412,
+            "anchor_node": 1035470403,
+            "anchor_distance_m": 24.090477716595228,
+            "validation_status": "Valid"
+        },
+        {
+            "location": "CTS",
+            "manual_lat": 12.970266027390673,
+            "manual_lon": 79.15623259923282,
+            "anchor_node": 1035519601,
+            "anchor_distance_m": 24.879294053178135,
+            "validation_status": "Valid"
+        }
+    ],
+    "ROUTING": [
+        {
+            "route": "MGR -> SMV",
+            "success_general": true,
+            "distance_general": 274.77,
+            "success_wheelchair": true,
+            "distance_wheelchair": 11
+        },
+        {
+            "route": "SMV -> TT",
+            "success_general": true,
+            "distance_general": 343.55,
+            "success_wheelchair": true,
+            "distance_wheelchair": 17
+        },
+        {
+            "route": "TT -> SJT",
+            "success_general": true,
+            "distance_general": 531.3,
+            "success_wheelchair": true,
+            "distance_wheelchair": 15
+        },
+        {
+            "route": "SJT -> PRP",
+            "success_general": true,
+            "distance_general": 447.21000000000004,
+            "success_wheelchair": true,
+            "distance_wheelchair": 8
+        },
+        {
+            "route": "PRP -> Gandhi Block",
+            "success_general": true,
+            "distance_general": 235.05,
+            "success_wheelchair": true,
+            "distance_wheelchair": 3
+        },
+        {
+            "route": "MGR -> CTS",
+            "success_general": true,
+            "distance_general": 236.73,
+            "success_wheelchair": true,
+            "distance_wheelchair": 10
+        },
+        {
+            "route": "Anna Auditorium -> MGR",
+            "success_general": true,
+            "distance_general": 228.00000000000003,
+            "success_wheelchair": true,
+            "distance_wheelchair": 15
+        },
+        {
+            "route": "Parking Lot -> MGR",
+            "success_general": true,
+            "distance_general": 205.14000000000004,
+            "success_wheelchair": true,
+            "distance_wheelchair": 9
+        }
+    ]
+}

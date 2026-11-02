@@ -1,0 +1,194 @@
+.app-container {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* Sidebar Layout & Transition */
+.sidebar {
+  width: 380px;
+  min-width: 380px;
+  max-width: 380px;
+  height: 100vh;
+  background-color: #ffffff;
+  padding: 24px;
+  box-sizing: border-box;
+  overflow-y: auto;
+  border-right: 1px solid var(--border-color, #e2e8f0);
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.04);
+  z-index: 20;
+  flex-shrink: 0;
+  transition: margin-left var(--transition-normal, 0.25s cubic-bezier(0.4, 0, 0.2, 1)),
+              opacity var(--transition-normal, 0.25s cubic-bezier(0.4, 0, 0.2, 1)),
+              visibility var(--transition-normal, 0.25s cubic-bezier(0.4, 0, 0.2, 1));
+}
+
+.sidebar.hidden {
+  margin-left: -380px;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* Minimize button inside sidebar header */
+.sidebar-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border-radius: var(--radius-full, 9999px);
+  border: 1px solid var(--border-color, #e2e8f0);
+  background-color: #f8fafc;
+  color: var(--text-secondary, #475569);
+  cursor: pointer;
+  transition: all var(--transition-fast, 0.15s ease);
+  outline: none;
+  flex-shrink: 0;
+}
+
+.sidebar-toggle-btn:hover {
+  background-color: var(--accent-light, #eff6ff);
+  color: var(--accent-color, #3b82f6);
+  border-color: var(--accent-color, #3b82f6);
+  transform: translateX(-1px);
+}
+
+.sidebar-toggle-btn:focus-visible {
+  box-shadow: 0 0 0 3px var(--accent-light, #eff6ff);
+  border-color: var(--accent-color, #3b82f6);
+}
+
+/* Floating Show button on map when sidebar is hidden */
+.sidebar-expand-tab {
+  position: absolute;
+  top: 20px;
+  left: 16px;
+  z-index: 1000;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border-radius: var(--radius-full, 9999px);
+  background: var(--panel-bg, rgba(255, 255, 255, 0.96));
+  backdrop-filter: blur(var(--panel-blur, 16px));
+  -webkit-backdrop-filter: blur(var(--panel-blur, 16px));
+  border: 1px solid var(--border-color, #e2e8f0);
+  box-shadow: var(--shadow-md, 0 4px 6px -1px rgba(0, 0, 0, 0.1));
+  color: var(--text-primary, #0f172a);
+  font-weight: 600;
+  font-size: 0.8125rem;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition: all var(--transition-fast, 0.15s ease);
+  outline: none;
+  animation: slideInLeft 0.25s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.sidebar-expand-tab:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-lg, 0 10px 15px -3px rgba(0, 0, 0, 0.08));
+  border-color: var(--accent-color, #3b82f6);
+  background-color: white;
+}
+
+.sidebar-expand-tab:focus-visible {
+  box-shadow: 0 0 0 3px var(--accent-light, #eff6ff);
+  border-color: var(--accent-color, #3b82f6);
+}
+
+.sidebar-expand-tab .tab-icon {
+  display: flex;
+  align-items: center;
+  color: var(--accent-color, #3b82f6);
+  transition: transform var(--transition-fast, 0.15s ease);
+}
+
+.sidebar-expand-tab:hover .tab-icon {
+  transform: translateX(2px);
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.map-container {
+  flex: 1;
+  position: relative;
+  background-color: #e5e5f7; /* placeholder color while map loads */
+  overflow: hidden;
+}
+
+/* Badge System */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 8px;
+  border-radius: var(--radius-full);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.badge-success { background: var(--success-bg); color: var(--success-color); }
+.badge-warning { background: var(--warning-bg); color: var(--warning-color); }
+.badge-danger { background: var(--danger-bg); color: var(--danger-color); }
+.badge-neutral { background: #f1f5f9; color: #64748b; }
+
+/* Custom Scrollbar for sidebars */
+.scroll-container::-webkit-scrollbar {
+  width: 6px;
+}
+.scroll-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+.scroll-container::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+.scroll-container:hover::-webkit-scrollbar-thumb {
+  background: #94a3b8;
+}
+
+/* Responsive / narrow viewport rules */
+@media (max-width: 640px) {
+  .sidebar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: min(380px, 100vw);
+    min-width: min(380px, 100vw);
+    max-width: 100vw;
+    box-shadow: var(--shadow-lg);
+  }
+
+  .sidebar.hidden {
+    margin-left: -100vw;
+  }
+
+  .sidebar-expand-tab {
+    top: 16px;
+    left: 16px;
+    padding: 8px 12px;
+    font-size: 0.75rem;
+  }
+}
+
+/* Accessibility / motion sensitivity */
+@media (prefers-reduced-motion: reduce) {
+  .sidebar,
+  .sidebar-toggle-btn,
+  .sidebar-expand-tab {
+    transition: none !important;
+    animation: none !important;
+  }
+}

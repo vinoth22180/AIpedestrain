@@ -1,0 +1,220 @@
+{
+  "audit_title": "PCVC Phase 6 Metric & Evaluation Validity Audit",
+  "project": "Profile-Coupled Counterfactual Verification Controller (PCVC)",
+  "target_publication": "IEEE Access",
+  "audit_timestamp": "2026-10-05T11:23:02Z",
+  "active_dataset": {
+    "path": "data/vit_vellore/processed/vit_vellore_academic_pedestrian_network.pkl",
+    "md5": "5ecc692284c6b43a700ac92f303aeed1",
+    "nodes": 1551,
+    "edges": 1721
+  },
+  "issue_1_e2_saturation": {
+    "diagnosis": "Binary impact distribution collapse (delta_ARL = 1.0 for 98.29% of edges; 0.0 for 1.71%).",
+    "total_evaluated_edges_e2": 1400,
+    "edges_with_delta_arl_1": 1376,
+    "edges_with_delta_arl_0": 24,
+    "percentage_edges_with_delta_arl_1": 98.29,
+    "cause_of_tic_ndcg_saturation": "Because >97% of held-out edges in any sample have delta_ARL=1.0, the top-10 oracle sum is 10.0 and any top-10 predicted selection sum is 10.0, resulting in TIC@10 = 10.0 / 10.0 = 1.000 and IDCG@10 = DCG@10 = 1.000.",
+    "impact_concentration_by_k": {
+      "K_20": {
+        "mean_positive_impact_count": 19.7,
+        "mean_zero_impact_count": 0.3,
+        "top1_share_pct": 5.08,
+        "top5_share_pct": 25.40,
+        "top10_share_pct": 50.79,
+        "remaining_share_pct": 49.21
+      },
+      "K_40": {
+        "mean_positive_impact_count": 39.1,
+        "mean_zero_impact_count": 0.9,
+        "top1_share_pct": 2.56,
+        "top5_share_pct": 12.80,
+        "top10_share_pct": 25.59,
+        "remaining_share_pct": 74.41
+      },
+      "K_80": {
+        "mean_positive_impact_count": 78.8,
+        "mean_zero_impact_count": 1.2,
+        "top1_share_pct": 1.27,
+        "top5_share_pct": 6.35,
+        "top10_share_pct": 12.69,
+        "remaining_share_pct": 87.31
+      }
+    },
+    "single_edge_dominance": false,
+    "distribution_type": "Degenerate uniform binary step function (not power-law)."
+  },
+  "issue_2_e3_baseline_validity": {
+    "extended_diagnostics_mean_10_seeds": [
+      {
+        "baseline_code": "B1",
+        "baseline_name": "Random",
+        "mrr": 0.1110,
+        "rank_pos_oracle_top1": 17.5,
+        "recall_at_1": 0.0,
+        "recall_at_5": 0.10,
+        "recall_at_10": 0.24,
+        "mean_top10_impact": 1.0,
+        "fraction_positive_top10": 1.0,
+        "spearman_rho": 0.0546,
+        "kendall_tau": 0.0451
+      },
+      {
+        "baseline_code": "B2",
+        "baseline_name": "Uncertainty-Only",
+        "mrr": 0.3968,
+        "rank_pos_oracle_top1": 13.0,
+        "recall_at_1": 0.20,
+        "recall_at_5": 0.68,
+        "recall_at_10": 0.75,
+        "mean_top10_impact": 0.97,
+        "fraction_positive_top10": 0.97,
+        "spearman_rho": -0.0578,
+        "kendall_tau": -0.0571
+      },
+      {
+        "baseline_code": "B3",
+        "baseline_name": "CAD-Only",
+        "mrr": 1.0000,
+        "rank_pos_oracle_top1": 1.0,
+        "recall_at_1": 1.0,
+        "recall_at_5": 1.0,
+        "recall_at_10": 1.0,
+        "mean_top10_impact": 1.0,
+        "fraction_positive_top10": 1.0,
+        "spearman_rho": 0.2037,
+        "kendall_tau": 0.1939
+      },
+      {
+        "baseline_code": "B4",
+        "baseline_name": "Impact-Only",
+        "mrr": 1.0000,
+        "rank_pos_oracle_top1": 1.0,
+        "recall_at_1": 1.0,
+        "recall_at_5": 1.0,
+        "recall_at_10": 1.0,
+        "mean_top10_impact": 1.0,
+        "fraction_positive_top10": 1.0,
+        "spearman_rho": 0.5000,
+        "kendall_tau": 0.5000
+      },
+      {
+        "baseline_code": "B5",
+        "baseline_name": "Uncertainty + CAD",
+        "mrr": 0.5510,
+        "rank_pos_oracle_top1": 4.1,
+        "recall_at_1": 0.40,
+        "recall_at_5": 0.70,
+        "recall_at_10": 0.93,
+        "mean_top10_impact": 1.0,
+        "fraction_positive_top10": 1.0,
+        "spearman_rho": 0.1851,
+        "kendall_tau": 0.1679
+      },
+      {
+        "baseline_code": "B6",
+        "baseline_name": "Full PCVC",
+        "mrr": 0.5510,
+        "rank_pos_oracle_top1": 4.1,
+        "recall_at_1": 0.40,
+        "recall_at_5": 0.70,
+        "recall_at_10": 0.93,
+        "mean_top10_impact": 1.0,
+        "fraction_positive_top10": 1.0,
+        "spearman_rho": 0.1877,
+        "kendall_tau": 0.1702
+      }
+    ],
+    "discriminative_power_analysis": "MRR and Recall@10 are highly discriminative. B1 (Random) achieves Recall@10 = 0.24 and MRR = 0.1110, while B6 (PCVC) achieves Recall@10 = 0.93 and MRR = 0.5510. TIC@10 and NDCG@10 are non-discriminative."
+  },
+  "issue_3_candidate_universe": {
+    "status": "VALID",
+    "verified_identical_across_baselines": true,
+    "seed_hashes": {
+      "42": "53704ae0499a0937499d05a92f587cf9",
+      "43": "1ac80f778ab461f4c6135654fec10b13",
+      "44": "a5e5aa4a7b364756489f9acb328d752d",
+      "45": "d25521b7466348be13ec3c3b1cc8c5bb",
+      "46": "8e96eec06c557174fbfc73d59e6be6cb",
+      "47": "a2b8b6a15d6e85953b33062800a50aa7",
+      "48": "f5daf25d66f15af19278030acef096cc",
+      "49": "704c738839874f2e6945396c2753161e",
+      "50": "55bef2ebf63a7df632fb07f60b48a029",
+      "51": "3429f38d8f626709a282f47a583a0ab3"
+    },
+    "candidate_count_per_baseline": 40
+  },
+  "issue_4_e2_ranking_universe": {
+    "status": "VALID",
+    "ranking_universe_mismatch": false,
+    "evaluation_universe_definition": "For each seed and K, the predicted ranking and oracle ranking are evaluated over the identical held-out edge set of size K sampled from the 324 known wheelchair edges."
+  },
+  "issue_5_primary_metrics_recommendation": {
+    "metrics_to_retire_as_primary": [
+      "TIC@K (Total Impact Captured)",
+      "NDCG@K (Normalized Discounted Cumulative Gain)"
+    ],
+    "reason_for_retirement": "Ceiling-saturated at 1.0 due to near-universal delta_ARL=1.0 among feasible edges. Does not discriminate intelligent prioritization from random guessing.",
+    "recommended_primary_metrics": [
+      "MRR (Mean Reciprocal Rank of critical bottleneck edges)",
+      "Recall@K / Precision@K against oracle critical bottlenecks",
+      "Spearman rank correlation (rho) and Kendall tau"
+    ]
+  },
+  "issue_6_e5_vs_e6_discrepancy": {
+    "e5_total_evaluations": 214,
+    "e6_total_evaluations": 114,
+    "root_cause": "Parameter divergence in script constants: CANDIDATE_LIMIT_PER_PROFILE = 100 in run_e5_safe_return.py versus EVALUATION_CANDIDATE_LIMIT = 50 in run_e6_probe_correctness.py.",
+    "profile_breakdown": {
+      "e5": {
+        "wheelchair": 100,
+        "elderly": 7,
+        "pregnant": 7,
+        "general": 100,
+        "total": 214
+      },
+      "e6": {
+        "wheelchair": 50,
+        "elderly": 7,
+        "pregnant": 7,
+        "general": 50,
+        "total": 114
+      }
+    },
+    "nature": "Intended scoping parameter difference for execution speed, not a code defect."
+  },
+  "issue_7_probe_mode_comparison": {
+    "mode_a_cross_profile_best_probe": {
+      "selection_rule": "Lowest travel cost across all 4 profiles.",
+      "general_probe_selected_pct": 100.0,
+      "wheelchair_target_median_dist_m": 942.2,
+      "wheelchair_target_mean_detour": 86.2
+    },
+    "mode_b_same_profile_probe": {
+      "wheelchair_probe_for_wheelchair_target": {
+        "eligibility_rate_pct": 100.0,
+        "rejection_count": 0,
+        "median_travel_dist_m": 964.4,
+        "mean_detour": 90.7,
+        "additional_distance_vs_general_m": 22.2
+      },
+      "elderly_probe_for_elderly_target": {
+        "eligibility_rate_pct": 100.0,
+        "median_travel_dist_m": 790.6,
+        "mean_detour": 103.7
+      },
+      "pregnant_probe_for_pregnant_target": {
+        "eligibility_rate_pct": 100.0,
+        "median_travel_dist_m": 790.6,
+        "mean_detour": 103.7
+      },
+      "general_probe_for_general_target": {
+        "eligibility_rate_pct": 100.0,
+        "median_travel_dist_m": 963.9,
+        "mean_detour": 91.1
+      }
+    },
+    "key_takeaway": "Wheelchair probes are 100% physically eligible to verify wheelchair candidate walkways from campus anchors; Mode A selected General merely because it was ~22 meters shorter."
+  }
+}

@@ -1,0 +1,355 @@
+2026-10-05 14:10:50,958 [INFO] ======================================================================
+2026-10-05 14:10:50,958 [INFO] PCVC Phase 6 â€“ Master Experiment Runner
+2026-10-05 14:10:50,958 [INFO] Root: D:\dynamic_pedestrian_rerouting
+2026-10-05 14:10:50,958 [INFO] ======================================================================
+2026-10-05 14:10:50,958 [INFO] 
+â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆ
+2026-10-05 14:10:50,969 [INFO]   STARTING: Exp1_UncertaintyCensus
+2026-10-05 14:10:50,969 [INFO] â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆ
+2026-10-05 14:10:51,345 [INFO] ======================================================================
+2026-10-05 14:10:51,345 [INFO] PCVC Experiment 1 â€“ Accessibility Attribute Uncertainty Census
+2026-10-05 14:10:51,345 [INFO] ======================================================================
+2026-10-05 14:10:51,346 [INFO] Loading precomputed graph from D:\dynamic_pedestrian_rerouting\data\vit_vellore\processed\vit_vellore_academic_pedestrian_network.pkl...
+2026-10-05 14:10:51,365 [INFO] Geometry check: 1721 total edges, 0 rebuilt from endpoints, 0 invalid.
+2026-10-05 14:10:51,365 [INFO] Graph loaded: 1551 nodes, 1721 edges.
+2026-10-05 14:10:51,366 [INFO] Graph loaded: 1551 nodes, 1721 edges.
+2026-10-05 14:10:51,392 [INFO] 
+2026-10-05 14:10:51,392 [INFO] Profile        Edges   U>0.4   U>0.7   U_mean    U_std    Low%    Med%   High%   Crit%
+2026-10-05 14:10:51,392 [INFO] -------------------------------------------------------------------------------------
+2026-10-05 14:10:51,393 [INFO] wheelchair      1721    1400       4   0.4497   0.1403    18.7    81.1     0.2     0.0
+2026-10-05 14:10:51,394 [INFO] elderly         1721       7       0   0.2805   0.0976    35.3    64.7     0.0     0.0
+2026-10-05 14:10:51,395 [INFO] pregnant        1721       7       0   0.2805   0.0976    35.3    64.7     0.0     0.0
+2026-10-05 14:10:51,396 [INFO] general         1721    1114       7   0.4450   0.1445    35.3    64.3     0.4     0.0
+2026-10-05 14:10:51,396 [INFO] 
+2026-10-05 14:10:51,396 [INFO] Top missing attributes per profile:
+2026-10-05 14:10:51,396 [INFO]   wheelchair  : smoothness_value(1721), tactile_paving(1721), wheelchair(1397), surface(1114), slope_percent(7)
+2026-10-05 14:10:51,396 [INFO]   elderly     : smoothness_value(1721), tactile_paving(1721), surface(1114), slope_percent(7)
+2026-10-05 14:10:51,396 [INFO]   pregnant    : smoothness_value(1721), tactile_paving(1721), surface(1114), slope_percent(7)
+2026-10-05 14:10:51,396 [INFO]   general     : smoothness_value(1721), surface(1114), slope_percent(7)
+2026-10-05 14:10:51,489 [INFO] Full per-edge records saved â†’ D:\dynamic_pedestrian_rerouting\experiments\results\exp1_uncertainty_census.json
+2026-10-05 14:10:51,489 [INFO] Summary CSV saved â†’ D:\dynamic_pedestrian_rerouting\experiments\results\exp1_summary.csv
+2026-10-05 14:10:51,489 [INFO] 
+Experiment 1 completed in 0.14s
+2026-10-05 14:10:51,491 [INFO] 
+Exp1_UncertaintyCensus â†’ SUCCESS in 0.53s
+2026-10-05 14:10:51,491 [INFO] 
+â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆ
+2026-10-05 14:10:51,491 [INFO]   STARTING: Exp2_CounterfactualImpact
+2026-10-05 14:10:51,491 [INFO] â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆ
+2026-10-05 14:10:51,493 [INFO] ======================================================================
+2026-10-05 14:10:51,493 [INFO] PCVC Experiment 2 â€“ Counterfactual Impact Analysis
+2026-10-05 14:10:51,493 [INFO] ======================================================================
+2026-10-05 14:10:51,493 [INFO] Loading precomputed graph from D:\dynamic_pedestrian_rerouting\data\vit_vellore\processed\vit_vellore_academic_pedestrian_network.pkl...
+2026-10-05 14:10:51,512 [INFO] Geometry check: 1721 total edges, 0 rebuilt from endpoints, 0 invalid.
+2026-10-05 14:10:51,512 [INFO] Graph loaded: 1551 nodes, 1721 edges.
+2026-10-05 14:10:51,513 [INFO] Graph: 1551 nodes, 1721 edges.
+2026-10-05 14:10:51,513 [INFO] 
+[WHEELCHAIR] Scanning uncertain edges (Uâ‰¥0.4)â€¦
+2026-10-05 14:10:51,529 [INFO]   Found 40 candidate edges.
+2026-10-05 14:10:56,053 [INFO]   Candidates: 40 | Cut-edges: 8 | mean(Î”ARL)=1.0000 | max(Î”ARL)=1.0000 | mean(CAD)=0.5150 | time=4.5s
+2026-10-05 14:10:56,053 [INFO]   Top-5 edges by Î”ARL for [wheelchair]:
+2026-10-05 14:10:56,053 [INFO]     Edge                                          U  Î”ARL  Î”AOC    MAL    CAD   Cut
+2026-10-05 14:10:56,053 [INFO]     Walkway_1035391385_1064545157             0.550  1.000      1  1.000  1.000  True
+2026-10-05 14:10:56,053 [INFO]     Walkway_1035404684_1035404671             0.550  1.000      1  1.000  1.000  True
+2026-10-05 14:10:56,053 [INFO]     Walkway_1035404671_1035404682             0.550  1.000      1  1.000  1.000  True
+2026-10-05 14:10:56,053 [INFO]     Walkway_1035404682_1035404680             0.550  1.000      1  1.000  1.000  True
+2026-10-05 14:10:56,053 [INFO]     Walkway_1035404680_1035404681             0.550  1.000      1  1.000  1.000  True
+2026-10-05 14:10:56,053 [INFO] 
+[ELDERLY] Scanning uncertain edges (Uâ‰¥0.4)â€¦
+2026-10-05 14:10:56,058 [INFO]   Found 7 candidate edges.
+2026-10-05 14:10:56,947 [INFO]   Candidates: 7 | Cut-edges: 0 | mean(Î”ARL)=1.0000 | max(Î”ARL)=1.0000 | mean(CAD)=0.4714 | time=0.9s
+2026-10-05 14:10:56,947 [INFO]   Top-5 edges by Î”ARL for [elderly]:
+2026-10-05 14:10:56,947 [INFO]     Edge                                          U  Î”ARL  Î”AOC    MAL    CAD   Cut
+2026-10-05 14:10:56,947 [INFO]     Amrtya Sen Avenue                         0.600  1.000      1  1.000  0.500 False
+2026-10-05 14:10:56,947 [INFO]     Amrtya Sen Avenue                         0.600  1.000      1  1.000  0.500 False
+2026-10-05 14:10:56,947 [INFO]     Amrtya Sen Avenue                         0.600  1.000      1  1.000  0.500 False
+2026-10-05 14:10:56,947 [INFO]     Walkway_14095322502_13318878766           0.600  1.000      1  1.000  0.500 False
+2026-10-05 14:10:56,947 [INFO]     Walkway_13318878762_13318878765           0.600  1.000      1  1.000  0.500 False
+2026-10-05 14:10:56,947 [INFO] 
+[PREGNANT] Scanning uncertain edges (Uâ‰¥0.4)â€¦
+2026-10-05 14:10:56,952 [INFO]   Found 7 candidate edges.
+2026-10-05 14:10:57,852 [INFO]   Candidates: 7 | Cut-edges: 0 | mean(Î”ARL)=1.0000 | max(Î”ARL)=1.0000 | mean(CAD)=0.4714 | time=0.9s
+2026-10-05 14:10:57,852 [INFO]   Top-5 edges by Î”ARL for [pregnant]:
+2026-10-05 14:10:57,852 [INFO]     Edge                                          U  Î”ARL  Î”AOC    MAL    CAD   Cut
+2026-10-05 14:10:57,852 [INFO]     Amrtya Sen Avenue                         0.600  1.000      1  1.000  0.500 False
+2026-10-05 14:10:57,852 [INFO]     Amrtya Sen Avenue                         0.600  1.000      1  1.000  0.500 False
+2026-10-05 14:10:57,852 [INFO]     Amrtya Sen Avenue                         0.600  1.000      1  1.000  0.500 False
+2026-10-05 14:10:57,852 [INFO]     Walkway_14095322502_13318878766           0.600  1.000      1  1.000  0.500 False
+2026-10-05 14:10:57,852 [INFO]     Walkway_13318878762_13318878765           0.600  1.000      1  1.000  0.500 False
+2026-10-05 14:10:57,852 [INFO] 
+[GENERAL] Scanning uncertain edges (Uâ‰¥0.4)â€¦
+2026-10-05 14:10:57,860 [INFO]   Found 40 candidate edges.
+2026-10-05 14:11:02,396 [INFO]   Candidates: 40 | Cut-edges: 9 | mean(Î”ARL)=1.0000 | max(Î”ARL)=1.0000 | mean(CAD)=0.5425 | time=4.5s
+2026-10-05 14:11:02,396 [INFO]   Top-5 edges by Î”ARL for [general]:
+2026-10-05 14:11:02,396 [INFO]     Edge                                          U  Î”ARL  Î”AOC    MAL    CAD   Cut
+2026-10-05 14:11:02,396 [INFO]     Walkway_14093657497_14093657498           0.550  1.000      1  1.000  1.000  True
+2026-10-05 14:11:02,396 [INFO]     Walkway_1035391385_1064545157             0.550  1.000      1  1.000  1.000  True
+2026-10-05 14:11:02,396 [INFO]     Walkway_1035404684_1035404671             0.550  1.000      1  1.000  1.000  True
+2026-10-05 14:11:02,396 [INFO]     Walkway_1035404671_1035404682             0.550  1.000      1  1.000  1.000  True
+2026-10-05 14:11:02,396 [INFO]     Walkway_1035404682_1035404680             0.550  1.000      1  1.000  1.000  True
+2026-10-05 14:11:02,410 [INFO] 
+Full impact records saved â†’ D:\dynamic_pedestrian_rerouting\experiments\results\exp2_counterfactual_impact.json
+2026-10-05 14:11:02,410 [INFO] Summary CSV saved â†’ D:\dynamic_pedestrian_rerouting\experiments\results\exp2_counterfactual_summary.csv
+2026-10-05 14:11:02,410 [INFO] 
+Experiment 2 completed in 10.92s
+2026-10-05 14:11:02,410 [INFO] 
+Exp2_CounterfactualImpact â†’ SUCCESS in 10.92s
+2026-10-05 14:11:02,410 [INFO] 
+â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆ
+2026-10-05 14:11:02,410 [INFO]   STARTING: Exp3_PriorityRankingValidation
+2026-10-05 14:11:02,410 [INFO] â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆ
+2026-10-05 14:11:02,413 [INFO] ======================================================================
+2026-10-05 14:11:02,413 [INFO] PCVC Experiment 3 â€“ Priority Score Ranking Validation
+2026-10-05 14:11:02,413 [INFO] ======================================================================
+2026-10-05 14:11:02,413 [INFO] Loading precomputed graph from D:\dynamic_pedestrian_rerouting\data\vit_vellore\processed\vit_vellore_academic_pedestrian_network.pkl...
+2026-10-05 14:11:02,431 [INFO] Geometry check: 1721 total edges, 0 rebuilt from endpoints, 0 invalid.
+2026-10-05 14:11:02,432 [INFO] Graph loaded: 1551 nodes, 1721 edges.
+2026-10-05 14:11:02,433 [INFO] Graph: 1551 nodes, 1721 edges.
+2026-10-05 14:11:02,433 [INFO] PCVC Weights: {'w_uncertainty': 0.25, 'w_delta_arl': 0.25, 'w_delta_aoc': 0.15, 'w_mal': 0.15, 'w_cad': 0.15, 'w_cost': 0.03, 'w_risk': 0.02}
+2026-10-05 14:11:02,433 [INFO] 
+[WHEELCHAIR] Running PCVC pipelineâ€¦
+2026-10-05 14:11:07,301 [INFO]   Pipeline complete in 4.87s
+2026-10-05 14:11:07,301 [INFO]   Summary: Evaluated 40 uncertain edges for 'wheelchair'. Top priority target: Walkway_1035391385_1064545157 (Score: 0.84). Selected probe: general.
+2026-10-05 14:11:07,301 [INFO]   Ranked candidates (5):
+2026-10-05 14:11:07,301 [INFO]     #1 [0.838] Walkway_1035391385_1064545157              U=0.550 Î”ARL=1.000 CAD=1.000 Cut=True
+2026-10-05 14:11:07,301 [INFO]     #2 [0.838] Walkway_1035404684_1035404671              U=0.550 Î”ARL=1.000 CAD=1.000 Cut=True
+2026-10-05 14:11:07,301 [INFO]     #3 [0.838] Walkway_1035404671_1035404682              U=0.550 Î”ARL=1.000 CAD=1.000 Cut=True
+2026-10-05 14:11:07,301 [INFO]     #4 [0.838] Walkway_1035404682_1035404680              U=0.550 Î”ARL=1.000 CAD=1.000 Cut=True
+2026-10-05 14:11:07,301 [INFO]     #5 [0.838] Walkway_1035404680_1035404681              U=0.550 Î”ARL=1.000 CAD=1.000 Cut=True
+2026-10-05 14:11:07,301 [INFO]   Selected Probe: general | Anchor: CTS | Reason: Lowest-cost eligible probe (1124m total) with feasible outbound and return paths.
+2026-10-05 14:11:07,301 [INFO]   Eligible probes:
+2026-10-05 14:11:07,301 [INFO]     general      cost=1124m out=511m ret=562m
+2026-10-05 14:11:07,301 [INFO]     elderly      cost=1124m out=511m ret=562m
+2026-10-05 14:11:07,301 [INFO]     pregnant     cost=1124m out=511m ret=562m
+2026-10-05 14:11:07,301 [INFO]     wheelchair   cost=1124m out=511m ret=562m
+2026-10-05 14:11:07,301 [INFO] 
+[ELDERLY] Running PCVC pipelineâ€¦
+2026-10-05 14:11:08,321 [INFO]   Pipeline complete in 1.02s
+2026-10-05 14:11:08,321 [INFO]   Summary: Evaluated 7 uncertain edges for 'elderly'. Top priority target: Amrtya Sen Avenue (Score: 0.78). Selected probe: general.
+2026-10-05 14:11:08,321 [INFO]   Ranked candidates (5):
+2026-10-05 14:11:08,321 [INFO]     #1 [0.775] Amrtya Sen Avenue                          U=0.600 Î”ARL=1.000 CAD=0.500 Cut=False
+2026-10-05 14:11:08,321 [INFO]     #2 [0.775] Amrtya Sen Avenue                          U=0.600 Î”ARL=1.000 CAD=0.500 Cut=False
+2026-10-05 14:11:08,321 [INFO]     #3 [0.775] Amrtya Sen Avenue                          U=0.600 Î”ARL=1.000 CAD=0.500 Cut=False
+2026-10-05 14:11:08,321 [INFO]     #4 [0.775] Walkway_14095322502_13318878766            U=0.600 Î”ARL=1.000 CAD=0.500 Cut=False
+2026-10-05 14:11:08,321 [INFO]     #5 [0.775] Walkway_13318878762_13318878765            U=0.600 Î”ARL=1.000 CAD=0.500 Cut=False
+2026-10-05 14:11:08,321 [INFO]   Selected Probe: general | Anchor: TT | Reason: Lowest-cost eligible probe (315m total) with feasible outbound and return paths.
+2026-10-05 14:11:08,321 [INFO]   Eligible probes:
+2026-10-05 14:11:08,321 [INFO]     general      cost=315m out=157m ret=155m
+2026-10-05 14:11:08,321 [INFO]     elderly      cost=790m out=395m ret=392m
+2026-10-05 14:11:08,321 [INFO]     pregnant     cost=790m out=395m ret=392m
+2026-10-05 14:11:08,321 [INFO]     wheelchair   cost=790m out=395m ret=392m
+2026-10-05 14:11:08,321 [INFO] 
+[PREGNANT] Running PCVC pipelineâ€¦
+2026-10-05 14:11:09,316 [INFO]   Pipeline complete in 0.99s
+2026-10-05 14:11:09,316 [INFO]   Summary: Evaluated 7 uncertain edges for 'pregnant'. Top priority target: Amrtya Sen Avenue (Score: 0.78). Selected probe: general.
+2026-10-05 14:11:09,316 [INFO]   Ranked candidates (5):
+2026-10-05 14:11:09,316 [INFO]     #1 [0.775] Amrtya Sen Avenue                          U=0.600 Î”ARL=1.000 CAD=0.500 Cut=False
+2026-10-05 14:11:09,316 [INFO]     #2 [0.775] Amrtya Sen Avenue                          U=0.600 Î”ARL=1.000 CAD=0.500 Cut=False
+2026-10-05 14:11:09,316 [INFO]     #3 [0.775] Amrtya Sen Avenue                          U=0.600 Î”ARL=1.000 CAD=0.500 Cut=False
+2026-10-05 14:11:09,316 [INFO]     #4 [0.775] Walkway_14095322502_13318878766            U=0.600 Î”ARL=1.000 CAD=0.500 Cut=False
+2026-10-05 14:11:09,316 [INFO]     #5 [0.775] Walkway_13318878762_13318878765            U=0.600 Î”ARL=1.000 CAD=0.500 Cut=False
+2026-10-05 14:11:09,316 [INFO]   Selected Probe: general | Anchor: TT | Reason: Lowest-cost eligible probe (315m total) with feasible outbound and return paths.
+2026-10-05 14:11:09,316 [INFO]   Eligible probes:
+2026-10-05 14:11:09,316 [INFO]     general      cost=315m out=157m ret=155m
+2026-10-05 14:11:09,316 [INFO]     elderly      cost=790m out=395m ret=392m
+2026-10-05 14:11:09,316 [INFO]     pregnant     cost=790m out=395m ret=392m
+2026-10-05 14:11:09,316 [INFO]     wheelchair   cost=790m out=395m ret=392m
+2026-10-05 14:11:09,316 [INFO] 
+[GENERAL] Running PCVC pipelineâ€¦
+2026-10-05 14:11:14,088 [INFO]   Pipeline complete in 4.77s
+2026-10-05 14:11:14,088 [INFO]   Summary: Evaluated 40 uncertain edges for 'general'. Top priority target: Walkway_14093657497_14093657498 (Score: 0.84). Selected probe: general.
+2026-10-05 14:11:14,088 [INFO]   Ranked candidates (5):
+2026-10-05 14:11:14,088 [INFO]     #1 [0.838] Walkway_14093657497_14093657498            U=0.550 Î”ARL=1.000 CAD=1.000 Cut=True
+2026-10-05 14:11:14,088 [INFO]     #2 [0.838] Walkway_1035391385_1064545157              U=0.550 Î”ARL=1.000 CAD=1.000 Cut=True
+2026-10-05 14:11:14,088 [INFO]     #3 [0.838] Walkway_1035404684_1035404671              U=0.550 Î”ARL=1.000 CAD=1.000 Cut=True
+2026-10-05 14:11:14,088 [INFO]     #4 [0.838] Walkway_1035404671_1035404682              U=0.550 Î”ARL=1.000 CAD=1.000 Cut=True
+2026-10-05 14:11:14,088 [INFO]     #5 [0.838] Walkway_1035404682_1035404680              U=0.550 Î”ARL=1.000 CAD=1.000 Cut=True
+2026-10-05 14:11:14,088 [INFO]   Selected Probe: general | Anchor: MGR | Reason: Lowest-cost eligible probe (37m total) with feasible outbound and return paths.
+2026-10-05 14:11:14,088 [INFO]   Eligible probes:
+2026-10-05 14:11:14,088 [INFO]     general      cost=37m out=14m ret=18m
+2026-10-05 14:11:14,088 [INFO]     elderly      cost=37m out=14m ret=18m
+2026-10-05 14:11:14,088 [INFO]     pregnant     cost=37m out=14m ret=18m
+2026-10-05 14:11:14,088 [INFO]     wheelchair   cost=37m out=14m ret=18m
+2026-10-05 14:11:14,127 [INFO] 
+Full ranking results saved â†’ D:\dynamic_pedestrian_rerouting\experiments\results\exp3_priority_ranking.json
+2026-10-05 14:11:14,128 [INFO] Flat ranking CSV saved â†’ D:\dynamic_pedestrian_rerouting\experiments\results\exp3_priority_ranking.csv
+2026-10-05 14:11:14,128 [INFO] 
+Experiment 3 completed in 11.72s
+2026-10-05 14:11:14,128 [INFO] 
+Exp3_PriorityRankingValidation â†’ SUCCESS in 11.72s
+2026-10-05 14:11:14,128 [INFO] 
+â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆ
+2026-10-05 14:11:14,128 [INFO]   STARTING: Exp4_ProbeSafetyValidation
+2026-10-05 14:11:14,128 [INFO] â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆ
+2026-10-05 14:11:14,130 [INFO] ======================================================================
+2026-10-05 14:11:14,130 [INFO] PCVC Experiment 4 â€“ Probe Safety & Closed-Loop Return Validation
+2026-10-05 14:11:14,130 [INFO] ======================================================================
+2026-10-05 14:11:14,131 [INFO] Loading precomputed graph from D:\dynamic_pedestrian_rerouting\data\vit_vellore\processed\vit_vellore_academic_pedestrian_network.pkl...
+2026-10-05 14:11:14,155 [INFO] Geometry check: 1721 total edges, 0 rebuilt from endpoints, 0 invalid.
+2026-10-05 14:11:14,156 [INFO] Graph loaded: 1551 nodes, 1721 edges.
+2026-10-05 14:11:14,156 [INFO] Graph: 1551 nodes, 1721 edges.
+2026-10-05 14:11:14,156 [INFO] 
+[TARGET PROFILE: WHEELCHAIR]
+2026-10-05 14:11:18,986 [INFO]   Top target: Walkway_1035391385_1064545157 (Priority=0.838 U=0.550 Î”ARL=1.000 CAD=1.000 Cut=True)
+2026-10-05 14:11:18,986 [INFO]   Anchor: CTS (node=1035519601)
+2026-10-05 14:11:19,034 [INFO] 
+  Probe        Eligible   Out(m)   Ret(m)  Cost(m) Reason
+2026-10-05 14:11:19,034 [INFO]   --------------------------------------------------------------------------------
+2026-10-05 14:11:19,034 [INFO]   general           âœ“      511      562   1123.5   Feasible outbound (511m), traversal (51m), and safe-return (
+2026-10-05 14:11:19,034 [INFO]   elderly           âœ“      511      562   1123.5   Feasible outbound (511m), traversal (51m), and safe-return (
+2026-10-05 14:11:19,034 [INFO]   pregnant          âœ“      511      562   1123.5   Feasible outbound (511m), traversal (51m), and safe-return (
+2026-10-05 14:11:19,034 [INFO]   wheelchair        âœ“      511      562   1123.5   Feasible outbound (511m), traversal (51m), and safe-return (
+2026-10-05 14:11:19,034 [INFO] 
+  Selected probe: general | Reason: Lowest-cost eligible probe (1124m total) with feasible outbound and return paths.
+2026-10-05 14:11:19,034 [INFO] 
+[TARGET PROFILE: ELDERLY]
+2026-10-05 14:11:19,998 [INFO]   Top target: Amrtya Sen Avenue (Priority=0.775 U=0.600 Î”ARL=1.000 CAD=0.500 Cut=False)
+2026-10-05 14:11:19,998 [INFO]   Anchor: TT (node=14041614622)
+2026-10-05 14:11:20,041 [INFO] 
+  Probe        Eligible   Out(m)   Ret(m)  Cost(m) Reason
+2026-10-05 14:11:20,041 [INFO]   --------------------------------------------------------------------------------
+2026-10-05 14:11:20,041 [INFO]   general           âœ“      157      155    314.6   Feasible outbound (157m), traversal (2m), and safe-return (1
+2026-10-05 14:11:20,041 [INFO]   elderly           âœ“      395      392    789.9   Feasible outbound (395m), traversal (2m), and safe-return (3
+2026-10-05 14:11:20,041 [INFO]   pregnant          âœ“      395      392    789.9   Feasible outbound (395m), traversal (2m), and safe-return (3
+2026-10-05 14:11:20,041 [INFO]   wheelchair        âœ“      395      392    789.9   Feasible outbound (395m), traversal (2m), and safe-return (3
+2026-10-05 14:11:20,041 [INFO] 
+  Selected probe: general | Reason: Lowest-cost eligible probe (315m total) with feasible outbound and return paths.
+2026-10-05 14:11:20,041 [INFO] 
+[TARGET PROFILE: PREGNANT]
+2026-10-05 14:11:21,007 [INFO]   Top target: Amrtya Sen Avenue (Priority=0.775 U=0.600 Î”ARL=1.000 CAD=0.500 Cut=False)
+2026-10-05 14:11:21,007 [INFO]   Anchor: TT (node=14041614622)
+2026-10-05 14:11:21,047 [INFO] 
+  Probe        Eligible   Out(m)   Ret(m)  Cost(m) Reason
+2026-10-05 14:11:21,047 [INFO]   --------------------------------------------------------------------------------
+2026-10-05 14:11:21,047 [INFO]   general           âœ“      157      155    314.6   Feasible outbound (157m), traversal (2m), and safe-return (1
+2026-10-05 14:11:21,047 [INFO]   elderly           âœ“      395      392    789.9   Feasible outbound (395m), traversal (2m), and safe-return (3
+2026-10-05 14:11:21,047 [INFO]   pregnant          âœ“      395      392    789.9   Feasible outbound (395m), traversal (2m), and safe-return (3
+2026-10-05 14:11:21,047 [INFO]   wheelchair        âœ“      395      392    789.9   Feasible outbound (395m), traversal (2m), and safe-return (3
+2026-10-05 14:11:21,047 [INFO] 
+  Selected probe: general | Reason: Lowest-cost eligible probe (315m total) with feasible outbound and return paths.
+2026-10-05 14:11:21,047 [INFO] 
+[TARGET PROFILE: GENERAL]
+2026-10-05 14:11:25,754 [INFO]   Top target: Walkway_14093657497_14093657498 (Priority=0.838 U=0.550 Î”ARL=1.000 CAD=1.000 Cut=True)
+2026-10-05 14:11:25,754 [INFO]   Anchor: MGR (node=14093702429)
+2026-10-05 14:11:25,791 [INFO] 
+  Probe        Eligible   Out(m)   Ret(m)  Cost(m) Reason
+2026-10-05 14:11:25,791 [INFO]   --------------------------------------------------------------------------------
+2026-10-05 14:11:25,791 [INFO]   general           âœ“       14       18     36.7   Feasible outbound (14m), traversal (4m), and safe-return (18
+2026-10-05 14:11:25,791 [INFO]   elderly           âœ“       14       18     36.7   Feasible outbound (14m), traversal (4m), and safe-return (18
+2026-10-05 14:11:25,791 [INFO]   pregnant          âœ“       14       18     36.7   Feasible outbound (14m), traversal (4m), and safe-return (18
+2026-10-05 14:11:25,791 [INFO]   wheelchair        âœ“       14       18     36.7   Feasible outbound (14m), traversal (4m), and safe-return (18
+2026-10-05 14:11:25,791 [INFO] 
+  Selected probe: general | Reason: Lowest-cost eligible probe (37m total) with feasible outbound and return paths.
+2026-10-05 14:11:25,803 [INFO] 
+Full probe safety records â†’ D:\dynamic_pedestrian_rerouting\experiments\results\exp4_probe_safety.json
+2026-10-05 14:11:25,804 [INFO] Probe safety CSV â†’ D:\dynamic_pedestrian_rerouting\experiments\results\exp4_probe_safety.csv
+2026-10-05 14:11:25,804 [INFO] 
+Experiment 4 completed in 11.67s
+2026-10-05 14:11:25,804 [INFO] 
+Exp4_ProbeSafetyValidation â†’ SUCCESS in 11.68s
+2026-10-05 14:11:25,804 [INFO] 
+â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆ
+2026-10-05 14:11:25,804 [INFO]   STARTING: Exp5_CADCensus
+2026-10-05 14:11:25,804 [INFO] â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆ
+2026-10-05 14:11:25,807 [INFO] ======================================================================
+2026-10-05 14:11:25,807 [INFO] PCVC Experiment 5 â€“ Network-Wide CAD Census
+2026-10-05 14:11:25,807 [INFO] ======================================================================
+2026-10-05 14:11:25,807 [INFO] Loading precomputed graph from D:\dynamic_pedestrian_rerouting\data\vit_vellore\processed\vit_vellore_academic_pedestrian_network.pkl...
+2026-10-05 14:11:25,830 [INFO] Geometry check: 1721 total edges, 0 rebuilt from endpoints, 0 invalid.
+2026-10-05 14:11:25,831 [INFO] Graph loaded: 1551 nodes, 1721 edges.
+2026-10-05 14:11:25,832 [INFO] Graph: 1551 nodes, 1721 edges.
+2026-10-05 14:11:25,832 [INFO] Pre-computing bridge caches for all profilesâ€¦
+2026-10-05 14:11:25,857 [INFO]   [wheelchair] subgraph: 1551 nodes, 1714 edges, 558 bridges
+2026-10-05 14:11:25,883 [INFO]   [elderly] subgraph: 1551 nodes, 1716 edges, 552 bridges
+2026-10-05 14:11:25,910 [INFO]   [pregnant] subgraph: 1551 nodes, 1716 edges, 552 bridges
+2026-10-05 14:11:25,938 [INFO]   [general] subgraph: 1551 nodes, 1721 edges, 537 bridges
+2026-10-05 14:11:25,938 [INFO] 
+[WHEELCHAIR] Identifying critical edges (CADâ‰¥0.4)â€¦
+2026-10-05 14:11:59,465 [INFO]   Critical edges: 1426/1714 (83.2%) | Cut: 558 | CAD=1.0: 558 | Profile-exclusive (Î”_CADâ‰¥0.3): 21 | time=33.5s
+2026-10-05 14:11:59,465 [INFO]   Top-10 critical edges:
+2026-10-05 14:11:59,465 [INFO]     Name                                        CAD  Î”_CAD   Cut
+2026-10-05 14:11:59,465 [INFO]     Segment_1034973038_1034973039             1.000   0.000  True
+2026-10-05 14:11:59,465 [INFO]     Segment_1034973039_1034973051             1.000   0.000  True
+2026-10-05 14:11:59,465 [INFO]     Segment_1034973051_1034973055             1.000   0.000  True
+2026-10-05 14:11:59,465 [INFO]     Segment_1034973055_1034973048             1.000   0.000  True
+2026-10-05 14:11:59,465 [INFO]     Segment_1034973048_13946184878            1.000   0.000  True
+2026-10-05 14:11:59,465 [INFO]     Segment_1034973048_1034973053             1.000   0.000  True
+2026-10-05 14:11:59,465 [INFO]     Segment_13946184878_13946184877           1.000   0.000  True
+2026-10-05 14:11:59,465 [INFO]     Segment_14093657497_14093657498           1.000   0.000  True
+2026-10-05 14:11:59,465 [INFO]     Segment_1035391385_1064545157             1.000   0.000  True
+2026-10-05 14:11:59,465 [INFO]     Segment_1035404684_1035404671             1.000   0.000  True
+2026-10-05 14:11:59,465 [INFO] 
+[ELDERLY] Identifying critical edges (CADâ‰¥0.4)â€¦
+2026-10-05 14:12:33,059 [INFO]   Critical edges: 1427/1716 (83.16%) | Cut: 552 | CAD=1.0: 552 | Profile-exclusive (Î”_CADâ‰¥0.3): 15 | time=33.6s
+2026-10-05 14:12:33,059 [INFO]   Top-10 critical edges:
+2026-10-05 14:12:33,059 [INFO]     Name                                        CAD  Î”_CAD   Cut
+2026-10-05 14:12:33,059 [INFO]     Segment_1034973038_1034973039             1.000   0.000  True
+2026-10-05 14:12:33,059 [INFO]     Segment_1034973039_1034973051             1.000   0.000  True
+2026-10-05 14:12:33,059 [INFO]     Segment_1034973051_1034973055             1.000   0.000  True
+2026-10-05 14:12:33,059 [INFO]     Segment_1034973055_1034973048             1.000   0.000  True
+2026-10-05 14:12:33,059 [INFO]     Segment_1034973048_13946184878            1.000   0.000  True
+2026-10-05 14:12:33,059 [INFO]     Segment_1034973048_1034973053             1.000   0.000  True
+2026-10-05 14:12:33,059 [INFO]     Segment_13946184878_13946184877           1.000   0.000  True
+2026-10-05 14:12:33,059 [INFO]     Segment_14093657497_14093657498           1.000   0.000  True
+2026-10-05 14:12:33,059 [INFO]     Segment_1035391385_1064545157             1.000   0.000  True
+2026-10-05 14:12:33,059 [INFO]     Segment_1035404684_1035404671             1.000   0.000  True
+2026-10-05 14:12:33,059 [INFO] 
+[PREGNANT] Identifying critical edges (CADâ‰¥0.4)â€¦
+2026-10-05 14:13:06,840 [INFO]   Critical edges: 1427/1716 (83.16%) | Cut: 552 | CAD=1.0: 552 | Profile-exclusive (Î”_CADâ‰¥0.3): 15 | time=33.8s
+2026-10-05 14:13:06,840 [INFO]   Top-10 critical edges:
+2026-10-05 14:13:06,840 [INFO]     Name                                        CAD  Î”_CAD   Cut
+2026-10-05 14:13:06,840 [INFO]     Segment_1034973038_1034973039             1.000   0.000  True
+2026-10-05 14:13:06,840 [INFO]     Segment_1034973039_1034973051             1.000   0.000  True
+2026-10-05 14:13:06,840 [INFO]     Segment_1034973051_1034973055             1.000   0.000  True
+2026-10-05 14:13:06,840 [INFO]     Segment_1034973055_1034973048             1.000   0.000  True
+2026-10-05 14:13:06,840 [INFO]     Segment_1034973048_13946184878            1.000   0.000  True
+2026-10-05 14:13:06,840 [INFO]     Segment_1034973048_1034973053             1.000   0.000  True
+2026-10-05 14:13:06,840 [INFO]     Segment_13946184878_13946184877           1.000   0.000  True
+2026-10-05 14:13:06,840 [INFO]     Segment_14093657497_14093657498           1.000   0.000  True
+2026-10-05 14:13:06,840 [INFO]     Segment_1035391385_1064545157             1.000   0.000  True
+2026-10-05 14:13:06,840 [INFO]     Segment_1035404684_1035404671             1.000   0.000  True
+2026-10-05 14:13:06,840 [INFO] 
+[GENERAL] Identifying critical edges (CADâ‰¥0.4)â€¦
+2026-10-05 14:13:39,744 [INFO]   Critical edges: 1431/1721 (83.15%) | Cut: 537 | CAD=1.0: 537 | Profile-exclusive (Î”_CADâ‰¥0.3): 0 | time=32.9s
+2026-10-05 14:13:39,744 [INFO]   Top-10 critical edges:
+2026-10-05 14:13:39,744 [INFO]     Name                                        CAD  Î”_CAD   Cut
+2026-10-05 14:13:39,744 [INFO]     Segment_1034973038_1034973039             1.000   0.000  True
+2026-10-05 14:13:39,744 [INFO]     Segment_1034973039_1034973051             1.000   0.000  True
+2026-10-05 14:13:39,744 [INFO]     Segment_1034973051_1034973055             1.000   0.000  True
+2026-10-05 14:13:39,744 [INFO]     Segment_1034973055_1034973048             1.000   0.000  True
+2026-10-05 14:13:39,744 [INFO]     Segment_1034973048_13946184878            1.000   0.000  True
+2026-10-05 14:13:39,744 [INFO]     Segment_1034973048_1034973053             1.000   0.000  True
+2026-10-05 14:13:39,744 [INFO]     Segment_13946184878_13946184877           1.000   0.000  True
+2026-10-05 14:13:39,744 [INFO]     Segment_14093657497_14093657498           1.000   0.000  True
+2026-10-05 14:13:39,744 [INFO]     Segment_1035391385_1064545157             1.000   0.000  True
+2026-10-05 14:13:39,744 [INFO]     Segment_1035404684_1035404671             1.000   0.000  True
+2026-10-05 14:13:39,744 [INFO] 
+======================================================================
+2026-10-05 14:13:39,744 [INFO] Cross-Profile CAD Summary:
+2026-10-05 14:13:39,744 [INFO] Profile       SubEdges  Critical       %    Cut   Excl
+2026-10-05 14:13:39,744 [INFO] ------------------------------------------------------------
+2026-10-05 14:13:39,744 [INFO] wheelchair        1714      1426   83.20%    558     21
+2026-10-05 14:13:39,744 [INFO] elderly           1716      1427   83.16%    552     15
+2026-10-05 14:13:39,744 [INFO] pregnant          1716      1427   83.16%    552     15
+2026-10-05 14:13:39,744 [INFO] general           1721      1431   83.15%    537      0
+2026-10-05 14:13:39,825 [INFO] 
+Full CAD census â†’ D:\dynamic_pedestrian_rerouting\experiments\results\exp5_cad_census.json
+2026-10-05 14:13:39,825 [INFO] CAD summary CSV â†’ D:\dynamic_pedestrian_rerouting\experiments\results\exp5_cad_summary.csv
+2026-10-05 14:13:39,825 [INFO] 
+Experiment 5 completed in 134.02s
+2026-10-05 14:13:39,829 [INFO] 
+Exp5_CADCensus â†’ SUCCESS in 134.02s
+2026-10-05 14:13:39,829 [INFO] 
+======================================================================
+2026-10-05 14:13:39,829 [INFO] EXPERIMENT RUN COMPLETE
+2026-10-05 14:13:39,829 [INFO]   Total time   : 168.87s
+2026-10-05 14:13:39,829 [INFO]   Succeeded    : 5/5
+2026-10-05 14:13:39,829 [INFO]   Failed       : 0/5
+2026-10-05 14:13:39,829 [INFO] ======================================================================
+2026-10-05 14:13:39,829 [INFO]   âœ“ Exp1_UncertaintyCensus                       0.53s
+2026-10-05 14:13:39,829 [INFO]   âœ“ Exp2_CounterfactualImpact                   10.92s
+2026-10-05 14:13:39,829 [INFO]   âœ“ Exp3_PriorityRankingValidation              11.72s
+2026-10-05 14:13:39,829 [INFO]   âœ“ Exp4_ProbeSafetyValidation                  11.68s
+2026-10-05 14:13:39,829 [INFO]   âœ“ Exp5_CADCensus                             134.02s
+2026-10-05 14:13:39,830 [INFO] 
+Manifest saved â†’ D:\dynamic_pedestrian_rerouting\experiments\results\experiment_manifest.json

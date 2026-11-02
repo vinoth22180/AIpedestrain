@@ -1,0 +1,17 @@
+{
+    "topology": {
+        "num_components": 9,
+        "isolated_nodes": 2,
+        "self_loops": 0,
+        "nodes": 1551,
+        "edges": 1697
+    },
+    "routing": [],
+    "data_quality": {
+        "academic_blocks_mapped": 10,
+        "stairs_mapped": 7,
+        "ramps_mapped": 0,
+        "edges_total": 1697,
+        "nodes_total": 1551
+    }
+}

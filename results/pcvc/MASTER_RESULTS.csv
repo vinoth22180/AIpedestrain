@@ -1,0 +1,39 @@
+experiment,sub_experiment,metric_1_name,metric_1_val,metric_2_name,metric_2_val,metric_3_name,metric_3_val,notes
+E1_Natural_Uncertainty,general,mean_uncertainty,0.445,candidates_above_0.4,1114.0,candidate_pct,64.73,Edges evaluated: 1721
+E1_Natural_Uncertainty,elderly,mean_uncertainty,0.2805,candidates_above_0.4,7.0,candidate_pct,0.41,Edges evaluated: 1721
+E1_Natural_Uncertainty,pregnant,mean_uncertainty,0.2805,candidates_above_0.4,7.0,candidate_pct,0.41,Edges evaluated: 1721
+E1_Natural_Uncertainty,wheelchair,mean_uncertainty,0.4497,candidates_above_0.4,1400.0,candidate_pct,81.35,Edges evaluated: 1721
+E2_Oracle_Masking,K=20,tic_at_10_mean,1.0,ndcg_at_10_mean,1.0,spearman_rho_mean,0.1191,"Precision@10: 0.89, 10 seeds"
+E2_Oracle_Masking,K=40,tic_at_10_mean,1.0,ndcg_at_10_mean,1.0,spearman_rho_mean,0.1877,"Precision@10: 0.93, 10 seeds"
+E2_Oracle_Masking,K=80,tic_at_10_mean,1.0,ndcg_at_10_mean,1.0,spearman_rho_mean,0.1538,"Precision@10: 0.75, 10 seeds"
+E3_Baseline_Comparison,B1 (Random),tic_at_10_mean,1.0,ndcg_at_10_mean,1.0,spearman_rho_mean,0.0546,Precision@10: 0.24
+E3_Baseline_Comparison,B2 (Uncertainty-Only),tic_at_10_mean,0.97,ndcg_at_10_mean,0.9421,spearman_rho_mean,-0.0578,Precision@10: 0.75
+E3_Baseline_Comparison,B3 (CAD-Only),tic_at_10_mean,1.0,ndcg_at_10_mean,1.0,spearman_rho_mean,0.2037,Precision@10: 1.0
+E3_Baseline_Comparison,B4 (Impact-Only),tic_at_10_mean,1.0,ndcg_at_10_mean,1.0,spearman_rho_mean,0.5,Precision@10: 1.0
+E3_Baseline_Comparison,B5 (Uncertainty + CAD),tic_at_10_mean,1.0,ndcg_at_10_mean,1.0,spearman_rho_mean,0.1851,Precision@10: 0.93
+E3_Baseline_Comparison,B6 (Full PCVC),tic_at_10_mean,1.0,ndcg_at_10_mean,1.0,spearman_rho_mean,0.1877,Precision@10: 0.93
+E4_Profile_Sensitivity,general vs elderly,top10_overlap_pct,10.0,jaccard_at_5,0.0,jaccard_at_10,0.0625,Overlap count: 1/10
+E4_Profile_Sensitivity,general vs pregnant,top10_overlap_pct,10.0,jaccard_at_5,0.0,jaccard_at_10,0.0625,Overlap count: 1/10
+E4_Profile_Sensitivity,general vs wheelchair,top10_overlap_pct,90.0,jaccard_at_5,0.6667,jaccard_at_10,0.8182,Overlap count: 9/10
+E4_Profile_Sensitivity,elderly vs pregnant,top10_overlap_pct,70.0,jaccard_at_5,1.0,jaccard_at_10,1.0,Overlap count: 7/10
+E4_Profile_Sensitivity,elderly vs wheelchair,top10_overlap_pct,20.0,jaccard_at_5,0.0,jaccard_at_10,0.1333,Overlap count: 2/10
+E4_Profile_Sensitivity,pregnant vs wheelchair,top10_overlap_pct,20.0,jaccard_at_5,0.0,jaccard_at_10,0.1333,Overlap count: 2/10
+E5_Safe_Return,wheelchair,eligibility_rate_pct,100.0,detour_overhead_mean,86.212,travel_distance_m_median,942.15,Candidates evaluated: 100
+E5_Safe_Return,elderly,eligibility_rate_pct,100.0,detour_overhead_mean,48.347,travel_distance_m_median,439.7,Candidates evaluated: 7
+E5_Safe_Return,pregnant,eligibility_rate_pct,100.0,detour_overhead_mean,48.347,travel_distance_m_median,439.7,Candidates evaluated: 7
+E5_Safe_Return,general,eligibility_rate_pct,100.0,detour_overhead_mean,91.128,travel_distance_m_median,963.9,Candidates evaluated: 100
+E6_Probe_Correctness,all_profiles,constraint_violation_rate_pct,0.0,valid_assignments,114.0,invalid_assignments,0.0,Violations: Stairs=0
+E7_Ablation,A1 (Uncertainty Only),tic_at_10_mean,0.97,ndcg_at_10_mean,0.9421,spearman_rho_mean,-0.0578,Redundancy: delta_AOC == delta_ARL == MAL (Spearman=1.0)
+E7_Ablation,A2 (Impact Only),tic_at_10_mean,1.0,ndcg_at_10_mean,1.0,spearman_rho_mean,0.5,Redundancy: delta_AOC == delta_ARL == MAL (Spearman=1.0)
+E7_Ablation,A3 (CAD Only),tic_at_10_mean,1.0,ndcg_at_10_mean,1.0,spearman_rho_mean,0.2037,Redundancy: delta_AOC == delta_ARL == MAL (Spearman=1.0)
+E7_Ablation,A4 (Uncertainty + CAD),tic_at_10_mean,1.0,ndcg_at_10_mean,1.0,spearman_rho_mean,0.1851,Redundancy: delta_AOC == delta_ARL == MAL (Spearman=1.0)
+E7_Ablation,A5 (Uncertainty + Impact),tic_at_10_mean,1.0,ndcg_at_10_mean,1.0,spearman_rho_mean,0.2266,Redundancy: delta_AOC == delta_ARL == MAL (Spearman=1.0)
+E7_Ablation,A6 (Full PCVC),tic_at_10_mean,1.0,ndcg_at_10_mean,1.0,spearman_rho_mean,0.1877,Redundancy: delta_AOC == delta_ARL == MAL (Spearman=1.0)
+E8_Runtime_Profiling,pipeline_breakdown,end_to_end_latency_s,5.89,counterfactual_latency_s,5.832,latency_std_s,0.1971,"N=10 repetitions, Candidate limit: 40"
+E9_Scalability,Limit_N=5,total_runtime_s,0.91,counterfactual_time_s,0.7457,ms_per_candidate,149.14,Evaluated: 5
+E9_Scalability,Limit_N=10,total_runtime_s,1.8034,counterfactual_time_s,1.4565,ms_per_candidate,145.65,Evaluated: 10
+E9_Scalability,Limit_N=20,total_runtime_s,3.2007,counterfactual_time_s,3.2302,ms_per_candidate,161.51,Evaluated: 20
+E9_Scalability,Limit_N=40,total_runtime_s,5.7648,counterfactual_time_s,6.1198,ms_per_candidate,153.0,Evaluated: 40
+E9_Scalability,Limit_N=80,total_runtime_s,11.8617,counterfactual_time_s,11.5887,ms_per_candidate,144.86,Evaluated: 80
+E9_Scalability,Limit_N=100,total_runtime_s,14.841,counterfactual_time_s,14.5766,ms_per_candidate,145.77,Evaluated: 100
+E9_Scalability,Limit_N=200,total_runtime_s,31.0043,counterfactual_time_s,28.9385,ms_per_candidate,144.69,Evaluated: 200

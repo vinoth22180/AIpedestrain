@@ -1,0 +1,24 @@
+2026-10-05 14:10:37,152 [INFO] ======================================================================
+2026-10-05 14:10:37,152 [INFO] PCVC Experiment 1 – Accessibility Attribute Uncertainty Census
+2026-10-05 14:10:37,153 [INFO] ======================================================================
+2026-10-05 14:10:37,153 [INFO] Loading precomputed graph from D:\dynamic_pedestrian_rerouting\data\vit_vellore\processed\vit_vellore_academic_pedestrian_network.pkl...
+2026-10-05 14:10:37,200 [INFO] Geometry check: 1721 total edges, 0 rebuilt from endpoints, 0 invalid.
+2026-10-05 14:10:37,200 [INFO] Graph loaded: 1551 nodes, 1721 edges.
+2026-10-05 14:10:37,201 [INFO] Graph loaded: 1551 nodes, 1721 edges.
+2026-10-05 14:10:37,227 [INFO] 
+2026-10-05 14:10:37,227 [INFO] Profile        Edges   U>0.4   U>0.7   U_mean    U_std    Low%    Med%   High%   Crit%
+2026-10-05 14:10:37,227 [INFO] -------------------------------------------------------------------------------------
+2026-10-05 14:10:37,230 [INFO] wheelchair      1721    1400       4   0.4497   0.1403    18.7    81.1     0.2     0.0
+2026-10-05 14:10:37,231 [INFO] elderly         1721       7       0   0.2805   0.0976    35.3    64.7     0.0     0.0
+2026-10-05 14:10:37,232 [INFO] pregnant        1721       7       0   0.2805   0.0976    35.3    64.7     0.0     0.0
+2026-10-05 14:10:37,233 [INFO] general         1721    1114       7   0.4450   0.1445    35.3    64.3     0.4     0.0
+2026-10-05 14:10:37,233 [INFO] 
+2026-10-05 14:10:37,233 [INFO] Top missing attributes per profile:
+2026-10-05 14:10:37,233 [INFO]   wheelchair  : smoothness_value(1721), tactile_paving(1721), wheelchair(1397), surface(1114), slope_percent(7)
+2026-10-05 14:10:37,233 [INFO]   elderly     : smoothness_value(1721), tactile_paving(1721), surface(1114), slope_percent(7)
+2026-10-05 14:10:37,233 [INFO]   pregnant    : smoothness_value(1721), tactile_paving(1721), surface(1114), slope_percent(7)
+2026-10-05 14:10:37,233 [INFO]   general     : smoothness_value(1721), surface(1114), slope_percent(7)
+2026-10-05 14:10:37,329 [INFO] Full per-edge records saved → D:\dynamic_pedestrian_rerouting\experiments\results\exp1_uncertainty_census.json
+2026-10-05 14:10:37,348 [INFO] Summary CSV saved → D:\dynamic_pedestrian_rerouting\experiments\results\exp1_summary.csv
+2026-10-05 14:10:37,348 [INFO] 
+Experiment 1 completed in 0.20s

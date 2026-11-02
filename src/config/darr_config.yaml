@@ -1,0 +1,103 @@
+# DARR (Dynamic Accessibility Resilience Routing) Configuration
+version: "1.0.0"
+
+# User Accessibility Profile Definitions & Constraints
+profiles:
+  general:
+    name: "General Pedestrian"
+    walking_speed_mps: 1.4      # ~5.0 km/h
+    min_accessibility_resilience: 0.0
+    max_acceptable_additional_time: 180.0 # seconds tolerance for rerouting to preserve accessible corridors (~3 min)
+    stairs_allowed: true
+    stairs_penalty: 0.5
+    max_slope_percent: null     # no strict slope limit
+    min_width_m: 0.0
+    requires_wheelchair_tag: false
+    scoring_weights:
+      distance_weight: 1.0
+      time_weight: 1.0
+      dynamic_cost_weight: 1.0
+      criticality_penalty_weight: 0.2
+      collapse_risk_penalty_weight: 0.5
+      marginal_accessibility_loss_weight: 1.8 # Strong weight to preserve accessible corridors for other users
+
+  elderly:
+    name: "Elderly"
+    walking_speed_mps: 0.9      # ~3.2 km/h
+    min_accessibility_resilience: 1.0
+    max_acceptable_additional_time: 90.0
+    stairs_allowed: true
+    stairs_penalty: 5.0         # high effort penalty
+    max_slope_percent: 8.0      # avoid slopes steeper than 8%
+    min_width_m: 0.6
+    requires_wheelchair_tag: false
+    scoring_weights:
+      distance_weight: 0.8
+      time_weight: 1.2
+      dynamic_cost_weight: 1.5
+      criticality_penalty_weight: 1.5
+      collapse_risk_penalty_weight: 2.0
+      marginal_accessibility_loss_weight: 0.8
+
+  pregnant:
+    name: "Pregnancy-Oriented"
+    walking_speed_mps: 1.0      # ~3.6 km/h
+    min_accessibility_resilience: 1.0
+    max_acceptable_additional_time: 90.0
+    stairs_allowed: true
+    stairs_penalty: 3.5
+    max_slope_percent: 8.0
+    min_width_m: 0.6
+    requires_wheelchair_tag: false
+    scoring_weights:
+      distance_weight: 0.8
+      time_weight: 1.2
+      dynamic_cost_weight: 1.5
+      criticality_penalty_weight: 1.5
+      collapse_risk_penalty_weight: 2.0
+      marginal_accessibility_loss_weight: 0.8
+
+  wheelchair:
+    name: "Mobility-Constrained / Wheelchair"
+    walking_speed_mps: 0.8      # ~2.9 km/h
+    min_accessibility_resilience: 2.0 # Requires at least 2 independent corridors for resilience
+    max_acceptable_additional_time: 60.0
+    stairs_allowed: false       # STRICTLY FORBIDDEN
+    stairs_penalty: 9999.0
+    max_slope_percent: 6.0      # ADA max standard ramp slope
+    min_width_m: 0.9            # ADA standard wheelchair clearance
+    requires_wheelchair_tag: false # if true, must have wheelchair=yes, if false, only wheelchair=no is excluded
+    scoring_weights:
+      distance_weight: 0.6
+      time_weight: 1.0
+      dynamic_cost_weight: 2.0
+      criticality_penalty_weight: 2.5
+      collapse_risk_penalty_weight: 3.0
+      marginal_accessibility_loss_weight: 0.2
+
+# Accessibility Resilience & Bottleneck Parameters
+resilience:
+  overlap_penalty_factor: 0.6    # Penalty on ARL for overlapping edges between candidate paths
+  bottleneck_cut_threshold: 1    # If min cut is <= this, resilience is severely constrained
+  cad_cut_edge_weight: 0.6       # Weight of cut-edge / bridge in CAD calculation
+  cad_detour_weight: 0.4         # Weight of detour elongation in CAD calculation
+
+# Collapse Prediction Parameters
+collapse_prediction:
+  forecast_horizon_seconds: 300.0 # 5 minutes forward projection
+  warning_arl_threshold: 1.5     # ARL below which WARNING is triggered
+  critical_arl_threshold: 0.5    # ARL below which CRITICAL is triggered
+
+# Counterfactual Route Simulation
+counterfactual:
+  simulated_pedestrian_load: 25   # Hypothetical pedestrian count added to candidate route
+  congestion_increase_per_pedestrian: 2.0 # Penalty increase per added pedestrian on edge
+
+# Fleet Simulation Parameters
+fleet_simulation:
+  total_pedestrians: 100
+  composition:
+    general: 60
+    elderly: 15
+    pregnant: 15
+    wheelchair: 10

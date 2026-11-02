@@ -1,0 +1,4 @@
+k_masked,spearman_rho_mean,spearman_rho_std,kendall_tau_mean,kendall_tau_std,mean_abs_rank_error_mean,tic_at_5_mean,tic_at_5_std,tic_at_10_mean,tic_at_10_std,ndcg_at_5_mean,ndcg_at_5_std,ndcg_at_10_mean,ndcg_at_10_std,mean_detour_at_5_mean,mean_detour_at_10_mean,oracle_mean_detour_at_10_mean,min_rank_max_edge_mean
+20,0.6584,0.1443,0.5228,0.1485,3.67,0.9831,0.0536,0.8645,0.1165,0.9896,0.0327,0.9204,0.0779,1934.8,1181.3,1381.8,1.0
+40,0.5507,0.1313,0.4259,0.1224,8.3,1.0,0.0,0.9428,0.0841,1.0,0.0,0.9643,0.0516,2000.0,1856.0,1966.0,1.0
+80,0.5989,0.0686,0.4655,0.0643,15.29,1.0,0.0,1.0,0.0,1.0,0.0,1.0,0.0,2000.0,2000.0,2000.0,1.0

@@ -1,0 +1,7 @@
+ablation_code,ablation_name,spearman_rho_mean,spearman_rho_std,kendall_tau_mean,kendall_tau_std,tic_at_5_mean,tic_at_5_std,tic_at_10_mean,tic_at_10_std,ndcg_at_5_mean,ndcg_at_5_std,ndcg_at_10_mean,ndcg_at_10_std
+A1,Uncertainty Only,-0.0578,0.1623,-0.0571,0.1605,0.94,0.0966,0.97,0.0483,0.9108,0.1477,0.9421,0.0958
+A2,Impact Only,0.5,0.527,0.5,0.527,1.0,0.0,1.0,0.0,1.0,0.0,1.0,0.0
+A3,CAD Only,0.2037,0.2184,0.1939,0.2078,1.0,0.0,1.0,0.0,1.0,0.0,1.0,0.0
+A4,Uncertainty + CAD,0.1851,0.1981,0.1679,0.1799,1.0,0.0,1.0,0.0,1.0,0.0,1.0,0.0
+A5,Uncertainty + Impact,0.2266,0.2447,0.2211,0.2388,1.0,0.0,1.0,0.0,1.0,0.0,1.0,0.0
+A6,Full PCVC,0.1877,0.2011,0.1702,0.1827,1.0,0.0,1.0,0.0,1.0,0.0,1.0,0.0

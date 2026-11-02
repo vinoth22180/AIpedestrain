@@ -1,0 +1,145 @@
+{
+  "experiment": "E1_Natural_Uncertainty_Distribution",
+  "description": "Natural accessibility uncertainty distribution on active VIT Vellore network",
+  "environment": {
+    "timestamp_utc": "2026-10-05T10:36:47.736203+00:00",
+    "python_version": "3.14.2 (tags/v3.14.2:df79316, Dec  5 2025, 17:18:21) [MSC v.1944 64 bit (AMD64)]",
+    "platform": "Windows-11-10.0.26300-SP0",
+    "architecture": "64bit",
+    "processor": "Intel64 Family 6 Model 183 Stepping 1, GenuineIntel",
+    "packages": {
+      "networkx": "3.6.1",
+      "numpy": "2.5.2",
+      "pandas": "3.0.5",
+      "scipy": "1.18.1",
+      "matplotlib": "3.11.2",
+      "shapely": "2.1.2",
+      "geopandas": "1.1.4",
+      "osmnx": "2.1.1",
+      "fastapi": "0.141.1",
+      "pydantic": "2.13.5"
+    },
+    "dataset_audit": {
+      "path": "D:\\dynamic_pedestrian_rerouting\\data\\vit_vellore\\processed\\vit_vellore_academic_pedestrian_network.pkl",
+      "size_bytes": 767489,
+      "md5": "5ecc692284c6b43a700ac92f303aeed1",
+      "mtime": 1789544907.9315057
+    }
+  },
+  "graph_statistics": {
+    "num_nodes": 1551,
+    "num_edges": 1721,
+    "is_multigraph": true,
+    "is_directed": false,
+    "num_connected_components": 9,
+    "component_sizes": [
+      1509,
+      14,
+      13,
+      6,
+      3,
+      2,
+      2,
+      1,
+      1
+    ],
+    "largest_component_nodes": 1509,
+    "largest_component_ratio": 0.9729
+  },
+  "uncertainty_threshold": 0.4,
+  "profile_summaries": {
+    "general": {
+      "profile": "general",
+      "total_edges": 1721,
+      "mean_uncertainty": 0.445,
+      "median_uncertainty": 0.55,
+      "std_uncertainty": 0.1445,
+      "min_uncertainty": 0.25,
+      "max_uncertainty": 0.75,
+      "candidate_count_above_threshold": 1114,
+      "candidate_pct_above_threshold": 64.73,
+      "mean_confidence": 0.555,
+      "median_confidence": 0.45,
+      "std_confidence": 0.1445,
+      "active_weights": {
+        "surface": 0.3,
+        "smoothness_value": 0.25,
+        "width_m": 0.25,
+        "slope_percent": 0.2
+      }
+    },
+    "elderly": {
+      "profile": "elderly",
+      "total_edges": 1721,
+      "mean_uncertainty": 0.2805,
+      "median_uncertainty": 0.35,
+      "std_uncertainty": 0.0976,
+      "min_uncertainty": 0.15,
+      "max_uncertainty": 0.6,
+      "candidate_count_above_threshold": 7,
+      "candidate_pct_above_threshold": 0.41,
+      "mean_confidence": 0.7195,
+      "median_confidence": 0.65,
+      "std_confidence": 0.0976,
+      "active_weights": {
+        "stairs": 0.25,
+        "slope_percent": 0.25,
+        "surface": 0.2,
+        "width_m": 0.15,
+        "smoothness_value": 0.1,
+        "tactile_paving": 0.05
+      }
+    },
+    "pregnant": {
+      "profile": "pregnant",
+      "total_edges": 1721,
+      "mean_uncertainty": 0.2805,
+      "median_uncertainty": 0.35,
+      "std_uncertainty": 0.0976,
+      "min_uncertainty": 0.15,
+      "max_uncertainty": 0.6,
+      "candidate_count_above_threshold": 7,
+      "candidate_pct_above_threshold": 0.41,
+      "mean_confidence": 0.7195,
+      "median_confidence": 0.65,
+      "std_confidence": 0.0976,
+      "active_weights": {
+        "stairs": 0.25,
+        "slope_percent": 0.25,
+        "surface": 0.2,
+        "width_m": 0.15,
+        "smoothness_value": 0.1,
+        "tactile_paving": 0.05
+      }
+    },
+    "wheelchair": {
+      "profile": "wheelchair",
+      "total_edges": 1721,
+      "mean_uncertainty": 0.4497,
+      "median_uncertainty": 0.55,
+      "std_uncertainty": 0.1403,
+      "min_uncertainty": 0.1,
+      "max_uncertainty": 0.75,
+      "candidate_count_above_threshold": 1400,
+      "candidate_pct_above_threshold": 81.35,
+      "mean_confidence": 0.5503,
+      "median_confidence": 0.45,
+      "std_confidence": 0.1403,
+      "active_weights": {
+        "wheelchair": 0.35,
+        "slope_percent": 0.2,
+        "width_m": 0.15,
+        "ramp": 0.1,
+        "surface": 0.1,
+        "smoothness_value": 0.05,
+        "tactile_paving": 0.05
+      }
+    }
+  },
+  "key_observations": [
+    "general: mean uncertainty = 0.445, 1114 candidates (64.73%)",
+    "elderly: mean uncertainty = 0.281, 7 candidates (0.41%)",
+    "pregnant: mean uncertainty = 0.281, 7 candidates (0.41%)",
+    "wheelchair: mean uncertainty = 0.450, 1400 candidates (81.35%)"
+  ]
+}

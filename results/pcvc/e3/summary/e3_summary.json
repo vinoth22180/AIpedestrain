@@ -1,0 +1,237 @@
+{
+  "experiment": "E3_Baseline_Comparison",
+  "candidate_pool_size": 40,
+  "num_seeds": 10,
+  "seeds": [
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51
+  ],
+  "baseline_summaries": [
+    {
+      "baseline_code": "B1",
+      "baseline_name": "Random",
+      "spearman_rho_mean": 0.0546,
+      "spearman_rho_std": 0.0837,
+      "kendall_tau_mean": 0.0451,
+      "kendall_tau_std": 0.0692,
+      "hit_at_5_mean": 0.4,
+      "hit_at_10_mean": 0.9,
+      "precision_at_5_mean": 0.1,
+      "precision_at_10_mean": 0.24,
+      "tic_at_5_mean": 1.0,
+      "tic_at_5_std": 0.0,
+      "tic_at_10_mean": 1.0,
+      "tic_at_10_std": 0.0,
+      "ndcg_at_5_mean": 1.0,
+      "ndcg_at_5_std": 0.0,
+      "ndcg_at_10_mean": 1.0,
+      "ndcg_at_10_std": 0.0
+    },
+    {
+      "baseline_code": "B2",
+      "baseline_name": "Uncertainty-Only",
+      "spearman_rho_mean": -0.0578,
+      "spearman_rho_std": 0.1623,
+      "kendall_tau_mean": -0.0571,
+      "kendall_tau_std": 0.1605,
+      "hit_at_5_mean": 1.0,
+      "hit_at_10_mean": 1.0,
+      "precision_at_5_mean": 0.68,
+      "precision_at_10_mean": 0.75,
+      "tic_at_5_mean": 0.94,
+      "tic_at_5_std": 0.0966,
+      "tic_at_10_mean": 0.97,
+      "tic_at_10_std": 0.0483,
+      "ndcg_at_5_mean": 0.9108,
+      "ndcg_at_5_std": 0.1477,
+      "ndcg_at_10_mean": 0.9421,
+      "ndcg_at_10_std": 0.0958
+    },
+    {
+      "baseline_code": "B3",
+      "baseline_name": "CAD-Only",
+      "spearman_rho_mean": 0.2037,
+      "spearman_rho_std": 0.2184,
+      "kendall_tau_mean": 0.1939,
+      "kendall_tau_std": 0.2078,
+      "hit_at_5_mean": 1.0,
+      "hit_at_10_mean": 1.0,
+      "precision_at_5_mean": 1.0,
+      "precision_at_10_mean": 1.0,
+      "tic_at_5_mean": 1.0,
+      "tic_at_5_std": 0.0,
+      "tic_at_10_mean": 1.0,
+      "tic_at_10_std": 0.0,
+      "ndcg_at_5_mean": 1.0,
+      "ndcg_at_5_std": 0.0,
+      "ndcg_at_10_mean": 1.0,
+      "ndcg_at_10_std": 0.0
+    },
+    {
+      "baseline_code": "B4",
+      "baseline_name": "Impact-Only",
+      "spearman_rho_mean": 0.5,
+      "spearman_rho_std": 0.527,
+      "kendall_tau_mean": 0.5,
+      "kendall_tau_std": 0.527,
+      "hit_at_5_mean": 1.0,
+      "hit_at_10_mean": 1.0,
+      "precision_at_5_mean": 1.0,
+      "precision_at_10_mean": 1.0,
+      "tic_at_5_mean": 1.0,
+      "tic_at_5_std": 0.0,
+      "tic_at_10_mean": 1.0,
+      "tic_at_10_std": 0.0,
+      "ndcg_at_5_mean": 1.0,
+      "ndcg_at_5_std": 0.0,
+      "ndcg_at_10_mean": 1.0,
+      "ndcg_at_10_std": 0.0
+    },
+    {
+      "baseline_code": "B5",
+      "baseline_name": "Uncertainty + CAD",
+      "spearman_rho_mean": 0.1851,
+      "spearman_rho_std": 0.1981,
+      "kendall_tau_mean": 0.1679,
+      "kendall_tau_std": 0.1799,
+      "hit_at_5_mean": 1.0,
+      "hit_at_10_mean": 1.0,
+      "precision_at_5_mean": 0.7,
+      "precision_at_10_mean": 0.93,
+      "tic_at_5_mean": 1.0,
+      "tic_at_5_std": 0.0,
+      "tic_at_10_mean": 1.0,
+      "tic_at_10_std": 0.0,
+      "ndcg_at_5_mean": 1.0,
+      "ndcg_at_5_std": 0.0,
+      "ndcg_at_10_mean": 1.0,
+      "ndcg_at_10_std": 0.0
+    },
+    {
+      "baseline_code": "B6",
+      "baseline_name": "Full PCVC",
+      "spearman_rho_mean": 0.1877,
+      "spearman_rho_std": 0.2011,
+      "kendall_tau_mean": 0.1702,
+      "kendall_tau_std": 0.1827,
+      "hit_at_5_mean": 1.0,
+      "hit_at_10_mean": 1.0,
+      "precision_at_5_mean": 0.7,
+      "precision_at_10_mean": 0.93,
+      "tic_at_5_mean": 1.0,
+      "tic_at_5_std": 0.0,
+      "tic_at_10_mean": 1.0,
+      "tic_at_10_std": 0.0,
+      "ndcg_at_5_mean": 1.0,
+      "ndcg_at_5_std": 0.0,
+      "ndcg_at_10_mean": 1.0,
+      "ndcg_at_10_std": 0.0
+    }
+  ],
+  "statistical_tests": {
+    "friedman_test_all_baselines": {
+      "tic_at_10": {
+        "statistic": 15.0,
+        "p_value": 0.010362
+      },
+      "ndcg_at_10": {
+        "statistic": 15.0,
+        "p_value": 0.010362
+      },
+      "spearman_rho": {
+        "statistic": 24.3642,
+        "p_value": 0.000185
+      }
+    },
+    "pairwise_wilcoxon_vs_b6": {
+      "B6_vs_B1": {
+        "comparison": "Full PCVC vs Random",
+        "tic_at_10": {
+          "w_stat": 0.0,
+          "p_value": 1.0
+        },
+        "ndcg_at_10": {
+          "w_stat": 0.0,
+          "p_value": 1.0
+        }
+      },
+      "B6_vs_B2": {
+        "comparison": "Full PCVC vs Uncertainty-Only",
+        "tic_at_10": {
+          "w_stat": 0.0,
+          "p_value": 0.25
+        },
+        "ndcg_at_10": {
+          "w_stat": 0.0,
+          "p_value": 0.25
+        }
+      },
+      "B6_vs_B3": {
+        "comparison": "Full PCVC vs CAD-Only",
+        "tic_at_10": {
+          "w_stat": 0.0,
+          "p_value": 1.0
+        },
+        "ndcg_at_10": {
+          "w_stat": 0.0,
+          "p_value": 1.0
+        }
+      },
+      "B6_vs_B4": {
+        "comparison": "Full PCVC vs Impact-Only",
+        "tic_at_10": {
+          "w_stat": 0.0,
+          "p_value": 1.0
+        },
+        "ndcg_at_10": {
+          "w_stat": 0.0,
+          "p_value": 1.0
+        }
+      },
+      "B6_vs_B5": {
+        "comparison": "Full PCVC vs Uncertainty + CAD",
+        "tic_at_10": {
+          "w_stat": 0.0,
+          "p_value": 1.0
+        },
+        "ndcg_at_10": {
+          "w_stat": 0.0,
+          "p_value": 1.0
+        }
+      }
+    }
+  },
+  "environment": {
+    "timestamp_utc": "2026-10-05T10:42:53.049348+00:00",
+    "python_version": "3.14.2 (tags/v3.14.2:df79316, Dec  5 2025, 17:18:21) [MSC v.1944 64 bit (AMD64)]",
+    "platform": "Windows-11-10.0.26300-SP0",
+    "architecture": "64bit",
+    "processor": "Intel64 Family 6 Model 183 Stepping 1, GenuineIntel",
+    "packages": {
+      "networkx": "3.6.1",
+      "numpy": "2.5.2",
+      "pandas": "3.0.5",
+      "scipy": "1.18.1",
+      "matplotlib": "3.11.2",
+      "shapely": "2.1.2",
+      "geopandas": "1.1.4",
+      "osmnx": "2.1.1",
+      "fastapi": "0.141.1",
+      "pydantic": "2.13.5"
+    },
+    "dataset_audit": {
+      "path": "D:\\dynamic_pedestrian_rerouting\\data\\vit_vellore\\processed\\vit_vellore_academic_pedestrian_network.pkl",
+      "size_bytes": 767489,
+      "md5": "5ecc692284c6b43a700ac92f303aeed1",
+      "mtime": 1789544907.9315057
+    }
+  }
+}

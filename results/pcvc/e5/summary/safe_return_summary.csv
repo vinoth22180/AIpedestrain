@@ -1,0 +1,5 @@
+target_profile,total_candidates,eligible_count,rejected_count,eligibility_rate_pct,detour_overhead_mean,detour_overhead_median,detour_overhead_std,detour_overhead_min,detour_overhead_max,travel_distance_m_mean,travel_distance_m_median
+wheelchair,100,100,0,100.0,86.212,45.52,108.081,1.001,694.31,993.48,942.15
+elderly,7,7,0,100.0,48.347,29.261,48.456,5.215,126.87,407.06,439.7
+pregnant,7,7,0,100.0,48.347,29.261,48.456,5.215,126.87,407.06,439.7
+general,100,100,0,100.0,91.128,54.528,110.231,2.689,694.31,1018.77,963.9

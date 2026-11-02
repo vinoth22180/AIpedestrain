@@ -1,0 +1,169 @@
+{
+  "mrr_tie_sensitivity": [
+    {
+      "baseline_code": "B1",
+      "baseline_name": "Random",
+      "mean_mrr": 0.113,
+      "median_mrr": 0.05,
+      "std_mrr": 0.1811,
+      "min_mrr": 0.025,
+      "max_mrr": 1.0
+    },
+    {
+      "baseline_code": "B2",
+      "baseline_name": "Uncertainty-Only",
+      "mean_mrr": 0.0973,
+      "median_mrr": 0.05,
+      "std_mrr": 0.1406,
+      "min_mrr": 0.025,
+      "max_mrr": 1.0
+    },
+    {
+      "baseline_code": "B3",
+      "baseline_name": "CAD-Only",
+      "mean_mrr": 0.1112,
+      "median_mrr": 0.0476,
+      "std_mrr": 0.1792,
+      "min_mrr": 0.025,
+      "max_mrr": 1.0
+    },
+    {
+      "baseline_code": "B4",
+      "baseline_name": "Impact-Only",
+      "mean_mrr": 0.1063,
+      "median_mrr": 0.0476,
+      "std_mrr": 0.1717,
+      "min_mrr": 0.025,
+      "max_mrr": 1.0
+    },
+    {
+      "baseline_code": "B5",
+      "baseline_name": "Uncertainty + CAD",
+      "mean_mrr": 0.1066,
+      "median_mrr": 0.0476,
+      "std_mrr": 0.1756,
+      "min_mrr": 0.025,
+      "max_mrr": 1.0
+    },
+    {
+      "baseline_code": "B6",
+      "baseline_name": "Full PCVC",
+      "mean_mrr": 0.1047,
+      "median_mrr": 0.0476,
+      "std_mrr": 0.1576,
+      "min_mrr": 0.025,
+      "max_mrr": 1.0
+    }
+  ],
+  "robust_metrics_summary": [
+    {
+      "baseline_code": "B1",
+      "baseline_name": "Random",
+      "p_at_1": 1.0,
+      "p_at_5": 1.0,
+      "p_at_10": 1.0,
+      "r_at_10": 0.2559,
+      "f1_at_10": 0.4075,
+      "ap": 0.9896,
+      "mean_rank_crit": 20.35,
+      "median_rank_crit": 20.35,
+      "spearman_rho": 0.0546,
+      "kendall_tau": 0.0451
+    },
+    {
+      "baseline_code": "B2",
+      "baseline_name": "Uncertainty-Only",
+      "p_at_1": 0.7,
+      "p_at_5": 0.94,
+      "p_at_10": 0.97,
+      "r_at_10": 0.248,
+      "f1_at_10": 0.395,
+      "ap": 0.9687,
+      "mean_rank_crit": 20.53,
+      "median_rank_crit": 20.5,
+      "spearman_rho": -0.0578,
+      "kendall_tau": -0.0571
+    },
+    {
+      "baseline_code": "B3",
+      "baseline_name": "CAD-Only",
+      "p_at_1": 1.0,
+      "p_at_5": 1.0,
+      "p_at_10": 1.0,
+      "r_at_10": 0.2559,
+      "f1_at_10": 0.4075,
+      "ap": 1.0,
+      "mean_rank_crit": 20.05,
+      "median_rank_crit": 20.05,
+      "spearman_rho": 0.2037,
+      "kendall_tau": 0.1939
+    },
+    {
+      "baseline_code": "B4",
+      "baseline_name": "Impact-Only",
+      "p_at_1": 1.0,
+      "p_at_5": 1.0,
+      "p_at_10": 1.0,
+      "r_at_10": 0.2559,
+      "f1_at_10": 0.4075,
+      "ap": 1.0,
+      "mean_rank_crit": 20.05,
+      "median_rank_crit": 20.05,
+      "spearman_rho": 0.5,
+      "kendall_tau": 0.5
+    },
+    {
+      "baseline_code": "B5",
+      "baseline_name": "Uncertainty + CAD",
+      "p_at_1": 1.0,
+      "p_at_5": 1.0,
+      "p_at_10": 1.0,
+      "r_at_10": 0.2559,
+      "f1_at_10": 0.4075,
+      "ap": 0.9998,
+      "mean_rank_crit": 20.06,
+      "median_rank_crit": 20.05,
+      "spearman_rho": 0.1851,
+      "kendall_tau": 0.1679
+    },
+    {
+      "baseline_code": "B6",
+      "baseline_name": "Full PCVC",
+      "p_at_1": 1.0,
+      "p_at_5": 1.0,
+      "p_at_10": 1.0,
+      "r_at_10": 0.2559,
+      "f1_at_10": 0.4075,
+      "ap": 1.0,
+      "mean_rank_crit": 20.05,
+      "median_rank_crit": 20.05,
+      "spearman_rho": 0.1877,
+      "kendall_tau": 0.1702
+    }
+  ],
+  "alternative_oracles_summary": {
+    "case_a_unique": 2,
+    "case_a_counts": {
+      "1.0": 49,
+      "0.0": 1
+    },
+    "case_b_unique": 2,
+    "case_b_counts": {
+      "1.0": 49,
+      "0.0": 1
+    },
+    "detour_unique": 44,
+    "detour_min": 4.41,
+    "detour_max": 1645.29,
+    "detour_mean": 439.4072000000001,
+    "comp_size_unique": 6,
+    "comp_size_counts": {
+      "0": 43,
+      "26": 1,
+      "1": 2,
+      "2": 1,
+      "3": 2,
+      "8": 1
+    }
+  }
+}

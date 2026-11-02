@@ -1,0 +1,15 @@
+dynamic_weights:
+  # Alpha: Multiplier for pedestrian congestion (0 to 1 score)
+  alpha_congestion: 50.0 
+  # Beta: Predictive congestion multiplier (historical time-of-day)
+  beta_predictive: 20.0
+  # Gamma: Base penalty for crossing a traffic signal intersection
+  gamma_signal: 30.0
+  # Delta: Multiplier for the Signal-Decay penalty
+  delta_decay: 1.0
+
+signal_decay:
+  # Lambda: Decay rate per second
+  lambda_rate: 0.005
+  # Threshold to completely remove penalty
+  epsilon: 0.1

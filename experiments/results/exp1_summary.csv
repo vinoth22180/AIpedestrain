@@ -1,0 +1,5 @@
+profile,total_edges,edges_uncertain_gt04,edges_uncertain_gt07,uncertainty_mean,uncertainty_std,band_low_pct,band_medium_pct,band_high_pct,band_critical_pct,top_missing_attrs
+wheelchair,1721,1400,4,0.4497,0.1403,18.7,81.1,0.2,0.0,smoothness_value; tactile_paving; wheelchair; surface; slope_percent
+elderly,1721,7,0,0.2805,0.0976,35.3,64.7,0.0,0.0,smoothness_value; tactile_paving; surface; slope_percent
+pregnant,1721,7,0,0.2805,0.0976,35.3,64.7,0.0,0.0,smoothness_value; tactile_paving; surface; slope_percent
+general,1721,1114,7,0.445,0.1445,35.3,64.3,0.4,0.0,smoothness_value; surface; slope_percent

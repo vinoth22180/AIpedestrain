@@ -1,0 +1,1208 @@
+
+=== src\accessibility.py ===
+def extract_accessibility_features(osm_edge_row):
+    """
+    Takes a row (Series) from the OSM edges GeoDataFrame and 
+    extracts standardized accessibility features.
+    """
+    features = {
+        'has_stairs': False,
+        'wheelchair_accessible': None, # None means unknown
+        'incline_value': None,
+        'surface_type': 'unknown',
+        'smoothness_value': 'unknown',
+        'tactile_paving': 'unknown'
+    }
+    
+    # 1. Stairs
+    highway = osm_edge_row.get('highway', '')
+    if isinstance(highway, list):
+        if 'steps' in highway:
+            features['has_stairs'] = True
+    elif highway == 'steps':
+        features['has_stairs'] = True
+        
+    # 2. Wheelchair accessibility
+    wheelchair = osm_edge_row.get('wheelchair', None)
+    if wheelchair:
+        if isinstance(wheelchair, list):
+            wheelchair = wheelchair[0]
+        if wheelchair in ['yes', 'designated']:
+            features['wheelchair_accessible'] = True
+        elif wheelchair == 'no':
+            features['wheelchair_accessible'] = False
+            
+    # 3. Surface & Smoothness
+    surface = osm_edge_row.get('surface', None)
+    if surface:
+        features['surface_type'] = surface[0] if isinstance(surface, list) else surface
+        
+    smoothness = osm_edge_row.get('smoothness', None)
+    if smoothness:
+        features['smoothness_value'] = smoothness[0] if isinstance(smoothness, list) else smoothness
+        
+    # 4. Incline (parse if numeric, or qualitative like 'up', 'down')
+    incline = osm_edge_row.get('incline', None)
+    if incline:
+        incline_val = incline[0] if isinstance(incline, list) else incline
+        try:
+            # Try parse percentage string like '5%' or '5'
+            features['incline_value'] = float(str(incline_val).replace('%', ''))
+        except ValueError:
+            # Could be qualitative e.g. 'up'
+            features['incline_value'] = incline_val
+            
+    # 5. Tactile Paving
+    tactile = osm_edge_row.get('tactile_paving', None)
+    if tactile:
+        features['tactile_paving'] = tactile[0] if isinstance(tactile, list) else tactile
+
+    return features
+
+=== src\api.py ===
+from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel
+from typing import List, Optional
+
+from src.graph_manager import load_or_build_graph
+from src.routing import calculate_route
+
+app = FastAPI(title="Accessibility-Aware Routing API")
+
+# Allow all origins for development
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+G_base = None
+
+@app.on_event("startup")
+def startup_event():
+    global G_base
+    print("Initializing Graph on startup...")
+    G_base = load_or_build_graph()
+    print("Graph initialized successfully.")
+
+class RouteRequest(BaseModel):
+    origin: List[float] # [lon, lat]
+    destination: List[float] # [lon, lat]
+    profile: str = "general"
+
+@app.post("/api/route")
+def get_route(request: RouteRequest):
+    if G_base is None:
+        raise HTTPException(status_code=503, detail="Graph not loaded yet")
+        
+    origin_tuple = (request.origin[0], request.origin[1])
+    dest_tuple = (request.destination[0], request.destination[1])
+    
+    # Pass simulation state to calculate_route
+    from src.simulation.controller import sim_controller
+    sim_state = sim_controller.get_state()
+    
+    path, path_edges = calculate_route(
+        G_base, origin_tuple, dest_tuple, request.profile, 
+        sim_date_str=sim_state['date'], 
+        sim_hour=sim_state['hour']
+    )
+    
+    if not path or not path_edges:
+        raise HTTPException(status_code=404, detail="No path found between these locations")
+        
+    total_length = sum([edge.get('length', 0) for edge in path_edges])
+    total_cost = sum([edge.get('cost', 0) for edge in path_edges])
+    stairs_count = sum([1 for edge in path_edges if edge.get('has_stairs', False)])
+    inaccessible_count = sum([1 for edge in path_edges if edge.get('wheelchair_accessible') is False])
+    
+    # Collect coordinates to form a GeoJSON LineString
+    route_coords = []
+    restricted_segments = []
+    
+    for edge in path_edges:
+        coords = list(edge['geometry'].coords)
+        route_coords.extend(coords)
+        
+        is_restricted = edge.get('has_stairs', False) or edge.get('wheelchair_accessible') is False
+        if is_restricted or edge.get('cost', 0) > edge.get('length', 0) * 2: # Highlight high cost edges too
+            restricted_segments.append({
+                "type": "Feature",
+                "geometry": {
+                    "type": "LineString",
+                    "coordinates": coords
+                },
+                "properties": {
+                    "cost": edge.get('cost', 0),
+                    "has_stairs": edge.get('has_stairs', False),
+                    "wheelchair_accessible": edge.get('wheelchair_accessible'),
+                    "cost_breakdown": edge.get('cost_breakdown', {})
+                }
+            })
+
+    geojson_route = {
+        "type": "Feature",
+        "geometry": {
+            "type": "LineString",
+            "coordinates": route_coords
+        },
+        "properties": {
+            "profile": request.profile,
+            "total_cost": total_cost
+        }
+    }
+    
+    return {
+        "route": geojson_route,
+        "restricted_segments": {
+            "type": "FeatureCollection",
+            "features": restricted_segments
+        },
+        "stats": {
+            "distance": round(total_length, 1),
+            "cost": round(total_cost, 1),
+            "stairs_count": stairs_count,
+            "inaccessible_count": inaccessible_count
+        }
+    }
+
+class SimStepRequest(BaseModel):
+    delta_seconds: float
+
+@app.get("/api/simulation/state")
+def get_sim_state():
+    from src.simulation.controller import sim_controller
+    return sim_controller.get_state()
+
+@app.post("/api/simulation/step")
+def step_simulation(req: SimStepRequest):
+    from src.simulation.controller import sim_controller
+    sim_controller.step(req.delta_seconds)
+    return sim_controller.get_state()
+
+@app.post("/api/simulation/reset")
+def reset_simulation():
+    from src.simulation.controller import sim_controller
+    sim_controller.reset()
+    return sim_controller.get_state()
+
+class InjectCongestionRequest(BaseModel):
+    lon: float
+    lat: float
+    penalty: float
+
+@app.post("/api/simulation/inject_congestion")
+def inject_congestion(req: InjectCongestionRequest):
+    from src.signal_decay.engine import decay_engine
+    from src.routing import get_nearest_node
+    # Find nearest edge. For simplicity, just find nearest node and penalize edges connected to it.
+    if G_base is None:
+        raise HTTPException(status_code=503, detail="Graph not loaded")
+        
+    node = get_nearest_node(G_base, (req.lon, req.lat))
+    if not node:
+        raise HTTPException(status_code=404, detail="No node found")
+        
+    # Inject penalty to all edges connected to this node
+    edges = list(G_base.edges(node))
+    for u, v in edges:
+        decay_engine.add_penalty(u, v, req.penalty)
+        
+    return {"status": "success", "injected_node": node, "edges_affected": len(edges)}
+
+@app.get("/api/sensors")
+def get_sensors():
+    import os
+    import pandas as pd
+    sensors_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "data", "raw", "pedestrian_sensors", "sensor_locations.csv")
+    if not os.path.exists(sensors_path):
+        return []
+    df = pd.read_csv(sensors_path)
+    return df[['location_id', 'sensor_name', 'latitude', 'longitude']].to_dict(orient='records')
+
+@app.get("/api/signals")
+def get_signals():
+    import os
+    import pandas as pd
+    signals_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "data", "raw", "traffic_signals", "victorian_traffic_signals.csv")
+    if not os.path.exists(signals_path):
+        return []
+    df = pd.read_csv(signals_path)
+    return df[['SITE_NO', 'SITE_NAME', 'LATITUDE', 'LONGITUDE']].to_dict(orient='records')
+
+
+=== src\app.py ===
+import streamlit as st
+import folium
+from streamlit_folium import st_folium
+import os
+import sys
+project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+if project_root not in sys.path:
+    sys.path.insert(0, project_root)
+
+import networkx as nx
+
+from src.data_loader import load_data
+from src.data_cleaner import merge_datasets
+from src.graph_builder import build_networkx_graph, apply_profile_costs
+from src.routing import calculate_route
+from src.visualization import create_map
+from src.user_profiles import PROFILE_WEIGHTS
+
+st.set_page_config(page_title="Accessibility-Aware Routing", layout="wide")
+
+from src.graph_manager import load_or_build_graph
+
+@st.cache_resource
+def get_graph():
+    st.write("Loading graph (check console for detailed logs)...")
+    return load_or_build_graph()
+
+st.title("Accessibility-Aware Static Pedestrian Routing")
+st.markdown("Proof of Concept - Milestone 1")
+
+# Load graph (cached)
+G_base = None
+try:
+    G_base = get_graph()
+except Exception as e:
+    st.error(f"Error loading data: {e}")
+    st.stop()
+
+# UI Layout
+col1, col2 = st.columns([1, 3])
+
+with col1:
+    st.header("Settings")
+    profile = st.selectbox("Select User Profile", list(PROFILE_WEIGHTS.keys()))
+    
+    st.subheader("Test Scenarios")
+    
+    # Pre-defined test locations (lon, lat) within Melbourne CBD bounding box
+    locations = {
+        "Flinders Street Station": (144.9669, -37.8183),
+        "State Library": (144.9646, -37.8098),
+        "Parliament House": (144.9740, -37.8115),
+        "Flagstaff Gardens": (144.9555, -37.8105)
+    }
+    
+    start_loc_name = st.selectbox("Source", list(locations.keys()), index=0)
+    end_loc_name = st.selectbox("Destination", list(locations.keys()), index=1)
+    
+    start_loc = locations[start_loc_name]
+    end_loc = locations[end_loc_name]
+    
+    st.markdown("---")
+    st.subheader("Profile Penalty Weights")
+    st.json(PROFILE_WEIGHTS[profile])
+    
+    st.info("Note: When offline, the map background (tiles) may not render, but the route geometry and calculations will run instantly.")
+
+with col2:
+    st.header("Route Map")
+    
+    if G_base is not None:
+        # Calculate Route directly using dynamic weights (No graph copying needed!)
+        path, path_edges = calculate_route(G_base, start_loc, end_loc, profile)
+        
+        if path and path_edges:
+            # Calculate stats
+            total_length = sum([edge.get('length', 0) for edge in path_edges])
+            total_cost = sum([edge.get('cost', 0) for edge in path_edges])
+            stairs_count = sum([1 for edge in path_edges if edge.get('has_stairs', False)])
+            inaccessible_count = sum([1 for edge in path_edges if edge.get('wheelchair_accessible') is False])
+            
+            # Display Stats
+            st.write(f"**Route Length:** {total_length:.1f} m | **Route Cost:** {total_cost:.1f}")
+            st.write(f"**Stairs Encountered:** {stairs_count} | **Inaccessible Segments:** {inaccessible_count}")
+            
+            # Render Map
+            m = create_map(G_base, path, path_edges, start_loc, end_loc)
+            st_folium(m, width=900, height=600)
+        else:
+            st.warning("Could not find a path between these locations.")
+    else:
+        st.warning("Graph data is not available. Check logs for download errors.")
+
+=== src\data_cleaner.py ===
+import pandas as pd
+import geopandas as gpd
+from src.accessibility import extract_accessibility_features
+
+def clean_osm_data(osm_edges):
+    """
+    Extracts structured accessibility features from raw OSM edge tags.
+    """
+    features_list = []
+    for _, row in osm_edges.iterrows():
+        features = extract_accessibility_features(row)
+        features_list.append(features)
+        
+    features_df = pd.DataFrame(features_list)
+    # Join features back to the geometry
+    clean_osm = pd.concat([osm_edges.reset_index(drop=True), features_df], axis=1)
+    
+    # Keep only relevant columns
+    cols_to_keep = ['geometry', 'has_stairs', 'wheelchair_accessible', 'incline_value', 
+                    'surface_type', 'smoothness_value', 'tactile_paving']
+    return clean_osm[cols_to_keep]
+
+def merge_datasets(melb_edges, osm_edges):
+    """
+    Spatially joins the OSM accessibility features onto the Melbourne Pedestrian Network.
+    Uses sjoin_nearest to find the closest OSM edge within a reasonable threshold (e.g. 10m).
+    """
+    # Project both to EPSG:28355 (GDA94 / MGA zone 55 - standard for Melbourne) for metric operations
+    melb_proj = melb_edges.to_crs("EPSG:28355")
+    
+    if osm_edges.empty:
+        print("OSM data is empty. Skipping spatial join.")
+        merged_wgs84 = melb_edges.copy()
+        # Add default columns for missing OSM data
+        merged_wgs84['has_stairs'] = False
+        merged_wgs84['wheelchair_accessible'] = None
+        merged_wgs84['incline_value'] = None
+        merged_wgs84['surface_type'] = 'unknown'
+        merged_wgs84['smoothness_value'] = 'unknown'
+        merged_wgs84['tactile_paving'] = 'unknown'
+        return merged_wgs84
+        
+    osm_proj = osm_edges.to_crs("EPSG:28355")
+    
+    clean_osm_proj = clean_osm_data(osm_proj)
+    
+    print("Performing spatial join (nearest) between Melbourne Network and OSM data...")
+    # Find nearest OSM edge for each Melbourne edge within 15 meters
+    merged = gpd.sjoin_nearest(
+        melb_proj, 
+        clean_osm_proj, 
+        how='left', 
+        max_distance=15, 
+        distance_col='osm_dist'
+    )
+    
+    # Since sjoin_nearest can return multiple matches if distances are exactly equal, 
+    # we drop duplicates based on the original index of the melb_edges.
+    merged = merged[~merged.index.duplicated(keep='first')]
+    
+    # Project back to WGS84 for mapping
+    merged_wgs84 = merged.to_crs("EPSG:4326")
+    
+    # Fill NA for boolean features where no OSM data was found
+    merged_wgs84['has_stairs'] = merged_wgs84['has_stairs'].fillna(False)
+    
+    print(f"Data merge complete. Total edges: {len(merged_wgs84)}")
+    return merged_wgs84
+
+from shapely.geometry import Point
+
+def map_poi_to_edges(edges_gdf, poi_df, lat_col='latitude', lon_col='longitude', max_dist=20, id_col='location_id'):
+    """
+    Spatially maps Points of Interest (sensors/signals) to the nearest network edges.
+    Returns a dictionary mapping edge_index (from edges_gdf) to a list of POI IDs.
+    """
+    if poi_df.empty:
+        return {}
+        
+    geometry = [Point(xy) for xy in zip(poi_df[lon_col], poi_df[lat_col])]
+    poi_gdf = gpd.GeoDataFrame(poi_df, geometry=geometry, crs="EPSG:4326")
+    
+    poi_proj = poi_gdf.to_crs("EPSG:28355")
+    edges_proj = edges_gdf.to_crs("EPSG:28355")
+    
+    # Drop index_right and index_left if they exist from previous spatial joins to avoid ValueError
+    gdf_edges_clean = edges_proj.drop(columns=['index_right', 'index_left'], errors='ignore')
+
+    # Find the nearest edge for each POI
+    joined = gpd.sjoin_nearest(
+        poi_proj,
+        gdf_edges_clean,
+        how='left', 
+        max_distance=max_dist, 
+        distance_col='dist'
+    )
+    
+    mapping = {}
+    for _, row in joined.iterrows():
+        edge_idx = row['index_right']
+        poi_id = row[id_col]
+        if edge_idx not in mapping:
+            mapping[edge_idx] = []
+        mapping[edge_idx].append(poi_id)
+        
+    return mapping
+
+
+=== src\data_loader.py ===
+import os
+import requests
+import geopandas as gpd
+import osmnx as ox
+
+MELB_PED_URL = "https://data.melbourne.vic.gov.au/api/explore/v2.1/catalog/datasets/pedestrian-network/exports/geojson"
+DATA_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), "data")
+PED_NET_PATH = os.path.join(DATA_DIR, "pedestrian_network", "pedestrian_network.geojson")
+OSM_DIR = os.path.join(DATA_DIR, "osm_accessibility")
+OSM_EDGES_PATH = os.path.join(OSM_DIR, "osm_edges.geojson")
+OSM_NODES_PATH = os.path.join(OSM_DIR, "osm_nodes.geojson")
+
+# Melbourne CBD Bounding Box (approx)
+BBOX = (-37.808, -37.820, 144.975, 144.955) # north, south, east, west
+
+def download_melbourne_network():
+    if not os.path.exists(PED_NET_PATH):
+        print(f"Downloading Melbourne Pedestrian Network to {PED_NET_PATH}...")
+        response = requests.get(MELB_PED_URL, timeout=30)
+        response.raise_for_status()
+        with open(PED_NET_PATH, 'wb') as f:
+            f.write(response.content)
+        print("Download complete.")
+    else:
+        print("Melbourne Pedestrian Network already exists.")
+
+    gdf = gpd.read_file(PED_NET_PATH)
+    
+    # Clip to bounding box for the prototype
+    from shapely.geometry import Polygon
+    bbox_polygon = Polygon([
+        (BBOX[3], BBOX[1]), 
+        (BBOX[2], BBOX[1]), 
+        (BBOX[2], BBOX[0]), 
+        (BBOX[3], BBOX[0]), 
+        (BBOX[3], BBOX[1])
+    ])
+    gdf = gpd.clip(gdf, bbox_polygon)
+    print(f"Clipped Melbourne Network to {len(gdf)} edges.")
+    return gdf
+
+def fetch_osm_accessibility_data():
+    if not os.path.exists(OSM_EDGES_PATH) or not os.path.exists(OSM_NODES_PATH):
+        print("Fetching OSM accessibility data for Melbourne CBD...")
+        # Define useful tags for pedestrian routing
+        useful_tags_path = ['highway', 'surface', 'smoothness', 'incline', 'wheelchair', 'tactile_paving', 'steps']
+        ox.settings.useful_tags_way = ox.settings.useful_tags_way + useful_tags_path
+        try:
+            # Bypass blocked Overpass API by downloading directly from main OSM XML API
+            # BBOX format for API is: left,bottom,right,top (west, south, east, north)
+            osm_api_url = f"https://api.openstreetmap.org/api/0.6/map?bbox={BBOX[3]},{BBOX[1]},{BBOX[2]},{BBOX[0]}"
+            print(f"Downloading raw OSM XML from {osm_api_url}...")
+            
+            headers = {'User-Agent': 'AccessibilityRoutingPrototype/1.0'}
+            resp = requests.get(osm_api_url, headers=headers, timeout=60)
+            resp.raise_for_status()
+            
+            osm_xml_path = os.path.join(OSM_DIR, "map.osm")
+            with open(osm_xml_path, 'wb') as f:
+                f.write(resp.content)
+            
+            # Create graph from the downloaded XML
+            G_osm = ox.graph_from_xml(osm_xml_path, simplify=False)
+            nodes, edges = ox.graph_to_gdfs(G_osm)
+            
+            # Save for later runs
+            edges.to_file(OSM_EDGES_PATH, driver="GeoJSON")
+            nodes.to_file(OSM_NODES_PATH, driver="GeoJSON")
+            print("OSM data fetched and saved.")
+        except Exception as e:
+            print(f"Error fetching OSM data (likely network timeout): {e}")
+            # Return empty geodataframes with expected structure
+            edges = gpd.GeoDataFrame(columns=['geometry', 'highway', 'surface', 'smoothness', 'incline', 'wheelchair', 'tactile_paving', 'steps'], crs="EPSG:4326")
+            nodes = gpd.GeoDataFrame(columns=['geometry'], crs="EPSG:4326")
+    else:
+        print("OSM accessibility data already exists. Loading...")
+        edges = gpd.read_file(OSM_EDGES_PATH)
+        nodes = gpd.read_file(OSM_NODES_PATH)
+        
+    return nodes, edges
+
+def load_data():
+    melb_gdf = download_melbourne_network()
+    osm_nodes, osm_edges = fetch_osm_accessibility_data()
+    return melb_gdf, osm_edges, osm_nodes
+
+=== src\graph_builder.py ===
+import networkx as nx
+from shapely.geometry import LineString
+from src.user_profiles import evaluate_edge_cost
+
+def build_networkx_graph(gdf):
+    """
+    Builds an undirected NetworkX graph from the pedestrian network GeoDataFrame.
+    Uses start and end coordinates of each LineString as nodes.
+    """
+    G = nx.Graph()
+    print("Building NetworkX graph from GeoDataFrame...")
+    for idx, row in gdf.iterrows():
+        geom = row['geometry']
+        if not isinstance(geom, LineString):
+            continue
+            
+        # Node coordinates as tuple of floats for hashing
+        coords = list(geom.coords)
+        u = (round(coords[0][0], 6), round(coords[0][1], 6))
+        v = (round(coords[-1][0], 6), round(coords[-1][1], 6))
+        
+        # Calculate metric distance by projecting temporarily (or use geodesic)
+        # We can approximate distance from WGS84 or use an existing length if we projected
+        # Let's use Haversine for simplicity or length in pseudo-degrees
+        # More accurately: project geometry to EPSG:28355 to get meters
+        import pyproj
+        from shapely.ops import transform
+        
+        project = pyproj.Transformer.from_crs("EPSG:4326", "EPSG:28355", always_xy=True).transform
+        geom_m = transform(project, geom)
+        distance = geom_m.length
+        
+        # Add nodes with their coordinates
+        G.add_node(u, x=u[0], y=u[1])
+        G.add_node(v, x=v[0], y=v[1])
+        
+        # Add edge with attributes
+        edge_attrs = {
+            'geometry': geom,
+            'length': distance,
+            'has_stairs': row.get('has_stairs', False),
+            'wheelchair_accessible': row.get('wheelchair_accessible', None),
+            'incline_value': row.get('incline_value', None),
+            'surface_type': row.get('surface_type', 'unknown'),
+            'smoothness_value': row.get('smoothness_value', 'unknown'),
+            'tactile_paving': row.get('tactile_paving', 'unknown'),
+            'sensors': row.get('sensors', []),
+            'signals': row.get('signals', [])
+        }
+        
+        G.add_edge(u, v, **edge_attrs)
+        
+    print(f"Graph built with {G.number_of_nodes()} nodes and {G.number_of_edges()} edges.")
+    return G
+
+def apply_profile_costs(G, profile_name):
+    """
+    Applies the edge costs to the graph based on the specified user profile.
+    Updates the 'cost' attribute on each edge.
+    """
+    for u, v, data in G.edges(data=True):
+        cost = evaluate_edge_cost(data['length'], data, profile_name)
+        # Assign the computed cost
+        G[u][v]['cost'] = cost
+    return G
+
+=== src\graph_manager.py ===
+import os
+import pickle
+import logging
+
+from src.data_loader import load_data
+from src.data_cleaner import merge_datasets
+from src.graph_builder import build_networkx_graph
+
+logger = logging.getLogger(__name__)
+
+GRAPH_CACHE_PATH = os.path.join(os.path.dirname(os.path.dirname(__file__)), "data", "graph_cache.pkl")
+
+def load_or_build_graph():
+    """
+    Loads the graph from the pickle cache if it exists.
+    Otherwise, builds it from datasets and caches it.
+    """
+    if os.path.exists(GRAPH_CACHE_PATH):
+        logger.info("Loading precomputed graph from cache (offline & fast)...")
+        with open(GRAPH_CACHE_PATH, 'rb') as f:
+            return pickle.load(f)
+            
+    logger.info("Loading datasets...")
+    melb_gdf, osm_edges, osm_nodes = load_data()
+    
+    logger.info("Merging spatial data (this takes a moment)...")
+    merged_gdf = merge_datasets(melb_gdf, osm_edges)
+    
+    import pandas as pd
+    from src.data_cleaner import map_poi_to_edges
+    
+    # Load sensors
+    sensors_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "data", "raw", "pedestrian_sensors", "sensor_locations.csv")
+    if os.path.exists(sensors_path):
+        sensors_df = pd.read_csv(sensors_path)
+        logger.info("Mapping sensors to network...")
+        sensor_map = map_poi_to_edges(merged_gdf, sensors_df, 'latitude', 'longitude', max_dist=20, id_col='location_id')
+        merged_gdf['sensors'] = merged_gdf.index.map(lambda i: sensor_map.get(i, []))
+    else:
+        merged_gdf['sensors'] = [[] for _ in range(len(merged_gdf))]
+        
+    # Load signals
+    signals_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "data", "raw", "traffic_signals", "victorian_traffic_signals.csv")
+    if os.path.exists(signals_path):
+        signals_df = pd.read_csv(signals_path)
+        logger.info("Mapping signals to network...")
+        signal_map = map_poi_to_edges(merged_gdf, signals_df, 'LATITUDE', 'LONGITUDE', max_dist=15, id_col='SITE_NO')
+        merged_gdf['signals'] = merged_gdf.index.map(lambda i: signal_map.get(i, []))
+    else:
+        merged_gdf['signals'] = [[] for _ in range(len(merged_gdf))]
+    
+    logger.info("Building Graph...")
+    G = build_networkx_graph(merged_gdf)
+    
+    # Save graph to disk for instant future loads
+    # Ensure data directory exists
+    os.makedirs(os.path.dirname(GRAPH_CACHE_PATH), exist_ok=True)
+    with open(GRAPH_CACHE_PATH, 'wb') as f:
+        pickle.dump(G, f)
+        
+    return G
+
+=== src\routing.py ===
+import networkx as nx
+import math
+from src.user_profiles import evaluate_edge_cost
+
+from src.config.loader import WEIGHTS_CONFIG
+from src.congestion.model import congestion_model
+from src.signal_decay.engine import decay_engine
+
+def get_nearest_node(G, point):
+    """
+    Finds the nearest node in the graph to the given (lon, lat) point.
+    """
+    best_node = None
+    min_dist = float('inf')
+    
+    # Simple euclidean distance for finding nearest node in small area
+    for node in G.nodes():
+        dist = math.hypot(node[0] - point[0], node[1] - point[1])
+        if dist < min_dist:
+            min_dist = dist
+            best_node = node
+            
+    return best_node
+
+def calculate_route(G, origin, destination, profile_name, sim_date_str=None, sim_hour=None):
+    """
+    Calculates the optimal route using Dijkstra's algorithm based on profile-specific edge cost.
+    Origin and destination are (lon, lat) tuples.
+    Returns the node path and the list of edge data dicts along the path.
+    """
+    orig_node = get_nearest_node(G, origin)
+    dest_node = get_nearest_node(G, destination)
+    
+    w_config = WEIGHTS_CONFIG['dynamic_weights']
+    alpha = w_config['alpha_congestion']
+    beta = w_config['beta_predictive']
+    gamma = w_config['gamma_signal']
+    delta = w_config['delta_decay']
+    
+    # Pre-load congestion data if not already loaded
+    if congestion_model.df is None:
+        congestion_model.load_data()
+    
+    # Dynamic weight function evaluated during Dijkstra traversal
+    def weight_func(u, v, data):
+        # 1. Base + Accessibility Cost
+        base_acc_cost = evaluate_edge_cost(data.get('length', 0), data, profile_name)
+        
+        # 2. Congestion (C_e) & Predictive (P_e)
+        congestion_cost = 0.0
+        predictive_cost = 0.0
+        sensors = data.get('sensors', [])
+        if sensors:
+            # Average congestion across all sensors mapped to this edge
+            c_sum, p_sum = 0.0, 0.0
+            for sid in sensors:
+                if sim_date_str and sim_hour is not None:
+                    c_sum += congestion_model.get_current_congestion(sid, sim_date_str, sim_hour)
+                    p_sum += congestion_model.get_predictive_congestion(sid, sim_hour)
+            avg_c = c_sum / len(sensors)
+            avg_p = p_sum / len(sensors)
+            congestion_cost = alpha * avg_c
+            predictive_cost = beta * avg_p
+            
+        # 3. Traffic Signals (S_e)
+        signal_cost = 0.0
+        signals = data.get('signals', [])
+        if signals:
+            signal_cost = gamma # Static penalty for crossing a traffic signal
+            
+        # 4. Signal-Decay Penalty D_e(t)
+        decay_cost = delta * decay_engine.get_penalty(u, v)
+        
+        total_dynamic_cost = base_acc_cost + congestion_cost + predictive_cost + signal_cost + decay_cost
+        
+        # Store individual components so we can break it down in the UI later
+        # Note: networkx shortest_path might call this multiple times without copying dict
+        # So we don't mutate `data` here. We will mutate it later when building path_edges.
+        return total_dynamic_cost
+    
+    try:
+        # Dijkstra shortest path using the dynamic weight function
+        path = nx.shortest_path(G, source=orig_node, target=dest_node, weight=weight_func)
+        
+        # Collect edge attributes along the path
+        path_edges = []
+        for i in range(len(path)-1):
+            u = path[i]
+            v = path[i+1]
+            edge_data = G.get_edge_data(u, v).copy()
+            
+            # Recompute to store breakdowns
+            base_acc_cost = evaluate_edge_cost(edge_data.get('length', 0), edge_data, profile_name)
+            
+            c_sum, p_sum = 0.0, 0.0
+            sensors = edge_data.get('sensors', [])
+            if sensors and sim_date_str and sim_hour is not None:
+                c_sum = sum(congestion_model.get_current_congestion(s, sim_date_str, sim_hour) for s in sensors) / len(sensors)
+                p_sum = sum(congestion_model.get_predictive_congestion(s, sim_hour) for s in sensors) / len(sensors)
+            
+            congestion_cost = alpha * c_sum
+            predictive_cost = beta * p_sum
+            signal_cost = gamma if edge_data.get('signals', []) else 0.0
+            decay_cost = delta * decay_engine.get_penalty(u, v)
+            total = base_acc_cost + congestion_cost + predictive_cost + signal_cost + decay_cost
+            
+            # Compute and store the specific cost for visualization
+            edge_data['cost'] = total
+            edge_data['cost_breakdown'] = {
+                'base': base_acc_cost,
+                'congestion': congestion_cost,
+                'predictive': predictive_cost,
+                'signal': signal_cost,
+                'decay': decay_cost
+            }
+            path_edges.append(edge_data)
+            
+        return path, path_edges
+        
+    except nx.NetworkXNoPath:
+        print("No path found between the selected points.")
+        return None, None
+
+
+=== src\user_profiles.py ===
+"""
+User Profiles and Edge Cost Configuration for Accessibility-Aware Routing
+
+This module defines the initial experimental weights and penalties for different pedestrian profiles.
+NOTE: These weights are a starting point for the milestone and are not validated medical or final Signal-Decay parameters.
+"""
+
+PROFILE_WEIGHTS = {
+    "general": {
+        "base_cost_multiplier": 1.0,
+        "stairs_penalty": 20.0, # Slight penalty for stairs (e.g., equivalent to 20m flat walking)
+        "wheelchair_inaccessible_penalty": 0.0,
+        "unknown_penalty": 0.0,
+        "bad_surface_penalty": 5.0,
+    },
+    "elderly": {
+        "base_cost_multiplier": 1.2,
+        "stairs_penalty": 100.0, # High penalty for stairs
+        "wheelchair_inaccessible_penalty": 10.0,
+        "unknown_penalty": 5.0,
+        "bad_surface_penalty": 30.0,
+    },
+    "pregnant": {
+        "base_cost_multiplier": 1.1,
+        "stairs_penalty": 80.0, # High penalty
+        "wheelchair_inaccessible_penalty": 10.0,
+        "unknown_penalty": 5.0,
+        "bad_surface_penalty": 20.0,
+    },
+    "mobility_impaired": {
+        "base_cost_multiplier": 1.0,
+        "stairs_penalty": 999999.0, # Essentially prohibit stairs
+        "wheelchair_inaccessible_penalty": 999999.0, # Prohibit explicitly inaccessible paths
+        "unknown_penalty": 50.0, # Penalize unknown accessibility
+        "bad_surface_penalty": 100.0,
+    }
+}
+
+BAD_SURFACES = ['cobblestone', 'unpaved', 'gravel', 'dirt', 'grass', 'sand']
+
+def evaluate_edge_cost(distance, features, profile_name):
+    """
+    Computes the cost of an edge based on physical length and accessibility features
+    weighted by the user profile preferences.
+    """
+    if profile_name not in PROFILE_WEIGHTS:
+        profile_name = "general"
+        
+    weights = PROFILE_WEIGHTS[profile_name]
+    
+    # Base cost is physical distance
+    cost = distance * weights["base_cost_multiplier"]
+    
+    # Stairs penalty
+    if features.get('has_stairs', False):
+        cost += weights["stairs_penalty"]
+        
+    # Wheelchair accessibility penalty
+    wc_access = features.get('wheelchair_accessible')
+    if wc_access is False:
+        cost += weights["wheelchair_inaccessible_penalty"]
+    elif wc_access is None:
+        cost += weights["unknown_penalty"]
+        
+    # Surface penalty
+    surface = features.get('surface_type')
+    if surface in BAD_SURFACES:
+        cost += weights["bad_surface_penalty"]
+    elif surface == 'unknown' or surface is None:
+        # mild penalty for unknown surface
+        cost += weights["unknown_penalty"] / 2.0
+        
+    return cost
+
+=== src\visualization.py ===
+import folium
+import geopandas as gpd
+
+def create_map(G, path, path_edges, origin, destination):
+    """
+    Creates an interactive Folium map showing the start/end points and the calculated route.
+    """
+    # Initialize map around the origin
+    m = folium.Map(location=[origin[1], origin[0]], zoom_start=15)
+    
+    # Add origin and destination markers
+    folium.Marker(
+        [origin[1], origin[0]], 
+        popup='Start', 
+        icon=folium.Icon(color='green', icon='play')
+    ).add_to(m)
+    
+    folium.Marker(
+        [destination[1], destination[0]], 
+        popup='Destination', 
+        icon=folium.Icon(color='red', icon='stop')
+    ).add_to(m)
+    
+    if not path or not path_edges:
+        return m
+        
+    # Draw the route
+    route_coords = []
+    for edge in path_edges:
+        # Extract coordinates from LineString geometry
+        coords = list(edge['geometry'].coords)
+        # Folium expects [lat, lon]
+        route_coords.extend([[c[1], c[0]] for c in coords])
+        
+    folium.PolyLine(
+        route_coords,
+        weight=5,
+        color='blue',
+        opacity=0.8,
+        tooltip="Recommended Route"
+    ).add_to(m)
+    
+    # Highlight restrictive/high penalty segments
+    for edge in path_edges:
+        if edge.get('has_stairs', False) or edge.get('wheelchair_accessible') is False:
+            coords = list(edge['geometry'].coords)
+            edge_coords = [[c[1], c[0]] for c in coords]
+            folium.PolyLine(
+                edge_coords,
+                weight=5,
+                color='red',
+                opacity=1.0,
+                tooltip=f"Restricted/Stairs/Inaccessible Segment (Cost: {edge.get('cost', 0):.1f})"
+            ).add_to(m)
+            
+    return m
+
+=== src\config\loader.py ===
+import yaml
+import os
+
+CONFIG_PATH = os.path.join(os.path.dirname(__file__), 'weights.yaml')
+
+def load_weights_config():
+    if not os.path.exists(CONFIG_PATH):
+        # Default fallback if file is missing
+        return {
+            'dynamic_weights': {
+                'alpha_congestion': 50.0,
+                'beta_predictive': 20.0,
+                'gamma_signal': 30.0,
+                'delta_decay': 1.0
+            },
+            'signal_decay': {
+                'lambda_rate': 0.005,
+                'epsilon': 0.1
+            }
+        }
+        
+    with open(CONFIG_PATH, 'r') as f:
+        return yaml.safe_load(f)
+
+WEIGHTS_CONFIG = load_weights_config()
+
+=== src\congestion\model.py ===
+import pandas as pd
+import os
+
+COUNTS_FILE = os.path.join(os.path.dirname(__file__), '../../data/raw/pedestrian_counts/counts_sample.csv')
+
+class CongestionModel:
+    def __init__(self):
+        self.df = None
+        self.max_count = 1.0
+        self.predictive_cache = {}
+        
+    def load_data(self):
+        if not os.path.exists(COUNTS_FILE):
+            print(f"Warning: {COUNTS_FILE} not found.")
+            return
+            
+        self.df = pd.read_csv(COUNTS_FILE)
+        
+        # Determine maximum count for normalization
+        if not self.df.empty and 'pedestriancount' in self.df.columns:
+            self.max_count = self.df['pedestriancount'].max()
+            if self.max_count == 0:
+                self.max_count = 1.0
+                
+            # Precompute predictive averages (by hourday and sensor_id)
+            # Actually sensor_id is location_id in the dataset
+            avg_df = self.df.groupby(['location_id', 'hourday'])['pedestriancount'].mean().reset_index()
+            for _, row in avg_df.iterrows():
+                loc = int(row['location_id'])
+                hr = int(row['hourday'])
+                self.predictive_cache[(loc, hr)] = row['pedestriancount'] / self.max_count
+
+    def get_current_congestion(self, location_id: int, date_str: str, hour: int) -> float:
+        """
+        Returns normalized congestion C_e(t) for a specific date and time.
+        """
+        if self.df is None or self.df.empty:
+            return 0.0
+            
+        # For performance, this would normally be indexed or cached
+        # In a real system, we'd use a database. For this prototype:
+        match = self.df[(self.df['location_id'] == location_id) & 
+                        (self.df['sensing_date'] == date_str) & 
+                        (self.df['hourday'] == hour)]
+        
+        if not match.empty:
+            return match.iloc[0]['pedestriancount'] / self.max_count
+        return 0.0
+        
+    def get_predictive_congestion(self, location_id: int, hour: int) -> float:
+        """
+        Returns normalized predictive congestion P_e(t) (historical average for that hour).
+        """
+        return self.predictive_cache.get((location_id, hour), 0.0)
+
+# Singleton instance
+congestion_model = CongestionModel()
+
+=== src\data\fetch_datasets.py ===
+import os
+import urllib.request
+import json
+import csv
+
+def ensure_dir(path):
+    if not os.path.exists(path):
+        os.makedirs(path)
+
+RAW_DIR = "data/raw"
+ensure_dir(f"{RAW_DIR}/pedestrian_counts")
+ensure_dir(f"{RAW_DIR}/pedestrian_sensors")
+ensure_dir(f"{RAW_DIR}/traffic_signals")
+
+def fetch_json_to_csv(url, output_path, dataset_name):
+    print(f"Fetching {dataset_name}...")
+    try:
+        req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
+        with urllib.request.urlopen(req) as response:
+            data = json.loads(response.read().decode())
+            results = data.get('results', [])
+            if not results:
+                print(f"No results found for {dataset_name}.")
+                return
+            
+            with open(output_path, 'w', newline='', encoding='utf-8') as f:
+                writer = csv.DictWriter(f, fieldnames=results[0].keys())
+                writer.writeheader()
+                writer.writerows(results)
+            print(f"Saved {len(results)} records to {output_path}")
+    except Exception as e:
+        print(f"Failed to fetch {dataset_name}: {e}")
+
+def fetch_file(url, output_path, dataset_name):
+    print(f"Downloading {dataset_name}...")
+    try:
+        req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
+        with urllib.request.urlopen(req) as response:
+            with open(output_path, 'wb') as f:
+                f.write(response.read())
+        print(f"Saved {dataset_name} to {output_path}")
+    except Exception as e:
+        print(f"Failed to fetch {dataset_name}: {e}")
+
+if __name__ == "__main__":
+    # 1. Pedestrian Counts (CSV Export for recent counts)
+    counts_url = "https://data.melbourne.vic.gov.au/api/explore/v2.1/catalog/datasets/pedestrian-counting-system-monthly-counts-per-hour/exports/csv?limit=50000&timezone=UTC&use_labels=false&epsg=4326"
+    fetch_file(counts_url, f"{RAW_DIR}/pedestrian_counts/counts_sample.csv", "Pedestrian Counts")
+    
+    # 2. Sensor Locations
+    sensors_url = "https://data.melbourne.vic.gov.au/api/explore/v2.1/catalog/datasets/pedestrian-counting-system-sensor-locations/records?limit=100"
+    fetch_json_to_csv(sensors_url, f"{RAW_DIR}/pedestrian_sensors/sensor_locations.csv", "Sensor Locations")
+    
+    # 3. Traffic Signals (Statewide, but we'll filter later)
+    signals_url = "https://opendata.transport.vic.gov.au/dataset/923af458-363d-469f-bc5e-84746a80b9a2/resource/1036a318-8867-4dc6-bd84-fc3bcd6cbdb9/download/victorian_traffic_signals.csv"
+    fetch_file(signals_url, f"{RAW_DIR}/traffic_signals/victorian_traffic_signals.csv", "Victorian Traffic Signals")
+
+=== src\evaluation\benchmark.py ===
+import time
+from src.graph_manager import load_or_build_graph
+from src.routing import calculate_route
+
+def run_benchmark():
+    print("Loading graph for benchmark...")
+    G = load_or_build_graph()
+    
+    # Common origin/destination in CBD
+    origin = (144.965, -37.813)
+    destination = (144.955, -37.820)
+    
+    print("Benchmarking General Profile Route Calculation...")
+    start_time = time.time()
+    for _ in range(10):
+        calculate_route(G, origin, destination, "general")
+    end_time = time.time()
+    
+    print(f"Average Route Time (General): {((end_time - start_time) / 10) * 1000:.2f} ms")
+
+if __name__ == "__main__":
+    run_benchmark()
+
+=== src\signal_decay\engine.py ===
+import math
+from src.config.loader import WEIGHTS_CONFIG
+
+class SignalDecayEngine:
+    def __init__(self):
+        self.lambda_rate = WEIGHTS_CONFIG['signal_decay']['lambda_rate']
+        self.epsilon = WEIGHTS_CONFIG['signal_decay']['epsilon']
+        # Dictionary mapping edge_id (u, v) to its current decay penalty D_e(t)
+        self.edge_penalties = {}
+        self.last_update_time = 0.0 # in seconds
+
+    def update_time(self, current_time: float):
+        """
+        Advances the simulation time and decays existing penalties.
+        """
+        delta_t = current_time - self.last_update_time
+        if delta_t <= 0:
+            return
+            
+        decay_factor = math.exp(-self.lambda_rate * delta_t)
+        
+        edges_to_remove = []
+        for edge, penalty in self.edge_penalties.items():
+            new_penalty = penalty * decay_factor
+            if new_penalty < self.epsilon:
+                edges_to_remove.append(edge)
+            else:
+                self.edge_penalties[edge] = new_penalty
+                
+        for edge in edges_to_remove:
+            del self.edge_penalties[edge]
+            
+        self.last_update_time = current_time
+
+    def add_penalty(self, u, v, penalty_value):
+        """
+        I_e(t): Injects an instantaneous penalty to an edge.
+        """
+        edge = (u, v)
+        if edge in self.edge_penalties:
+            self.edge_penalties[edge] += penalty_value
+        else:
+            self.edge_penalties[edge] = penalty_value
+            
+        # Graph is undirected, so add to reverse as well if not strictly directed graph
+        # We assume edges are treated in pairs or canonicalized in routing.py
+        # If it's an undirected graph in nx, get_edge_data(u, v) == get_edge_data(v, u)
+        # So we should penalize (v, u) as well.
+        rev_edge = (v, u)
+        if rev_edge in self.edge_penalties:
+            self.edge_penalties[rev_edge] += penalty_value
+        else:
+            self.edge_penalties[rev_edge] = penalty_value
+
+    def get_penalty(self, u, v) -> float:
+        """
+        Returns D_e(t) for the given edge.
+        """
+        return self.edge_penalties.get((u, v), 0.0)
+
+    def reset(self):
+        self.edge_penalties = {}
+        self.last_update_time = 0.0
+
+decay_engine = SignalDecayEngine()
+
+=== src\simulation\controller.py ===
+from src.signal_decay.engine import decay_engine
+
+class SimulationController:
+    def __init__(self):
+        # Default start point based on available sample data
+        # Let's say we start at 2025-10-23 08:00 (since we saw 2025-10-23 in the sample output)
+        self.sim_date_str = "2025-10-23"
+        self.sim_hour = 8
+        self.elapsed_seconds = 0.0
+        
+    def step(self, delta_seconds: float):
+        self.elapsed_seconds += delta_seconds
+        
+        # Advance hour if elapsed time crosses 3600 seconds
+        # For simplicity, we just add hours based on elapsed time directly
+        # E.g., if we run simulation in fast forward.
+        hours_passed = int(self.elapsed_seconds // 3600)
+        current_hour = (8 + hours_passed) % 24
+        self.sim_hour = current_hour
+        
+        # Tell decay engine about the time advance
+        decay_engine.update_time(self.elapsed_seconds)
+        
+    def reset(self):
+        self.sim_hour = 8
+        self.elapsed_seconds = 0.0
+        decay_engine.reset()
+        
+    def get_state(self):
+        return {
+            "date": self.sim_date_str,
+            "hour": self.sim_hour,
+            "elapsed_seconds": self.elapsed_seconds
+        }
+
+sim_controller = SimulationController()
+
+=== src\traffic\signals.py ===
+import pandas as pd
+import os
+
+SIGNALS_FILE = os.path.join(os.path.dirname(__file__), '../../data/raw/traffic_signals/victorian_traffic_signals.csv')
+
+class TrafficSignalsData:
+    def __init__(self):
+        self.df = None
+        
+    def load_data(self):
+        if not os.path.exists(SIGNALS_FILE):
+            print(f"Warning: {SIGNALS_FILE} not found.")
+            return
+            
+        self.df = pd.read_csv(SIGNALS_FILE)
+        
+    def get_dataframe(self):
+        return self.df
+
+signals_data = TrafficSignalsData()
